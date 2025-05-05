@@ -7,12 +7,13 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 const astriaApiKey = process.env.ASTRIA_API_KEY;
-const astriaTestModeIsOn = process.env.ASTRIA_TEST_MODE === "true";
-const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
+const astriaTestModeIsOn: boolean = process.env.ASTRIA_TEST_MODE === "true";
+const packsIsEnabled: boolean = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 // For local development, recommend using an Ngrok tunnel for the domain
 
 const appWebhookSecret = process.env.APP_WEBHOOK_SECRET;
-const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+const stripeIsConfigured: boolean =
+  process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 
 if (!appWebhookSecret) {
   throw new Error("MISSING APP_WEBHOOK_SECRET!");
@@ -139,15 +140,17 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-  
+
   // Get the modelId from the created model
   const modelId = data?.id;
 
   try {
-    const deploymentUrl = process.env.DEPLOYMENT_URL || '';
-    const baseUrl = deploymentUrl.startsWith('http://') || deploymentUrl.startsWith('https://') 
-      ? deploymentUrl 
-      : `https://${deploymentUrl}`;
+    const deploymentUrl = process.env.DEPLOYMENT_URL || "";
+    const baseUrl =
+      deploymentUrl.startsWith("http://") ||
+      deploymentUrl.startsWith("https://")
+        ? deploymentUrl
+        : `https://${deploymentUrl}`;
 
     const trainWebhook = `${baseUrl}/astria/train-webhook`;
     const trainWebhookWithParams = `${trainWebhook}?user_id=${user.id}&model_id=${modelId}&webhook_secret=${appWebhookSecret}`;

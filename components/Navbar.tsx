@@ -1,5 +1,5 @@
 import { AvatarIcon } from "@radix-ui/react-icons";
-import { Camera } from "lucide-react"
+import { Camera } from "lucide-react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import {
@@ -43,19 +43,28 @@ export default async function Navbar() {
           <Camera className="h-5 w-5 text-primary" />
           <span>Headshots AI</span>
         </Link>
-        
+
         {user && (
           <nav className="hidden md:flex gap-6">
-            <Link href="/overview" className="text-sm font-medium hover:text-primary transition-colors">
+            <Link
+              href="/overview"
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
               Home
             </Link>
             {packsIsEnabled && (
-              <Link href="/overview/packs" className="text-sm font-medium hover:text-primary transition-colors">
+              <Link
+                href="/overview/packs"
+                className="text-sm font-medium hover:text-primary transition-colors"
+              >
                 Packs
               </Link>
             )}
             {stripeIsConfigured && (
-              <Link href="/get-credits" className="text-sm font-medium hover:text-primary transition-colors">
+              <Link
+                href="/get-credits"
+                className="text-sm font-medium hover:text-primary transition-colors"
+              >
                 Get Credits
               </Link>
             )}
@@ -64,10 +73,13 @@ export default async function Navbar() {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          
+
           {!user && (
             <>
-              <Link href="/login" className="hidden sm:block text-sm font-medium hover:text-primary transition-colors">
+              <Link
+                href="/login"
+                className="hidden sm:block text-sm font-medium hover:text-primary transition-colors"
+              >
                 Login
               </Link>
               <Link href="/login">

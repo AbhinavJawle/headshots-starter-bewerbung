@@ -147,7 +147,7 @@ function Beispielen() {
               <img
                 src={`/headshots/${img}`}
                 alt={`Beispiel KI Bewerbungsfoto ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg shadow-sm" // Initial shadow
+                className={"w-full h-full object-cover rounded-lg shadow-sm"}
               />
             </Box>
           ))}

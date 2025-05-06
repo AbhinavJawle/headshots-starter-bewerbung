@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/homepage/theme-provider";
 import { validateConfig } from "@/lib/config";
 import Providers from "@/components/Providers";
+import "./globals.css";
 
 // Validate configuration at app initialization
 validateConfig();

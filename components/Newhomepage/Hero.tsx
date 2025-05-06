@@ -63,19 +63,7 @@ const Hero = () => {
             >
               Steigere deinen Marktwert in Sekunden
             </Box>
-            {/* <Box
-              as="h2"
-              maxWidth="50rem"
-              fontSize={{ base: "md", sm: "xl" }}
-              lineHeight={{ base: "xl", sm: "2xl" }}
-              marginX="auto" // Add this to center the h2 Box itself
-            >
-              <Text>
-                {" "}
-                Moderne Bewerbungsfotos mit KI: Professionelle Bewerbungsfotos
-                selber machen – Kostenlos testen, im Handumdrehen erstellen
-              </Text>
-            </Box> */}
+
             <VStack>
               <List>
                 <ListItem display="flex" alignItems="center">

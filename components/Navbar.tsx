@@ -1,206 +1,313 @@
 "use client";
-// import { AvatarIcon } from "@radix-ui/react-icons";
-// import { Camera } from "lucide-react";
-// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-// import { cookies } from "next/headers";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "./ui/dropdown-menu";
-// import Link from "next/link";
-// import { Button } from "./ui/button";
-// import React from "react";
-// import { Database } from "@/types/supabase";
-// import ClientSideCredits from "./realtime/ClientSideCredits";
-// import { ThemeToggle } from "./homepage/theme-toggle";
 
-// export const dynamic = "force-dynamic";
-
-// const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
-// const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
-// export const revalidate = 0;
-
-// export default async function Navbar() {
-//   const supabase = createServerComponentClient<Database>({ cookies });
-
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-
-//   const { data: credits } = await supabase
-//     .from("credits")
-//     .select("*")
-//     .eq("user_id", user?.id ?? "")
-//     .single();
-
-//   return (
-//     <header className="sticky top-0 z-[100] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-//       <div className="container flex h-16 items-center justify-between">
-//         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-//           <Camera className="h-5 w-5 text-primary" />
-//           <span>Headshots AI</span>
-//         </Link>
-
-//         {user && (
-//           <nav className="hidden md:flex gap-6">
-//             <Link
-//               href="/overview"
-//               className="text-sm font-medium hover:text-primary transition-colors"
-//             >
-//               Home
-//             </Link>
-//             {packsIsEnabled && (
-//               <Link
-//                 href="/overview/packs"
-//                 className="text-sm font-medium hover:text-primary transition-colors"
-//               >
-//                 Packs
-//               </Link>
-//             )}
-//             {stripeIsConfigured && (
-//               <Link
-//                 href="/get-credits"
-//                 className="text-sm font-medium hover:text-primary transition-colors"
-//               >
-//                 Get Credits
-//               </Link>
-//             )}
-//           </nav>
-//         )}
-
-//         <div className="flex items-center gap-4">
-//           <ThemeToggle />
-
-//           {!user && (
-//             <>
-//               <Link
-//                 href="/login"
-//                 className="hidden sm:block text-sm font-medium hover:text-primary transition-colors"
-//               >
-//                 Login
-//               </Link>
-//               <Link href="/login">
-//                 <Button>Create headshots</Button>
-//               </Link>
-//             </>
-//           )}
-
-//           {user && (
-//             <div className="flex items-center gap-4">
-//               {stripeIsConfigured && (
-//                 <ClientSideCredits creditsRow={credits ? credits : null} />
-//               )}
-//               <DropdownMenu>
-//                 <DropdownMenuTrigger asChild>
-//                   <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
-//                     <AvatarIcon className="h-6 w-6 text-primary" />
-//                   </Button>
-//                 </DropdownMenuTrigger>
-//                 <DropdownMenuContent className="w-56 z-[101]">
-//                   <DropdownMenuLabel className="text-primary text-center overflow-hidden text-ellipsis">
-//                     {user.email}
-//                   </DropdownMenuLabel>
-//                   <DropdownMenuSeparator />
-//                   <form action="/auth/sign-out" method="post">
-//                     <Button
-//                       type="submit"
-//                       className="w-full text-left"
-//                       variant="ghost"
-//                     >
-//                       Log out
-//                     </Button>
-//                   </form>
-//                 </DropdownMenuContent>
-//               </DropdownMenu>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState } from "react";
+import React from "react";
+import { Database } from "@/types/supabase";
+import ClientSideCredits from "./realtime/ClientSideCredits";
+import Link from "next/link";
 import {
   Button,
   Flex,
   HStack,
   Icon,
-  IconButton,
   Text,
-  Tooltip,
-  ListIcon,
+  Box,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Avatar,
+  IconButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
-// import { Session } from "next-auth";
-// import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { HiLogout } from "react-icons/hi";
 import { IoIosFlash } from "react-icons/io";
-import { CheckIcon } from "@chakra-ui/icons"; // Import CheckIcon and QuestionOutlineIcon
+import { HiLogout, HiArrowRight } from "react-icons/hi";
+
+// Client components don't need dynamic = "force-dynamic"
+// export const dynamic = "force-dynamic";
+
+const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 
 const Header = () => {
-  return (
-    <Flex
-      width="100%"
-      flexDirection="column"
-      marginX="auto"
-      maxWidth="container.lg"
-      px="2"
-    >
-      <Flex justifyContent="space-between" py={4} as="footer">
-        <Flex
-          role="group"
-          as={Link}
-          href="/"
-          alignItems="center"
-          fontWeight="bold"
-          fontSize="2xl"
-        >
-          {/* <Icon
-            transition="200ms all"
-            _groupHover={{ color: "brand.500" }}
-            as={IoIosFlash}
-          /> */}
-          <Text display={{ base: "none", sm: "inherit" }}>
-            KIBewerbungsfotos.de
-          </Text>
-        </Flex>
-        <HStack spacing={1}>
-          <Button
-            as={Link}
-            href="/#pricing"
-            colorScheme="beige"
-            variant="link"
-            mr={4}
-            size="sm"
-          >
-            Kosten
-          </Button>
-          <Button
-            as={Link}
-            href="/login"
-            colorScheme="beige"
-            variant="brand"
-            size="sm"
-          >
-            Erstellen
-          </Button>
+  const supabase = createClientComponentClient<Database>();
+  const [user, setUser] = useState<any>(null);
+  const [credits, setCredits] = useState<any>(null);
+  const [scrolled, setScrolled] = useState(false);
 
-          <Button
-            href="/login"
+  // Add scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      // Change this value to adjust when the navbar transforms
+      const scrollThreshold = 80;
+
+      if (window.scrollY > scrollThreshold) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchUserAndCredits = async () => {
+      // Get user
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+
+      // Get credits if user exists
+      if (user) {
+        const { data } = await supabase
+          .from("credits")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
+        setCredits(data);
+      }
+    };
+
+    fetchUserAndCredits();
+
+    // Set up auth state change listener
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        setUser(session.user);
+      } else {
+        setUser(null);
+        setCredits(null);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
+
+  // Dynamic styles based on scroll position
+  const bgColor = useColorModeValue(
+    scrolled ? "rgba(255, 255, 255, 0.8)" : "#faf6f5",
+    scrolled ? "rgba(26, 32, 44, 0.85)" : "gray.800"
+  );
+
+  const boxShadow = scrolled
+    ? "0 4px 20px rgba(0, 0, 0, 0.08)"
+    : "0 1px 3px rgba(0, 0, 0, 0.05)";
+
+  const transition = "all 0.3s ease";
+  const height = scrolled ? "14" : "16";
+  const py = scrolled ? 2 : 4;
+  const backdropFilter = scrolled ? "blur(10px)" : "none";
+
+  return (
+    <Box
+      as="header"
+      position="sticky"
+      top="0"
+      zIndex="100"
+      borderBottomWidth="1px"
+      bg={bgColor}
+      shadow={boxShadow}
+      transition={transition}
+      backdropFilter={backdropFilter}
+      style={{
+        WebkitBackdropFilter: backdropFilter === "none" ? "none" : "blur(10px)",
+      }}
+    >
+      <Flex
+        width="100%"
+        flexDirection="column"
+        marginX="auto"
+        maxWidth="container.lg"
+        px={{ base: 4, md: scrolled ? 8 : 6 }}
+        transition={transition}
+      >
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          py={py}
+          height={height}
+          transition={transition}
+        >
+          <Flex
+            role="group"
             as={Link}
-            variant="ghost"
-            colorScheme="beige"
-            size="sm"
+            href="/"
+            alignItems="center"
+            fontWeight="bold"
+            fontSize={scrolled ? "xl" : "2xl"}
+            transition={transition}
           >
-            Anmelden
-          </Button>
-        </HStack>
+            <Icon
+              transition={transition}
+              _groupHover={{ color: "brand.500" }}
+              as={IoIosFlash}
+              mr={2}
+              boxSize={scrolled ? "5" : "6"}
+            />
+            <Text
+              display={{ base: "none", sm: "inherit" }}
+              transition={transition}
+            >
+              KIBewerbungsfotos.de
+            </Text>
+          </Flex>
+
+          {user && (
+            <HStack
+              spacing={scrolled ? 2 : 4}
+              display={{ base: "flex", md: "flex" }}
+              transition={transition}
+            >
+              <Button
+                as={Link}
+                href="/overview"
+                variant="ghost"
+                size="sm"
+                fontWeight="medium"
+                _hover={{ color: "brand.500" }}
+                py={scrolled ? 1 : 2}
+                transition={transition}
+              >
+                Dashboard
+              </Button>
+
+              {/* {packsIsEnabled && (
+                <Button
+                  as={Link}
+                  href="/overview/packs"
+                  variant="ghost"
+                  size="sm"
+                  fontWeight="medium"
+                  _hover={{ color: "brand.500" }}
+                  py={scrolled ? 1 : 2}
+                  transition={transition}
+                >
+                  Packs
+                </Button>
+              )} */}
+
+              {stripeIsConfigured && (
+                <Button
+                  as={Link}
+                  href="/get-credits"
+                  variant="ghost"
+                  size="sm"
+                  fontWeight="medium"
+                  _hover={{ color: "brand.500" }}
+                  py={scrolled ? 1 : 2}
+                  transition={transition}
+                >
+                  Get Credits
+                </Button>
+              )}
+            </HStack>
+          )}
+
+          {!user && (
+            <HStack spacing={2} transition={transition}>
+              <Button
+                as={Link}
+                href="/#pricing"
+                colorScheme="beige"
+                variant="link"
+                mr={4}
+                size="sm"
+                transition={transition}
+              >
+                Kosten
+              </Button>
+
+              <Button
+                as={Link}
+                href="/login"
+                colorScheme="beige"
+                variant="brand"
+                size="sm"
+                rightIcon={<HiArrowRight />}
+                shadow="md"
+                py={scrolled ? 1 : 2}
+                transition={transition}
+              >
+                Erstellen
+              </Button>
+
+              <Button
+                as={Link}
+                href="/login"
+                variant="ghost"
+                colorScheme="beige"
+                size="sm"
+                py={scrolled ? 1 : 2}
+                transition={transition}
+              >
+                Anmelden
+              </Button>
+            </HStack>
+          )}
+
+          {user && (
+            <HStack spacing={4} transition={transition}>
+              {stripeIsConfigured && (
+                <Box transition={transition}>
+                  <ClientSideCredits creditsRow={credits ? credits : null} />
+                </Box>
+              )}
+
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  icon={
+                    <Avatar
+                      size={scrolled ? "xs" : "sm"}
+                      bg="brand.500"
+                      color="white"
+                      name={user.email}
+                      transition={transition}
+                    />
+                  }
+                  variant="ghost"
+                  aria-label="User menu"
+                  size={scrolled ? "xs" : "sm"}
+                  rounded="full"
+                  transition={transition}
+                />
+                <MenuList zIndex="101">
+                  <Text
+                    px={3}
+                    py={2}
+                    fontWeight="medium"
+                    color="brand.500"
+                    textAlign="center"
+                    isTruncated
+                  >
+                    {user.email}
+                  </Text>
+                  <MenuDivider />
+                  <form action="/auth/sign-out" method="post">
+                    <MenuItem
+                      as="button"
+                      type="submit"
+                      icon={<Icon as={HiLogout} />}
+                    >
+                      Log out
+                    </MenuItem>
+                  </form>
+                </MenuList>
+              </Menu>
+            </HStack>
+          )}
+        </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 };
 

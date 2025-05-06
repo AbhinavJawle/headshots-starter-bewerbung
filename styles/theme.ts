@@ -4,16 +4,16 @@ import { extendTheme } from "@chakra-ui/react";
 const theme = extendTheme({
   colors: {
     brand: {
-      50: "#FFFFFF",
-      100: "#FFFFFF",
-      200: "#FFFFFF",
-      300: "#FFFFFF",
-      400: "#DEFFEE",
-      500: "#77c5f8",
-      600: "#7DFFBC",
-      700: "#45FF9F",
-      800: "#0DFF83",
-      900: "#00D467",
+      50: "#E6F7FF",
+      100: "#BAE7FF",
+      200: "#91D5FF",
+      300: "#69C0FF",
+      400: "#40A9FF",
+      500: "#3dacec",
+      600: "#1890FF",
+      700: "#096DD9",
+      800: "#0050B3",
+      900: "#003A8C",
     },
     beige: {
       50: "#D7D5D4",
@@ -45,12 +45,21 @@ const theme = extendTheme({
         brand: {
           transition: "all 0.2s",
           bg: "brand.500",
-          color: "blackAlpha.700",
+          color: "white",
           shadow: "lg",
           borderWidth: "1px",
-          borderColor: "blackAlpha.100",
+          borderColor: "brand.400",
           _hover: {
+            bg: "brand.600",
             shadow: "md",
+            transform: "translateY(-2px)",
+          },
+        },
+        outline: {
+          transition: "all 0.2s",
+          _hover: {
+            transform: "translateY(-2px)",
+            shadow: "sm",
           },
         },
       },
@@ -60,14 +69,21 @@ const theme = extendTheme({
         brand: {
           transition: "all 0.2s",
           bg: "brand.500",
-          color: "blackAlpha.700",
+          color: "white",
           shadow: "lg",
           borderWidth: "1px",
-          borderColor: "blackAlpha.100",
+          borderColor: "brand.400",
           _hover: {
+            bg: "brand.600",
             shadow: "md",
+            transform: "translateY(-2px)",
           },
         },
+      },
+    },
+    Input: {
+      defaultProps: {
+        focusBorderColor: "brand.500",
       },
     },
   },

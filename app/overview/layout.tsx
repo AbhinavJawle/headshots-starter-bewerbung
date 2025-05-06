@@ -1,6 +1,7 @@
 import Login from "../login/page";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { Box } from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
 
@@ -19,10 +20,15 @@ export default async function RootLayout({
     return <Login />;
   }
 
-  // Updated to ensure compatibility with new layout
   return (
-    <div className="flex w-full flex-col px-4 lg:px-40 py-6">
+    <Box 
+      width="full" 
+      maxWidth="container.xl" 
+      marginX="auto" 
+      paddingX={{ base: 4, md: 8 }} 
+      paddingY={6}
+    >
       {children}
-    </div>
+    </Box>
   );
 }

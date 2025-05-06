@@ -177,7 +177,7 @@ const SocialButton = ({
 
 export default function Footer() {
   return (
-    <Box>
+    <Box mt="auto">
       <Container
         as={Stack}
         maxWidth="container.lg"

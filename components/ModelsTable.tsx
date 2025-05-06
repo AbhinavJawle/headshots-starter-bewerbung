@@ -48,12 +48,12 @@ export default async function ModelsTable({ models }: ModelsTableProps) {
               <TableCell>
                 <div>
                   <Badge
-                    className="flex gap-2 items-center w-min"
+                    className="flex gap-2 items-center w-min bg-blue-400 text-white rounded-sm px-2 py-1 text-sm"
                     variant={
                       model.status === "finished" ? "default" : "secondary"
                     }
                   >
-                    {model.status === "processing" ? "training" : model.status }
+                    {model.status === "processing" ? "training" : model.status}
                     {model.status === "processing" && (
                       <Icons.spinner className="h-4 w-4 animate-spin" />
                     )}

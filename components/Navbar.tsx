@@ -180,20 +180,55 @@ const Header = () => {
                 Dashboard
               </Button>
 
-              {/* {packsIsEnabled && (
-                <Button
-                  as={Link}
-                  href="/overview/packs"
-                  variant="ghost"
-                  size="sm"
-                  fontWeight="medium"
-                  _hover={{ color: "brand.500" }}
-                  py={scrolled ? 1 : 2}
-                  transition={transition}
-                >
-                  Packs
-                </Button>
-              )} */}
+              <HStack spacing={4} transition={transition}>
+                {stripeIsConfigured && (
+                  <Box transition={transition}>
+                    <ClientSideCredits creditsRow={credits ? credits : null} />
+                  </Box>
+                )}
+
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    icon={
+                      <Avatar
+                        size={scrolled ? "xs" : "sm"}
+                        bg="brand.500"
+                        color="white"
+                        name={user.email}
+                        transition={transition}
+                      />
+                    }
+                    variant="ghost"
+                    aria-label="User menu"
+                    size={scrolled ? "xs" : "sm"}
+                    rounded="full"
+                    transition={transition}
+                  />
+                  <MenuList zIndex="101">
+                    <Text
+                      px={3}
+                      py={2}
+                      fontWeight="medium"
+                      color="brand.500"
+                      textAlign="center"
+                      isTruncated
+                    >
+                      {user.email}
+                    </Text>
+                    <MenuDivider />
+                    <form action="/auth/sign-out" method="post">
+                      <MenuItem
+                        as="button"
+                        type="submit"
+                        icon={<Icon as={HiLogout} />}
+                      >
+                        Log out
+                      </MenuItem>
+                    </form>
+                  </MenuList>
+                </Menu>
+              </HStack>
 
               {stripeIsConfigured && (
                 <Button
@@ -254,7 +289,7 @@ const Header = () => {
             </HStack>
           )}
 
-          {user && (
+          {/* {user && (
             <HStack spacing={4} transition={transition}>
               {stripeIsConfigured && (
                 <Box transition={transition}>
@@ -304,7 +339,7 @@ const Header = () => {
                 </MenuList>
               </Menu>
             </HStack>
-          )}
+          )} */}
         </Flex>
       </Flex>
     </Box>

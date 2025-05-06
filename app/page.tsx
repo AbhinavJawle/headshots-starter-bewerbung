@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/homepage/TestimonialsSection";
 import PricingSection from "@/components/homepage/PricingSection";
 import FAQSection from "@/components/homepage/FAQSection";
 import CTASection from "@/components/homepage/CTASection";
+import HomePage from "@/components/Newhomepage/HomePage";
 
 export const dynamic = "force-dynamic";
 
@@ -25,18 +26,19 @@ export default async function Index() {
   // }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="flex-1">
-        <HeroSection />
-        <BrandsSection />
-        <ProcessSection />
-        <FeaturesSection />
-        <ExamplesSection />
-        <TestimonialsSection />
-        <PricingSection />
-        <FAQSection />
-        <CTASection />
-      </div>
-    </div>
+    // <div className="flex min-h-screen flex-col">
+    //   <div className="flex-1">
+    //     <HeroSection />
+    //     <BrandsSection />
+    //     <ProcessSection />
+    //     <FeaturesSection />
+    //     <ExamplesSection />
+    //     <TestimonialsSection />
+    //     <PricingSection />
+    //     <FAQSection />
+    //     <CTASection />
+    //   </div>
+    // </div>
+    <HomePage />
   );
 }

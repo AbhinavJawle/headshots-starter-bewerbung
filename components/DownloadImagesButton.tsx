@@ -17,23 +17,15 @@ interface DownloadImagesButtonProps {
   modelName: string;
 }
 
-export default function DownloadImagesButton({
-  images,
-  modelName,
-}: DownloadImagesButtonProps) {
+export default function DownloadImagesButton({ images, modelName }: DownloadImagesButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDownload = async () => {
-    console.log(
-      "[DownloadButton] Attempting to download images. Received props:",
-      { images, modelName }
-    );
+    console.log("[DownloadButton] Attempting to download images. Received props:", { images, modelName });
 
     if (!images || images.length === 0) {
       alert("No images to download.");
-      console.log(
-        "[DownloadButton] No images provided or images array is empty."
-      );
+      console.log("[DownloadButton] No images provided or images array is empty.");
       return;
     }
 
@@ -43,38 +35,34 @@ export default function DownloadImagesButton({
 
     try {
       const imageProcessingPromises = images.map(async (image, index) => {
-        console.log(
-          `[DownloadButton] Image ${index + 1}/${
-            images.length
-          }: Processing URI: ${image.uri}`
-        );
+        console.log(`[DownloadButton] Image ${index + 1}/${images.length}: Original S3 URI: ${image.uri}`);
+        
+        // MODIFICATION: Use the proxy URL
+        const proxyUrl = `/api/download-image?url=${encodeURIComponent(image.uri)}`;
+        console.log(`[DownloadButton] Image ${index + 1}: Fetching via proxy: ${proxyUrl}`);
+
         try {
-          const response = await fetch(image.uri);
-          console.log(
-            `[DownloadButton] Image ${index + 1}: Fetch response status: ${
-              response.status
-            }, ok: ${response.ok}`
-          );
+          // MODIFICATION: Fetch from the proxy URL
+          const response = await fetch(proxyUrl);
+          console.log(`[DownloadButton] Image ${index + 1}: Proxy response status: ${response.status}, ok: ${response.ok}`);
 
           if (!response.ok) {
-            throw new Error(
-              `Failed to fetch ${image.uri}: ${response.status} ${response.statusText}`
-            );
+            // Try to get error message from proxy if available
+            let errorBody = `Failed to fetch via proxy ${proxyUrl}: ${response.status} ${response.statusText}`;
+            try {
+                const errorJson = await response.json();
+                if (errorJson && errorJson.error) {
+                    errorBody += ` - Server message: ${errorJson.error}`;
+                }
+            } catch (e) { /* ignore if response is not json */ }
+            throw new Error(errorBody);
           }
 
           const blob = await response.blob();
-          console.log(
-            `[DownloadButton] Image ${index + 1}: Blob received. Size: ${
-              blob.size
-            }, Type: ${blob.type}`
-          );
+          console.log(`[DownloadButton] Image ${index + 1}: Blob received from proxy. Size: ${blob.size}, Type: ${blob.type}`);
 
           if (blob.size === 0) {
-            console.warn(
-              `[DownloadButton] Image ${index + 1}: Blob for ${
-                image.uri
-              } is empty. Skipping this file.`
-            );
+            console.warn(`[DownloadButton] Image ${index + 1}: Blob for ${image.uri} (via proxy) is empty. Skipping this file.`);
             return null; // Indicate failure for this image
           }
 
@@ -82,68 +70,46 @@ export default function DownloadImagesButton({
           const defaultExtension = ".jpg"; // Fallback extension
 
           try {
-            const url = new URL(image.uri);
-            const pathParts = url.pathname.split("/");
-            const lastPart = decodeURIComponent(
-              pathParts[pathParts.length - 1]
-            );
-
+            // Use the original S3 URI for filename generation logic
+            const s3Url = new URL(image.uri); 
+            const pathParts = s3Url.pathname.split('/');
+            const lastPart = decodeURIComponent(pathParts[pathParts.length - 1]);
+            
             if (lastPart) {
-              // Basic check if lastPart already has an extension
-              if (lastPart.includes(".")) {
-                filename = lastPart;
-              } else {
-                // Attempt to get extension from blob type if available
-                if (blob.type && blob.type.startsWith("image/")) {
-                  const ext = blob.type.split("/")[1];
-                  filename = `${lastPart}.${ext}`;
+                if (lastPart.includes('.')) {
+                    filename = lastPart;
                 } else {
-                  filename = `${lastPart}${defaultExtension}`;
+                    if (blob.type && blob.type.startsWith("image/")) {
+                        const ext = blob.type.split('/')[1];
+                        filename = `${lastPart}.${ext}`;
+                    } else {
+                        filename = `${lastPart}${defaultExtension}`;
+                    }
                 }
-              }
             } else {
-              // Fallback if lastPart is empty
-              if (blob.type && blob.type.startsWith("image/")) {
-                const ext = blob.type.split("/")[1];
-                filename = `image_${index + 1}.${ext}`;
-              } else {
-                filename = `image_${index + 1}${defaultExtension}`;
-              }
+                 if (blob.type && blob.type.startsWith("image/")) {
+                    const ext = blob.type.split('/')[1];
+                    filename = `image_${index + 1}.${ext}`;
+                 } else {
+                    filename = `image_${index + 1}${defaultExtension}`;
+                 }
             }
           } catch (e) {
-            console.warn(
-              `[DownloadButton] Image ${
-                index + 1
-              }: Could not parse URI for filename, using default name. Error:`,
-              e
-            );
+            console.warn(`[DownloadButton] Image ${index + 1}: Could not parse S3 URI for filename, using default name. Error:`, e);
             if (blob.type && blob.type.startsWith("image/")) {
-              const ext = blob.type.split("/")[1];
-              filename = `image_${index + 1}.${ext}`;
+                const ext = blob.type.split('/')[1];
+                filename = `image_${index + 1}.${ext}`;
             } else {
-              filename = `image_${index + 1}${defaultExtension}`;
+                filename = `image_${index + 1}${defaultExtension}`;
             }
           }
-
-          console.log(
-            `[DownloadButton] Image ${
-              index + 1
-            }: Adding to zip as: "${filename}"`
-          );
+          
+          console.log(`[DownloadButton] Image ${index + 1}: Adding to zip as: "${filename}"`);
           zip.file(filename, blob);
-          console.log(
-            `[DownloadButton] Image ${
-              index + 1
-            }: Successfully registered "${filename}" with zip.`
-          );
+          console.log(`[DownloadButton] Image ${index + 1}: Successfully registered "${filename}" with zip.`);
           return filename; // Indicate success
         } catch (error) {
-          console.error(
-            `[DownloadButton] Image ${index + 1}: Error processing image ${
-              image.uri
-            }:`,
-            error
-          );
+          console.error(`[DownloadButton] Image ${index + 1}: Error processing image ${image.uri} (via proxy):`, error);
           return null; // Indicate failure for this image
         }
       });
@@ -190,14 +156,10 @@ export default function DownloadImagesButton({
       );
     } catch (error) {
       console.error("[DownloadButton] Error creating ZIP file:", error);
-      alert(
-        "Failed to create ZIP file. Please try again and check the console."
-      );
+      alert("Failed to create ZIP file. Please try again and check the console.");
     } finally {
       setIsLoading(false);
-      console.log(
-        "[DownloadButton] Download process finished. isLoading set to false."
-      );
+      console.log("[DownloadButton] Download process finished. isLoading set to false.");
     }
   };
 

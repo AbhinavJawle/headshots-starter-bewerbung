@@ -19,6 +19,11 @@ import {
   Image,
   useColorModeValue,
   Divider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 export const revalidate = 0;
@@ -39,6 +44,8 @@ export default function ClientSideModel({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
   );
   const [model, setModel] = useState<modelRow>(serverModel);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const channel = supabase
@@ -62,6 +69,11 @@ export default function ClientSideModel({
   const headingColor = useColorModeValue("gray.800", "white");
   const subheadingColor = useColorModeValue("gray.700", "gray.200");
   const sectionBg = useColorModeValue("gray.50", "gray.900");
+
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    onOpen();
+  };
 
   return (
     <Box width="full" py={6} px={{ base: 4, md: 0 }}>
@@ -95,6 +107,15 @@ export default function ClientSideModel({
                       boxShadow="sm"
                       transition="transform 0.2s"
                       _hover={{ transform: "scale(1.02)", cursor: "pointer" }}
+                      onClick={() => handleImageClick(sample.uri)}
+                      tabIndex={0} // Add this line
+                      role="button" // Add for accessibility
+                      onKeyDown={(e) => {
+                        // Optional: Allow keyboard activation
+                        if (e.key === "Enter" || e.key === " ") {
+                          handleImageClick(sample.uri);
+                        }
+                      }}
                     >
                       <AspectRatio ratio={1}>
                         <Image
@@ -139,6 +160,15 @@ export default function ClientSideModel({
                         boxShadow="sm"
                         transition="transform 0.2s"
                         _hover={{ transform: "scale(1.02)", cursor: "pointer" }}
+                        onClick={() => handleImageClick(image.uri)}
+                        tabIndex={0} // Add this line
+                        role="button" // Add for accessibility
+                        onKeyDown={(e) => {
+                          // Optional: Allow keyboard activation
+                          if (e.key === "Enter" || e.key === " ") {
+                            handleImageClick(image.uri);
+                          }
+                        }}
                       >
                         <AspectRatio ratio={1}>
                           <Image
@@ -182,6 +212,34 @@ export default function ClientSideModel({
           </Box>
         </SimpleGrid>
       </VStack>
+
+      {selectedImage && (
+        <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+          <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
+          <ModalContent
+            width="fit-content"
+            maxWidth="90vw"
+            maxHeight="90vh" // Ensure content doesn't overflow vertically either
+            onClick={onClose} // Keep this for mobile usability
+            cursor="pointer" // Keep this
+          >
+            <ModalBody p={0}>
+              {" "}
+              {/* onClick and cursor moved to ModalContent */}
+              <Image
+                src={selectedImage}
+                alt="Bewerbungsfoto"
+                objectFit="contain"
+                maxH="90vh" // Image max height
+                maxW="100%" // Image fills the new fit-content width of ModalContent
+                // onClick={(e) => e.stopPropagation()}
+                onClick={onClose} // Keep this for mobile usability
+                cursor="pointer" // Prevent image click from closing if ModalBody handles it
+              />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      )}
     </Box>
   );
 }

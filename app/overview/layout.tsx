@@ -21,11 +21,11 @@ export default async function RootLayout({
   }
 
   return (
-    <Box 
-      width="full" 
-      maxWidth="container.xl" 
-      marginX="auto" 
-      paddingX={{ base: 4, md: 8 }} 
+    <Box
+      width="full"
+      maxWidth="container.xl"
+      marginX="auto"
+      paddingX={{ base: 4, md: 8 }}
       paddingY={6}
     >
       {children}

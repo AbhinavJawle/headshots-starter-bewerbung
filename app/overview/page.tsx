@@ -2,14 +2,7 @@ import ClientSideModelsList from "@/components/realtime/ClientSideModelsList";
 import { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  Container,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, VStack, Container, Flex } from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
 
@@ -61,9 +54,7 @@ export default async function Index() {
           >
             Your Models
           </Heading>
-          <Text color="gray.600">
-            Manage and create new AI headshots
-          </Text>
+          <Text color="gray.600">Manage and create new AI headshots</Text>
         </Box>
 
         <Box

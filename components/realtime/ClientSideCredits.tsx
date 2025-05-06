@@ -4,13 +4,7 @@ import { Database } from "@/types/supabase";
 import { creditsRow } from "@/types/utils";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-import { 
-  Badge, 
-  Flex, 
-  Text, 
-  Icon,
-  useColorModeValue
-} from "@chakra-ui/react";
+import { Badge, Flex, Text, Icon, useColorModeValue } from "@chakra-ui/react";
 import { IoIosFlash } from "react-icons/io";
 
 export const revalidate = 0;
@@ -22,12 +16,13 @@ type ClientSideCreditsProps = {
 export default function ClientSideCredits({
   creditsRow,
 }: ClientSideCreditsProps) {
-  if (!creditsRow) return (
-    <Flex align="center" gap={1}>
-      <Icon as={IoIosFlash} color="brand.500" />
-      <Text fontWeight="medium">Credits: 0</Text>
-    </Flex>
-  )
+  if (!creditsRow)
+    return (
+      <Flex align="center" gap={1}>
+        <Icon as={IoIosFlash} color="brand.500" />
+        <Text fontWeight="medium">Credits: 0</Text>
+      </Flex>
+    );
 
   const supabase = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL as string,
@@ -59,13 +54,13 @@ export default function ClientSideCredits({
 
   return (
     <Flex align="center" gap={1}>
-      <Badge 
-        display="flex" 
-        alignItems="center" 
-        px={2} 
-        py={1} 
-        borderRadius="full" 
-        bg={bgColor} 
+      <Badge
+        display="flex"
+        alignItems="center"
+        px={2}
+        py={1}
+        borderRadius="full"
+        bg={bgColor}
         color={textColor}
       >
         <Icon as={IoIosFlash} mr={1} />

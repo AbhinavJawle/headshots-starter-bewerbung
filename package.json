@@ -50,6 +50,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^4.1.0",
     "disposable-email-domains": "^1.0.62",
+    "file-saver": "^2.0.5",
     "formidable": "^3.5.2",
     "framer-motion": "^10.16.4",
     "image-blob-reduce": "^4.1.0",
@@ -94,6 +95,7 @@
   },
   "devDependencies": {
     "@types/busboy": "^1.5.0",
+    "@types/file-saver": "^2.0.7",
     "@types/mjml-react": "^2.0.6",
     "@types/node": "20.3.1",
     "@types/nodemailer": "^6.4.7",

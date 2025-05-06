@@ -48,7 +48,7 @@ export default async function ModelsTable({ models }: ModelsTableProps) {
               <TableCell>
                 <div>
                   <Badge
-                    className="flex gap-2 items-center w-min bg-blue-400 text-white rounded-sm px-2 py-1 text-sm"
+                    className="flex gap-2 items-center w-min bg-[#3dacec] text-white rounded-md px-2 py-1 text-sm"
                     variant={
                       model.status === "finished" ? "default" : "secondary"
                     }

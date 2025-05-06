@@ -139,7 +139,7 @@ export const Login = ({
     "linear(to-br, blue.50, purple.50)",
     "linear(to-br, blue.900, purple.900)"
   );
-  
+
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("brand.500", "brand.400");
 
@@ -169,10 +169,18 @@ export const Login = ({
           opacity: "0.5",
         }}
       >
-        <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.500">
+        <Text
+          fontSize={{ base: "xl", md: "2xl" }}
+          fontWeight="bold"
+          color="brand.500"
+        >
           Welcome
         </Text>
-        <Text fontSize={{ base: "xs", md: "sm" }} textAlign="center" color="gray.500">
+        <Text
+          fontSize={{ base: "xs", md: "sm" }}
+          textAlign="center"
+          color="gray.500"
+        >
           Sign in or create an account to get started.
         </Text>
         <Button
@@ -183,11 +191,11 @@ export const Login = ({
           leftIcon={<GoogleLogo boxSize={{ base: 4, md: 5 }} />}
           borderWidth="2px"
           borderColor="gray.200"
-          _hover={{ 
-            bg: "gray.50", 
+          _hover={{
+            bg: "gray.50",
             borderColor: "gray.300",
             transform: "translateY(-2px)",
-            boxShadow: "md"
+            boxShadow: "md",
           }}
           transition="all 0.2s"
           height={{ base: "40px", md: "48px" }}
@@ -205,7 +213,10 @@ export const Login = ({
                 placeholder="Email"
                 borderColor="gray.300"
                 _hover={{ borderColor: "brand.500" }}
-                _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px #3dacec" }}
+                _focus={{
+                  borderColor: "brand.500",
+                  boxShadow: "0 0 0 1px #3dacec",
+                }}
                 height={{ base: "40px", md: "48px" }}
                 fontSize={{ base: "sm", md: "md" }}
                 {...register("email", {
@@ -237,10 +248,10 @@ export const Login = ({
               color="white"
               w="full"
               type="submit"
-              _hover={{ 
+              _hover={{
                 bg: "brand.600",
                 transform: "translateY(-2px)",
-                boxShadow: "md"
+                boxShadow: "md",
               }}
               transition="all 0.2s"
               height={{ base: "40px", md: "48px" }}

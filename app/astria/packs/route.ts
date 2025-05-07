@@ -10,10 +10,8 @@ export const dynamic = "force-dynamic";
 const astriapackids = [
   //corporate - first 5
   // { id: 1173, title: "Professional Headshot", category: "corporate" },
-  { id: 827, title: "Golden Glow", category: "corporate" },
   { id: 260, title: "Corporate Headshot", category: "corporate" },
-  { id: 806, title: "Styled For Work", category: "corporate" },
-  { id: 650, title: "Styled for success", category: "corporate" },
+  { id: 820, title: "Partner's Headshot", category: "corporate" },
   { id: 1888, title: "Corporate Confidence", category: "corporate" },
 
   //lawyer - next 3
@@ -28,6 +26,8 @@ const astriapackids = [
   { id: 406, title: "Realtor", category: "realtor" },
 
   //casual - next 5
+  { id: 806, title: "Styled For Work", category: "corporate" },
+  { id: 650, title: "Styled for success", category: "corporate" },
   { id: 279, title: "J Crew", category: "casual" },
   { id: 811, title: "Casual Stylish Look", category: "casual" },
   { id: 1012, title: "Casual Studio", category: "casual" },
@@ -38,6 +38,7 @@ const astriapackids = [
   { id: 407, title: "Speaker", category: "model" },
   { id: 592, title: "Stylish Pro", category: "model" },
   { id: 822, title: "Timeless Studio Looks", category: "model" },
+  { id: 502, title: "Helmut Newton", category: "model" },
 ];
 
 // Environment Variables

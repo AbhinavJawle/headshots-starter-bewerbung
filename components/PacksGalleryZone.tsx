@@ -27,14 +27,18 @@ interface Pack {
   category?: string;
 }
 
-interface GroupedPacks {
-  [category: string]: Pack[];
-}
-
 export default function PacksGalleryZone() {
-  const [groupedPacks, setGroupedPacks] = useState<GroupedPacks>({});
+  const [packs, setPacks] = useState<Pack[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+
+  // Categorized packs
+  const [corporatePacks, setCorporatePacks] = useState<Pack[]>([]);
+  const [lawyerPacks, setLawyerPacks] = useState<Pack[]>([]);
+  const [medicinePacks, setMedicinePacks] = useState<Pack[]>([]);
+  const [realtorPacks, setRealtorPacks] = useState<Pack[]>([]);
+  const [casualPacks, setCasualPacks] = useState<Pack[]>([]);
+  const [modelPacks, setModelPacks] = useState<Pack[]>([]);
 
   const cardBg = useColorModeValue("gray.700", "gray.800"); // Darker background for cards
   const cardHoverBg = useColorModeValue("gray.600", "gray.700");
@@ -48,17 +52,45 @@ export default function PacksGalleryZone() {
       setLoading(true);
       const response = await axios.get<Pack[]>("/astria/packs");
       const fetchedPacks = response.data;
+      setPacks(fetchedPacks);
 
-      // Group packs by category
-      const groups: GroupedPacks = {};
-      fetchedPacks.forEach((pack) => {
-        const category = pack.category || "Uncategorized"; // Default if category is missing
-        if (!groups[category]) {
-          groups[category] = [];
-        }
-        groups[category].push(pack);
-      });
-      setGroupedPacks(groups);
+      // Categorize packs based on index in the array
+      // First 5 are corporate
+      setCorporatePacks(
+        fetchedPacks
+          .slice(0, 5)
+          .map((pack) => ({ ...pack, category: "corporate" }))
+      );
+      // Next 3 are lawyers
+      setLawyerPacks(
+        fetchedPacks
+          .slice(5, 8)
+          .map((pack) => ({ ...pack, category: "lawyer" }))
+      );
+      // Next 1 is medicine
+      setMedicinePacks(
+        fetchedPacks
+          .slice(8, 9)
+          .map((pack) => ({ ...pack, category: "medicine" }))
+      );
+      // Next 1 is realtor
+      setRealtorPacks(
+        fetchedPacks
+          .slice(9, 10)
+          .map((pack) => ({ ...pack, category: "realtor" }))
+      );
+      // Next 5 are casual
+      setCasualPacks(
+        fetchedPacks
+          .slice(10, 15)
+          .map((pack) => ({ ...pack, category: "casual" }))
+      );
+      // Next 3 are model
+      setModelPacks(
+        fetchedPacks
+          .slice(15, 18)
+          .map((pack) => ({ ...pack, category: "model" }))
+      );
     } catch (err: unknown) {
       if (err instanceof Error) {
         toast({
@@ -99,7 +131,7 @@ export default function PacksGalleryZone() {
     );
   }
 
-  if (Object.keys(groupedPacks).length === 0) {
+  if (packs.length === 0) {
     return (
       <Box textAlign="center" py={8}>
         <Text fontSize="lg" color={useColorModeValue("gray.600", "gray.400")}>
@@ -108,9 +140,6 @@ export default function PacksGalleryZone() {
       </Box>
     );
   }
-
-  // Define a preferred order for categories if needed, otherwise they'll render in object key order
-  const categoryOrder = ["corporate", "lawyer", "medicine", "realtor", "casual", "model", "Uncategorized"];
 
   // Render a category section with its packs
   const renderCategorySection = (title: string, categoryPacks: Pack[]) => {
@@ -191,16 +220,13 @@ export default function PacksGalleryZone() {
   };
 
   return (
-    <Container maxW="container.xl" py={10}>
-      {categoryOrder.map((categoryName) => {
-        const packsInCategory = groupedPacks[categoryName];
-        if (packsInCategory && packsInCategory.length > 0) {
-          // Capitalize category name for display or use a mapping for nicer titles
-          const displayTitle = categoryName.charAt(0).toUpperCase() + categoryName.slice(1) + " Packs";
-          return renderCategorySection(displayTitle, packsInCategory);
-        }
-        return null;
-      })}
+    <Container maxW="container.xl" py={8}>
+      {renderCategorySection("Corporate", corporatePacks)}
+      {renderCategorySection("Lawyers", lawyerPacks)}
+      {renderCategorySection("Medicine", medicinePacks)}
+      {renderCategorySection("Realtor", realtorPacks)}
+      {renderCategorySection("Casual", casualPacks)}
+      {renderCategorySection("Model", modelPacks)}
     </Container>
   );
 }

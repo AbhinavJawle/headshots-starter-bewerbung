@@ -11,7 +11,7 @@ const astriapackids = [
   // { id: 260, title: "Corporate Headshot", category: "corporate" },
 
   //Using only this pack now, which is the best among tested
-  { id: 820, title: "Partner's Headshot", category: "corporate" },
+  { id: 820, title: "Bewerbungsfoto", category: "corporate" },
   // { id: 1888, title: "Corporate Confidence", category: "corporate" },
 
   //lawyer

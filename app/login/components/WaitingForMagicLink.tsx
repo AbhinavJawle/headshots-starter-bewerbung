@@ -20,7 +20,7 @@ export const WaitingForMagicLink = ({
     "linear(to-br, blue.50, purple.50)",
     "linear(to-br, blue.900, purple.900)"
   );
-  
+
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("brand.500", "brand.400");
 
@@ -50,19 +50,16 @@ export const WaitingForMagicLink = ({
           opacity: "0.5",
         }}
       >
-        <Text 
-          fontSize={{ base: "xl", md: "2xl" }} 
-          fontWeight="bold" 
+        <Text
+          fontSize={{ base: "xl", md: "2xl" }}
+          fontWeight="bold"
           color="brand.500"
           textAlign="center"
         >
           Check your email to continue
         </Text>
         <VStack spacing={{ base: 3, md: 4 }} align="center">
-          <Text 
-            fontSize={{ base: "sm", md: "md" }} 
-            textAlign="center"
-          >
+          <Text fontSize={{ base: "sm", md: "md" }} textAlign="center">
             We've emailed you a magic link to access your account.{" "}
           </Text>
           <ChakraLink
@@ -73,13 +70,14 @@ export const WaitingForMagicLink = ({
             color="brand.500"
             fontWeight="medium"
             _hover={{ textDecoration: "underline" }}
-            fontSize={{ base: "sm", md: "md" }}
+            fontSize={{ base: "md", md: "lg" }}
+            style={{ textDecoration: "underline" }}
           >
             Open Gmail
           </ChakraLink>
-          <Text 
-            fontSize={{ base: "xs", md: "sm" }} 
-            color="gray.500" 
+          <Text
+            fontSize={{ base: "xs", md: "sm" }}
+            color="gray.500"
             textAlign="center"
           >
             Hint: it might be in your spam folder.

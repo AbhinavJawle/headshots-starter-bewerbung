@@ -9,7 +9,8 @@ export const dynamic = "force-dynamic";
 
 const astriapackids = [
   //corporate - first 5
-  { id: 1173, title: "Professional Headshot", category: "corporate" },
+  // { id: 1173, title: "Professional Headshot", category: "corporate" },
+  { id: 827, title: "Golden Glow", category: "corporate" },
   { id: 260, title: "Corporate Headshot", category: "corporate" },
   { id: 806, title: "Styled For Work", category: "corporate" },
   { id: 650, title: "Styled for success", category: "corporate" },
@@ -25,7 +26,7 @@ const astriapackids = [
 
   //realtor - next 1
   { id: 406, title: "Realtor", category: "realtor" },
-  
+
   //casual - next 5
   { id: 279, title: "J Crew", category: "casual" },
   { id: 811, title: "Casual Stylish Look", category: "casual" },
@@ -95,10 +96,10 @@ export async function GET(request: Request) {
       // Add the category information from our astriapackids array
       return {
         ...response.data,
-        category: astriapackids[index].category
+        category: astriapackids[index].category,
       };
     });
-    
+
     console.log("PROCESSED DATA: ", processedData);
     // Return the processed data as JSON, maintaining the original order
     return NextResponse.json(processedData);

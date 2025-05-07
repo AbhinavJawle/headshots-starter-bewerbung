@@ -36,7 +36,8 @@ export default async function Index({ params }: { params: { id: string } }) {
 
   const { data: imagesData } = await supabase // Renamed to imagesData to avoid conflict if 'images' is used elsewhere
     .from("images")
-    .select("uri") // Only select uri if that's all you need for download
+    .select("*") // Select all fields
+    // .select("uri") // Only select uri if that's all you need for download
     .eq("modelId", model.id);
   console.log("IMAGESDATA", imagesData); // Log the imagesData to the console to check if it's being fetched correctly
   const { data: samples } = await supabase
@@ -49,7 +50,9 @@ export default async function Index({ params }: { params: { id: string } }) {
       {/* Modified header section for responsiveness */}
       <div className="flex flex-col items-start gap-4 w-full mb-6 px-4 py-3 bg-gray-50 border-b border-gray-200 md:flex-row md:items-center md:justify-between">
         {/* Left Group: Go Back Button and Model Info */}
-        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4"> {/* Stacks on very small, row on sm+ */}
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+          {" "}
+          {/* Stacks on very small, row on sm+ */}
           {/* Go Back Button */}
           <Link href="/overview" className="text-xs w-fit">
             <Button variant={"outline"} className="text-xs" size="sm">
@@ -59,7 +62,9 @@ export default async function Index({ params }: { params: { id: string } }) {
           </Link>
           {/* Model Name and Status */}
           <div className="flex flex-row gap-2 items-center">
-            <h1 className="text-xl font-semibold text-gray-800">{model.name}</h1>
+            <h1 className="text-xl font-semibold text-gray-800">
+              {model.name}
+            </h1>
             <div>
               <Badge
                 variant={model.status === "finished" ? "default" : "secondary"}
@@ -73,15 +78,19 @@ export default async function Index({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        
+
         {/* Download Button - pushed to the right on md screens, full width on smaller screens if desired */}
-        <div className="w-full md:w-auto"> {/* Ensures button can take full width if needed on mobile, auto on larger */}
-          {imagesData && imagesData.length > 0 && model.status === "finished" && (
-            <DownloadImagesButton
-              images={imagesData}
-              modelName={model.name || "model"}
-            />
-          )}
+        <div className="w-full md:w-auto">
+          {" "}
+          {/* Ensures button can take full width if needed on mobile, auto on larger */}
+          {imagesData &&
+            imagesData.length > 0 &&
+            model.status === "finished" && (
+              <DownloadImagesButton
+                images={imagesData}
+                modelName={model.name || "model"}
+              />
+            )}
         </div>
       </div>
 

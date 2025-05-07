@@ -207,7 +207,8 @@ export default function PacksGalleryZone() {
                       textTransform="capitalize"
                       noOfLines={2}
                     >
-                      {pack.title}
+                      Bewerbungsfoto
+                      {/* {pack.title} */}
                     </Heading>
                   </Box>
                 </LinkOverlay>

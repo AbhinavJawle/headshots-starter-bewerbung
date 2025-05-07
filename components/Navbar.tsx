@@ -288,7 +288,6 @@ const Header = () => {
               </Button>
             </HStack>
           )}
-
           {/* {user && (
             <HStack spacing={4} transition={transition}>
               {stripeIsConfigured && (

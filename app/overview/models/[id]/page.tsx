@@ -46,36 +46,43 @@ export default async function Index({ params }: { params: { id: string } }) {
 
   return (
     <div id="train-model-container" className="w-full h-full">
-      <div className="flex flex-row gap-4 items-center">
-        {" "}
-        {/* Added items-center for vertical alignment */}
-        <Link href="/overview" className="text-xs w-fit">
-          <Button variant={"outline"} className="text-xs" size="sm">
-            <FaArrowLeft className="mr-2" />
-            Go Back
-          </Button>
-        </Link>
-        <div className="flex flex-row gap-2 align-middle text-center items-center pb-4">
-          <h1 className="text-xl">{model.name}</h1>
-          <div>
-            <Badge
-              variant={model.status === "finished" ? "default" : "secondary"}
-              className="text-xs font-medium bg-[#3dacec] text-white rounded-md px-2 py-1"
-            >
-              {model.status === "processing" ? "training" : model.status}
-              {model.status === "processing" && (
-                <Icons.spinner className="h-4 w-4 animate-spin ml-2 inline-block" />
-              )}
-            </Badge>
+      {/* Modified header section for responsiveness */}
+      <div className="flex flex-col items-start gap-4 w-full mb-6 px-4 py-3 bg-gray-50 border-b border-gray-200 md:flex-row md:items-center md:justify-between">
+        {/* Left Group: Go Back Button and Model Info */}
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4"> {/* Stacks on very small, row on sm+ */}
+          {/* Go Back Button */}
+          <Link href="/overview" className="text-xs w-fit">
+            <Button variant={"outline"} className="text-xs" size="sm">
+              <FaArrowLeft className="mr-2" />
+              Go Back
+            </Button>
+          </Link>
+          {/* Model Name and Status */}
+          <div className="flex flex-row gap-2 items-center">
+            <h1 className="text-xl font-semibold text-gray-800">{model.name}</h1>
+            <div>
+              <Badge
+                variant={model.status === "finished" ? "default" : "secondary"}
+                className="text-xs font-medium bg-[#3dacec] text-white rounded-md px-2 py-1"
+              >
+                {model.status === "processing" ? "training" : model.status}
+                {model.status === "processing" && (
+                  <Icons.spinner className="h-4 w-4 animate-spin ml-2 inline-block" />
+                )}
+              </Badge>
+            </div>
           </div>
         </div>
-        {/* Add the Download Button here, ensure imagesData is not null */}
-        {imagesData && imagesData.length > 0 && model.status === "finished" && (
-          <DownloadImagesButton
-            images={imagesData}
-            modelName={model.name || "model"}
-          />
-        )}
+        
+        {/* Download Button - pushed to the right on md screens, full width on smaller screens if desired */}
+        <div className="w-full md:w-auto"> {/* Ensures button can take full width if needed on mobile, auto on larger */}
+          {imagesData && imagesData.length > 0 && model.status === "finished" && (
+            <DownloadImagesButton
+              images={imagesData}
+              modelName={model.name || "model"}
+            />
+          )}
+        </div>
       </div>
 
       <ClientSideModel

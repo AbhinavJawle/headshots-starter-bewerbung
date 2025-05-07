@@ -4,41 +4,41 @@ import { Database } from "@/types/supabase";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
-// Set dynamic route handling
 export const dynamic = "force-dynamic";
 
 const astriapackids = [
-  //corporate - first 5
-  // { id: 1173, title: "Professional Headshot", category: "corporate" },
-  { id: 260, title: "Corporate Headshot", category: "corporate" },
+  //corporate
+  // { id: 260, title: "Corporate Headshot", category: "corporate" },
+
+  //Using only this pack now, which is the best among tested
   { id: 820, title: "Partner's Headshot", category: "corporate" },
-  { id: 1888, title: "Corporate Confidence", category: "corporate" },
+  // { id: 1888, title: "Corporate Confidence", category: "corporate" },
 
-  //lawyer - next 3
-  { id: 796, title: "Stylish Lawyers", category: "lawyer" },
-  { id: 820, title: "Partner's Headshot", category: "lawyer" },
-  { id: 1989, title: "Lawyer Headshot", category: "lawyer" },
+  //lawyer
+  // { id: 796, title: "Stylish Lawyers", category: "lawyer" },
+  // { id: 820, title: "Partner's Headshot", category: "lawyer" },
+  // { id: 1989, title: "Lawyer Headshot", category: "lawyer" },
 
-  //medicine - next 1
-  { id: 1991, title: "Doctor Headshots", category: "medicine" },
+  //medicine
+  // { id: 1991, title: "Doctor Headshots", category: "medicine" },
 
-  //realtor - next 1
-  { id: 406, title: "Realtor", category: "realtor" },
+  // //realtor
+  // { id: 406, title: "Realtor", category: "realtor" },
 
-  //casual - next 5
-  { id: 806, title: "Styled For Work", category: "corporate" },
-  { id: 650, title: "Styled for success", category: "corporate" },
-  { id: 279, title: "J Crew", category: "casual" },
-  { id: 811, title: "Casual Stylish Look", category: "casual" },
-  { id: 1012, title: "Casual Studio", category: "casual" },
-  { id: 855, title: "The Casual", category: "casual" },
-  { id: 1722, title: "Studio Models", category: "casual" },
+  // //casual
+  // { id: 806, title: "Styled For Work", category: "corporate" },
+  // { id: 650, title: "Styled for success", category: "corporate" },
+  // { id: 279, title: "J Crew", category: "casual" },
+  // { id: 811, title: "Casual Stylish Look", category: "casual" },
+  // { id: 1012, title: "Casual Studio", category: "casual" },
+  // { id: 855, title: "The Casual", category: "casual" },
+  // { id: 1722, title: "Studio Models", category: "casual" },
 
-  //model - next 3
-  { id: 407, title: "Speaker", category: "model" },
-  { id: 592, title: "Stylish Pro", category: "model" },
-  { id: 822, title: "Timeless Studio Looks", category: "model" },
-  { id: 502, title: "Helmut Newton", category: "model" },
+  // //model
+  // { id: 407, title: "Speaker", category: "model" },
+  // { id: 592, title: "Stylish Pro", category: "model" },
+  // { id: 822, title: "Timeless Studio Looks", category: "model" },
+  // { id: 502, title: "Helmut Newton", category: "model" },
 ];
 
 // Environment Variables
@@ -68,10 +68,8 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Authorization header
     const headers = { Authorization: `Bearer ${API_KEY}` };
 
-    // Define the endpoints based on the query type
     const endpoints: string[] = [];
 
     // if (QUERY_TYPE === "users" || QUERY_TYPE === "both") {
@@ -87,14 +85,11 @@ export async function GET(request: Request) {
     }
     console.log("ENDPOINTS: ", endpoints);
 
-    // Make concurrent requests
     const responses = await Promise.all(
       endpoints.map((url) => axios.get(url, { headers }))
     );
 
-    // Process the responses to ensure we have all the necessary data
     const processedData = responses.map((response, index) => {
-      // Add the category information from our astriapackids array
       return {
         ...response.data,
         category: astriapackids[index].category,
@@ -102,12 +97,10 @@ export async function GET(request: Request) {
     });
 
     console.log("PROCESSED DATA: ", processedData);
-    // Return the processed data as JSON, maintaining the original order
     return NextResponse.json(processedData);
   } catch (error) {
     console.error("Error fetching packs:", error);
 
-    // Return error response
     return NextResponse.json(
       {
         message: "Failed to fetch packs.",

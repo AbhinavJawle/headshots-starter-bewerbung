@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@chakra-ui/react";
 import {
   Select,
   SelectContent,
@@ -32,7 +33,10 @@ import { fileUploadFormSchema } from "@/types/zod";
 import { upload } from "@vercel/blob/client";
 import axios from "axios";
 import { ImageInspector } from "./ImageInspector";
-import { ImageInspectionResult, aggregateCharacteristics } from "@/lib/imageInspection";
+import {
+  ImageInspectionResult,
+  aggregateCharacteristics,
+} from "@/lib/imageInspection";
 
 type FormInput = z.infer<typeof fileUploadFormSchema>;
 
@@ -41,7 +45,9 @@ const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 export default function TrainModelZone({ packSlug }: { packSlug: string }) {
   const [files, setFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [characteristics, setCharacteristics] = useState<ImageInspectionResult[]>([]);
+  const [characteristics, setCharacteristics] = useState<
+    ImageInspectionResult[]
+  >([]);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -117,8 +123,11 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
     [files]
   );
 
-  const handleInspectionComplete = (result: ImageInspectionResult, file: File) => {
-    setCharacteristics(prev => [...prev, result]);
+  const handleInspectionComplete = (
+    result: ImageInspectionResult,
+    file: File
+  ) => {
+    setCharacteristics((prev) => [...prev, result]);
   };
 
   const trainModel = useCallback(async () => {
@@ -144,7 +153,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       name: form.getValues("name").trim(),
       type: form.getValues("type"),
       pack: packSlug,
-      characteristics: aggregatedCharacteristics
+      characteristics: aggregatedCharacteristics,
     };
 
     // Send the JSON payload to the "/astria/train-model" endpoint
@@ -334,7 +343,9 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
                     <ImageInspector
                       file={file}
                       type={form.getValues("type")}
-                      onInspectionComplete={(result) => handleInspectionComplete(result, file)}
+                      onInspectionComplete={(result) =>
+                        handleInspectionComplete(result, file)
+                      }
                     />
                   </div>
                 </div>
@@ -342,7 +353,12 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
             </div>
           )}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isLoading}
+            variant={"brand"}
+          >
             Train Model{" "}
             {stripeIsConfigured && <span className="ml-1">(1 Credit)</span>}
           </Button>

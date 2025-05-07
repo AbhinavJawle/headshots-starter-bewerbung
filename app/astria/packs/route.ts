@@ -8,24 +8,35 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 export const dynamic = "force-dynamic";
 
 const astriapackids = [
-  { id: 406, title: "Realtor" },
-  { id: 822, title: "Timeless Studio Looks" },
-  { id: 279, title: "J Crew" },
-  { id: 796, title: "Stylish Lawyers" },
-  { id: 811, title: "Casual Stylish Look" },
-  { id: 820, title: "Partner's Headshot" },
-  { id: 1012, title: "Casual Studio" },
-  { id: 1173, title: "Professional Headshot" },
-  { id: 260, title: "Corporate Headshot" },
-  { id: 407, title: "Speaker" },
-  { id: 855, title: "The Casual" },
-  { id: 1722, title: "Studio Models" },
-  { id: 806, title: "Styled For Work" },
-  { id: 592, title: "Stylish Pro" },
-  { id: 1991, title: "Doctor Headshots" },
-  { id: 650, title: "Styled for success" },
-  { id: 1989, title: "Lawyer Headshot" },
-  { id: 1888, title: "Corporate Confidence" },
+  //corporate - first 5
+  { id: 1173, title: "Professional Headshot", category: "corporate" },
+  { id: 260, title: "Corporate Headshot", category: "corporate" },
+  { id: 806, title: "Styled For Work", category: "corporate" },
+  { id: 650, title: "Styled for success", category: "corporate" },
+  { id: 1888, title: "Corporate Confidence", category: "corporate" },
+
+  //lawyer - next 3
+  { id: 796, title: "Stylish Lawyers", category: "lawyer" },
+  { id: 820, title: "Partner's Headshot", category: "lawyer" },
+  { id: 1989, title: "Lawyer Headshot", category: "lawyer" },
+
+  //medicine - next 1
+  { id: 1991, title: "Doctor Headshots", category: "medicine" },
+
+  //realtor - next 1
+  { id: 406, title: "Realtor", category: "realtor" },
+  
+  //casual - next 5
+  { id: 279, title: "J Crew", category: "casual" },
+  { id: 811, title: "Casual Stylish Look", category: "casual" },
+  { id: 1012, title: "Casual Studio", category: "casual" },
+  { id: 855, title: "The Casual", category: "casual" },
+  { id: 1722, title: "Studio Models", category: "casual" },
+
+  //model - next 3
+  { id: 407, title: "Speaker", category: "model" },
+  { id: 592, title: "Stylish Pro", category: "model" },
+  { id: 822, title: "Timeless Studio Looks", category: "model" },
 ];
 
 // Environment Variables
@@ -79,11 +90,18 @@ export async function GET(request: Request) {
       endpoints.map((url) => axios.get(url, { headers }))
     );
 
-    // Combine the data from both responses
-    const combinedData = responses.flatMap((response) => response.data);
-    console.log("COMBINED DATA: ", combinedData);
-    // Return the combined data as JSON
-    return NextResponse.json(combinedData);
+    // Process the responses to ensure we have all the necessary data
+    const processedData = responses.map((response, index) => {
+      // Add the category information from our astriapackids array
+      return {
+        ...response.data,
+        category: astriapackids[index].category
+      };
+    });
+    
+    console.log("PROCESSED DATA: ", processedData);
+    // Return the processed data as JSON, maintaining the original order
+    return NextResponse.json(processedData);
   } catch (error) {
     console.error("Error fetching packs:", error);
 

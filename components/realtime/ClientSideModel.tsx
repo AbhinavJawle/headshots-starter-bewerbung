@@ -62,7 +62,7 @@ export default function ClientSideModel({
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase, model, setModel]);
+  }, [supabase, setModel]);
 
   const bgColor = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");

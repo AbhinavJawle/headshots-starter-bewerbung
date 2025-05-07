@@ -37,6 +37,7 @@ import {
   ImageInspectionResult,
   aggregateCharacteristics,
 } from "@/lib/imageInspection";
+import { Loader2 } from "lucide-react";
 
 type FormInput = z.infer<typeof fileUploadFormSchema>;
 
@@ -359,6 +360,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
             disabled={isLoading}
             variant={"brand"}
           >
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Train Model{" "}
             {stripeIsConfigured && <span className="ml-1">(1 Credit)</span>}
           </Button>

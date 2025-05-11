@@ -74,10 +74,11 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       // if user tries to upload more than 10 files, display a toast
       if (newFiles.length + files.length > 10) {
         toast({
+          variant: "destructive",
           title: "Too many images",
           description:
             "You can only upload up to 10 images in total. Please try again.",
-          duration: 5000,
+          duration: 7000,
         });
         return;
       }
@@ -85,10 +86,11 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       // display a toast if any duplicate files were found
       if (newFiles.length !== acceptedFiles.length) {
         toast({
+          variant: "destructive",
           title: "Duplicate file names",
           description:
             "Some of the files you selected were already added. They were ignored.",
-          duration: 5000,
+          duration: 7000,
         });
       }
 
@@ -96,12 +98,12 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       const totalSize = files.reduce((acc, file) => acc + file.size, 0);
       const newSize = newFiles.reduce((acc, file) => acc + file.size, 0);
 
-      if (totalSize + newSize > 4.5 * 1024 * 1024) {
+      if (totalSize + newSize > 10 * 1024 * 1024) {
         toast({
           title: "Images exceed size limit",
           description:
-            "The total combined size of the images cannot exceed 4.5MB.",
-          duration: 5000,
+            "The total combined size of the images cannot exceed 10MB.",
+          duration: 7000,
         });
         return;
       }
@@ -109,9 +111,10 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       setFiles([...files, ...newFiles]);
 
       toast({
+        variant: "default",
         title: "Images selected",
         description: "The images were successfully selected.",
-        duration: 5000,
+        duration: 7000,
       });
     },
     [files]
@@ -194,10 +197,10 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       title: "Model queued for training",
       description:
         "The model was queued for training. You will receive an email when the model is ready to use.",
-      duration: 5000,
+      duration: 7000,
     });
 
-    router.push("/");
+    router.push("/overview");
   }, [files, characteristics, form, packSlug]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -305,8 +308,8 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
           >
             <FormLabel>Samples</FormLabel>
             <FormDescription>
-              Upload 4-10 images of the person you want to generate headshots
-              for.
+              Upload 5-10 images of the person you want to generate headshots
+              for. Je mehr desto besser.
             </FormDescription>
             <div className="outline-dashed outline-2 outline-gray-100 hover:outline-blue-500 w-full h-full rounded-md p-4 flex justify-center align-middle">
               <input {...getInputProps()} />
@@ -361,7 +364,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
             variant={"brand"}
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Train Model{" "}
+            Train Model
             {stripeIsConfigured && <span className="ml-1">(1 Credit)</span>}
           </Button>
         </form>

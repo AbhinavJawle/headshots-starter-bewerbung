@@ -26,7 +26,7 @@ import { IoIosFlash } from "react-icons/io";
 import { HiLogout, HiArrowRight } from "react-icons/hi";
 
 // Client components don't need dynamic = "force-dynamic"
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";

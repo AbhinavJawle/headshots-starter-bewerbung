@@ -96,7 +96,6 @@ export async function GET(request: Request) {
       };
     });
 
-    console.log("PROCESSED DATA: ", processedData);
     return NextResponse.json(processedData);
   } catch (error) {
     console.error("Error fetching packs:", error);

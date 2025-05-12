@@ -7,6 +7,9 @@ import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
+//REPLACE ALL OF THIS WITH DODOPAYMENTS WEBHOOK
+//iNVESTIGATE IF STRIPE' PRICING TABLE IS RESPONSIBLE FOR HANDLING PAYMENTS
+
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -150,7 +153,9 @@ export async function POST(request: Request) {
           console.log(error);
           return NextResponse.json(
             {
-              message: `Error updating credits: ${JSON.stringify(error)}. data=${data}`,
+              message: `Error updating credits: ${JSON.stringify(
+                error
+              )}. data=${data}`,
             },
             {
               status: 400,

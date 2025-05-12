@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge"
-import ModernPricing from "@/components/homepage/modern-pricing"
+import { Badge } from "@/components/ui/badge";
+import ModernPricing from "@/components/homepage/modern-pricing";
 
 export default function PricingSection() {
   return (
@@ -10,10 +10,12 @@ export default function PricingSection() {
             Pricing
           </Badge>
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            Professional-grade headshots for <span className="text-primary">a fraction</span> of the cost
+            Professional-grade headshots for{" "}
+            <span className="text-primary">a fraction</span> of the cost
           </h2>
           <p className="max-w-[700px] text-muted-foreground text-lg">
-            Professional photographers charge $200-$500 for a session. Our AI creates stunning headshots for much less.
+            Professional photographers charge $200-$500 for a session. Our AI
+            creates stunning headshots for much less.
           </p>
         </div>
         <div className="mt-16">
@@ -21,5 +23,5 @@ export default function PricingSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import StripePricingTable from "@/components/stripe/StripeTable";
 
+//imports stripepricingtable and returns with stripepricingtable with the current user
+
 export const dynamic = "force-dynamic";
 
 export default async function Index() {
@@ -16,7 +18,5 @@ export default async function Index() {
     return redirect("/login");
   }
 
-  return (
-    <StripePricingTable user={user} />
-  );
+  return <StripePricingTable user={user} />;
 }

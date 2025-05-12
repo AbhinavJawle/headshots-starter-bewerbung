@@ -12,6 +12,8 @@ const packsIsEnabled: boolean = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 // For local development, recommend using an Ngrok tunnel for the domain
 
 const appWebhookSecret = process.env.APP_WEBHOOK_SECRET;
+
+//replace with if dodo configured and 'stripeIsConfigured' to 'dodoIsConfigured'
 const stripeIsConfigured: boolean =
   process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 
@@ -54,6 +56,7 @@ export async function POST(request: Request) {
     );
   }
 
+  //change to more images later and add a limit
   if (images?.length < 4) {
     return NextResponse.json(
       {

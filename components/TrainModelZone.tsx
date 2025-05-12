@@ -1,6 +1,5 @@
 "use client";
 
-// import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -40,6 +39,8 @@ import {
 import { Loader2 } from "lucide-react";
 
 type FormInput = z.infer<typeof fileUploadFormSchema>;
+
+//change this stripeisconfigured to dodoisconfigured and set it true
 
 const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 

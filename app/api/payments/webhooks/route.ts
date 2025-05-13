@@ -24,12 +24,11 @@ const productIdToCredits: { [key: string]: number } = {
   // "your_other_product_id_2": 10,
 };
 
-let event: any;
-
 const webhook = new Webhook(process.env.NEXT_PUBLIC_DODO_WEBHOOK_KEY!);
 
 export async function POST(request: Request) {
   const headersList = await headers();
+  let payload: WebhookPayload; // Declare payload here
 
   try {
     const rawBody = await request.text();
@@ -44,24 +43,16 @@ export async function POST(request: Request) {
     await webhook.verify(rawBody, webhookHeaders);
     logger.info("Webhook verified successfully");
 
-    const payload = JSON.parse(rawBody) as WebhookPayload;
+    payload = JSON.parse(rawBody) as WebhookPayload; // Assign to outer scoped payload
 
     if (!payload.data?.customer?.email) {
       throw new Error("Missing customer email in payload");
     }
-    event = payload;
 
     console.log("-----------PAYLOAD------------", payload);
     console.log("-----------PAYLOAD DATA------------", payload.data);
-    console.log("-----------PAYLOAD------------", event);
-    console.log("-----------event DATA------------", event.data);
-
-    // event = payload.type;
-
-    // return Response.json(
-    //   { message: "Webhook processed successfully" },
-    //   { status: 200 }
-    // );
+    // console.log("-----------PAYLOAD------------", event); // OLD, uses event
+    // console.log("-----------event DATA------------", event.data); // OLD, uses event
   } catch (error) {
     logger.error("Webhook processing failed", error);
     return NextResponse.json(
@@ -73,7 +64,7 @@ export async function POST(request: Request) {
     );
   }
 
-  // Handle the event
+  // Handle the event using the local 'payload' variable
   const supabase = createClient<Database>(
     supabaseUrl as string,
     supabaseServiceRoleKey as string,
@@ -85,12 +76,12 @@ export async function POST(request: Request) {
       },
     }
   );
-  switch (event.type) {
+  switch (payload.type) {
     case "payment.succeeded":
       logger.info("Processing payment.succeeded event");
 
-      const paymentSucceededPayload = event.data as Payment;
-      const userId = paymentSucceededPayload?.metadata?.userId as
+      const paymentSucceededData = payload.data as Payment; // Use payload.data and cast to Payment
+      const userId = paymentSucceededData?.metadata?.userId as
         | string
         | undefined;
 
@@ -109,7 +100,7 @@ export async function POST(request: Request) {
       // Determine credits based on product_id from Dodo Payments payload
       // Assuming the first item in product_cart is the one purchased.
       // Adjust if multiple items can be in a single Dodo payment or if structure differs.
-      const purchasedItem = paymentSucceededPayload?.product_cart?.[0];
+      const purchasedItem = paymentSucceededData?.product_cart?.[0]; // Use paymentSucceededData
       const productId = purchasedItem?.product_id;
       const quantity = purchasedItem?.quantity || 1; // Default to 1 if quantity is not present
 
@@ -222,7 +213,7 @@ export async function POST(request: Request) {
     default:
       return NextResponse.json(
         {
-          message: `Unhandled event type ${event.type}`,
+          message: `Unhandled event type ${payload.type}`, // Use payload.type
         },
         { status: 400 }
       );

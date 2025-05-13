@@ -2,6 +2,9 @@ import { dodopayments } from "@/lib/dodopayments";
 import { CountryCode } from "dodopayments/resources/misc";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { Database } from "@/types/supabase";
 
 const paymentRequestSchema = z.object({
   formData: z.object({
@@ -25,6 +28,20 @@ export async function POST(request: NextRequest) {
     // const { formData, cartItems } = paymentRequestSchema.parse(body);
     const { formData } = paymentRequestSchema.parse(body);
 
+    const supabase = createServerComponentClient<Database>({ cookies });
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: "User not authenticated",
+        },
+        { status: 401 }
+      );
+    }
+
     const response = await dodopayments.payments.create({
       billing: {
         city: formData.city,
@@ -42,7 +59,12 @@ export async function POST(request: NextRequest) {
       //   product_id: id,
       //   quantity: 1,
       // })),
-      product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }],
+      product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
+      metadata: {
+        userId: user.id,
+        // You can add other relevant metadata here, like product_id if it's fixed or determined here
+        // For dynamic products, this might be better handled if Dodo allows passing line_item metadata
+      },
       return_url: process.env.DEPLOYMENT_URL
         ? `https://${process.env.DEPLOYMENT_URL}/overview`
         : "http://localhost:3000/overview",

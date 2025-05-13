@@ -1,7 +1,7 @@
 import { Webhook } from "standardwebhooks";
 import { headers } from "next/headers";
 import { logger } from "@/lib/logger";
-import { WebhookPayload } from "@/types/api-types";
+import { WebhookPayload, Payment } from "@/types/api-types";
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
@@ -15,13 +15,14 @@ export const dynamic = "force-dynamic";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// const creditsPerPriceId: {
-//   [key: string]: number;
-// } = {
-//   [oneCreditPriceId]: 1,
-//   [threeCreditsPriceId]: 3,
-//   [fiveCreditsPriceId]: 5,
-// };
+// Define a mapping from Dodo Payments product_id to credits
+// This needs to be configured based on your Dodo Payments product setup
+const productIdToCredits: { [key: string]: number } = {
+  pdt_N9oLHUhlbDeyciMDR7c3q: 1, // Example: 1 credit for this product ID
+  // Add other product_ids and their corresponding credits here
+  // "your_other_product_id_1": 5,
+  // "your_other_product_id_2": 10,
+};
 
 let event: any;
 
@@ -86,109 +87,135 @@ export async function POST(request: Request) {
   );
   switch (event.type) {
     case "payment.succeeded":
-      console.log("-------------PAYMENT SUCCEEDED------------");
+      logger.info("Processing payment.succeeded event");
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      // const checkoutSessionCompleted = event.data
-      //   .object as Stripe.Checkout.Session;
-      // const userId = checkoutSessionCompleted.client_reference_id;
-      console.log("--------USER-------", user);
-      console.log("-------USER.ID-------", user?.id);
-      const userId = user?.id;
-      console.log("-------USERID------", userId);
+      const paymentSucceededPayload = event.data as Payment;
+      const userId = paymentSucceededPayload?.metadata?.userId as
+        | string
+        | undefined;
+
+      logger.info(`Extracted userId from metadata: ${userId}`);
 
       if (!userId) {
+        console.log("Missing userId in webhook metadata");
         return NextResponse.json(
           {
-            message: `Missing userId`,
+            message: "Missing userId in webhook metadata",
           },
           { status: 400 }
         );
       }
 
-      // const lineItems = await stripe.checkout.sessions.listLineItems(
-      //   checkoutSessionCompleted.id
-      // );
-      // const quantity = lineItems.data[0].quantity;
-      const quantity = 1;
+      // Determine credits based on product_id from Dodo Payments payload
+      // Assuming the first item in product_cart is the one purchased.
+      // Adjust if multiple items can be in a single Dodo payment or if structure differs.
+      const purchasedItem = paymentSucceededPayload?.product_cart?.[0];
+      const productId = purchasedItem?.product_id;
+      const quantity = purchasedItem?.quantity || 1; // Default to 1 if quantity is not present
 
-      // const priceId = lineItems.data[0].price!.id;
-      const priceId = 0;
+      if (!productId) {
+        logger.info("Missing product_id in webhook payload product_cart");
+        return NextResponse.json(
+          {
+            message: "Missing product_id in webhook payload",
+          },
+          { status: 400 }
+        );
+      }
 
-      // const creditsPerUnit = creditsPerPriceId[priceId];
-      const creditsPerUnit = 1;
+      const creditsPerUnit = productIdToCredits[productId];
 
-      const totalCreditsPurchased = quantity! * creditsPerUnit;
+      if (creditsPerUnit === undefined) {
+        logger.info(`No credit mapping found for product_id: ${productId}`);
+        return NextResponse.json(
+          {
+            message: `Product ID ${productId} not configured for credits.`,
+          },
+          { status: 400 }
+        );
+      }
 
-      // console.log({ lineItems });
+      const totalCreditsPurchased = quantity * creditsPerUnit;
+
+      // console.log({ product_cart: paymentSucceededPayload?.product_cart });
       console.log({ quantity });
-      console.log({ priceId });
+      // console.log({ priceId }); // priceId is not available in Dodo payload directly like this
       console.log({ creditsPerUnit });
 
-      console.log("totalCreditsPurchased: " + totalCreditsPurchased);
+      logger.info(
+        `Total credits to be awarded: ${totalCreditsPurchased} for user ${userId}`
+      );
 
-      const { data: existingCredits } = await supabase
+      const { data: existingCredits, error: fetchError } = await supabase
         .from("credits")
         .select("*")
         .eq("user_id", userId)
         .single();
 
-      // If user has existing credits, add to it.
-      if (existingCredits) {
-        const newCredits = existingCredits.credits + totalCreditsPurchased;
-        const { data, error } = await supabase
-          .from("credits")
-          .update({
-            credits: newCredits,
-          })
-          .eq("user_id", userId);
-        console.log("");
-        if (error) {
-          console.log(error);
-          return NextResponse.json(
-            {
-              message: `Error updating credits: ${JSON.stringify(
-                error
-              )}. data=${data}`,
-            },
-            {
-              status: 400,
-            }
-          );
-        }
-
+      if (fetchError && fetchError.code !== "PGRST116") {
+        // PGRST116 means no rows found, which is fine for new users
+        logger.error("Error fetching existing credits", {
+          userId,
+          error: fetchError,
+        });
         return NextResponse.json(
           {
-            message: "success",
+            message: "Error fetching user credits",
+            error: fetchError.message,
           },
-          { status: 200 }
+          { status: 500 }
+        );
+      }
+
+      if (existingCredits) {
+        const newCredits = existingCredits.credits + totalCreditsPurchased;
+        const { error: updateError } = await supabase
+          .from("credits")
+          .update({ credits: newCredits })
+          .eq("user_id", userId);
+
+        if (updateError) {
+          logger.error("Error updating credits", {
+            userId,
+            error: updateError,
+          });
+          return NextResponse.json(
+            {
+              message: "Error updating credits",
+              error: updateError.message,
+            },
+            { status: 500 }
+          );
+        }
+        logger.info(
+          `Successfully updated credits for user ${userId} to ${newCredits}`
         );
       } else {
-        // Else create new credits row.
-        const { data, error } = await supabase.from("credits").insert({
+        const { error: insertError } = await supabase.from("credits").insert({
           user_id: userId,
           credits: totalCreditsPurchased,
         });
 
-        if (error) {
-          console.log(error);
+        if (insertError) {
+          logger.error("Error inserting new credits row", {
+            userId,
+            error: insertError,
+          });
           return NextResponse.json(
             {
-              message: `Error creating credits: ${error}\n ${data}`,
+              message: "Error creating credits record",
+              error: insertError.message,
             },
-            {
-              status: 400,
-            }
+            { status: 500 }
           );
         }
+        logger.info(
+          `Successfully created credits row for user ${userId} with ${totalCreditsPurchased} credits`
+        );
       }
 
       return NextResponse.json(
-        {
-          message: "success",
-        },
+        { message: "Credits updated successfully" },
         { status: 200 }
       );
 

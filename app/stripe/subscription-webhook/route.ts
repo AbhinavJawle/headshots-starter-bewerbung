@@ -102,6 +102,8 @@ export async function POST(request: Request) {
     }
   );
 
+  // const supabase = createServerComponentClient({ cookies });
+
   // Handle the event
   switch (event.type) {
     case "checkout.session.completed":

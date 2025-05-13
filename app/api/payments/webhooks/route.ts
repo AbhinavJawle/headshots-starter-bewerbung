@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     // );
   } catch (error) {
     logger.error("Webhook processing failed", error);
-    return Response.json(
+    return NextResponse.json(
       {
         error: "Webhook processing failed",
         details: error instanceof Error ? error.message : "Unknown error",

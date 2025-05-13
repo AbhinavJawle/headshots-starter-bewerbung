@@ -17,15 +17,12 @@ const paymentRequestSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
   }),
-  // cartItems: z.array(z.string()),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Validate request body
-    // const { formData, cartItems } = paymentRequestSchema.parse(body);
     const { formData } = paymentRequestSchema.parse(body);
 
     const supabase = createServerComponentClient<Database>({ cookies });
@@ -55,10 +52,7 @@ export async function POST(request: NextRequest) {
         name: `${formData.firstName} ${formData.lastName}`,
       },
       payment_link: true,
-      // product_cart: cartItems.map((id) => ({
-      //   product_id: id,
-      //   quantity: 1,
-      // })),
+
       product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
       metadata: {
         userId: user.id,

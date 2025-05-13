@@ -25,20 +25,5 @@ export default async function Index() {
   //   return redirect("/overview");
   // }
 
-  return (
-    // <div className="flex min-h-screen flex-col">
-    //   <div className="flex-1">
-    //     <HeroSection />
-    //     <BrandsSection />
-    //     <ProcessSection />
-    //     <FeaturesSection />
-    //     <ExamplesSection />
-    //     <TestimonialsSection />
-    //     <PricingSection />
-    //     <FAQSection />
-    //     <CTASection />
-    //   </div>
-    // </div>
-    <HomePage />
-  );
+  return <HomePage />;
 }

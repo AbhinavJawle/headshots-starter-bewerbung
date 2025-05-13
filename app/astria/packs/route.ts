@@ -7,38 +7,8 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 export const dynamic = "force-dynamic";
 
 const astriapackids = [
-  //corporate
-  // { id: 260, title: "Corporate Headshot", category: "corporate" },
-
-  //Using only this pack now, which is the best among tested
+  { id: 260, title: "Corporate Headshot", category: "corporate" },
   { id: 820, title: "Bewerbungsfoto", category: "corporate" },
-  // { id: 1888, title: "Corporate Confidence", category: "corporate" },
-
-  //lawyer
-  // { id: 796, title: "Stylish Lawyers", category: "lawyer" },
-  // { id: 820, title: "Partner's Headshot", category: "lawyer" },
-  // { id: 1989, title: "Lawyer Headshot", category: "lawyer" },
-
-  //medicine
-  // { id: 1991, title: "Doctor Headshots", category: "medicine" },
-
-  // //realtor
-  // { id: 406, title: "Realtor", category: "realtor" },
-
-  // //casual
-  // { id: 806, title: "Styled For Work", category: "corporate" },
-  // { id: 650, title: "Styled for success", category: "corporate" },
-  // { id: 279, title: "J Crew", category: "casual" },
-  // { id: 811, title: "Casual Stylish Look", category: "casual" },
-  // { id: 1012, title: "Casual Studio", category: "casual" },
-  // { id: 855, title: "The Casual", category: "casual" },
-  // { id: 1722, title: "Studio Models", category: "casual" },
-
-  // //model
-  // { id: 407, title: "Speaker", category: "model" },
-  // { id: 592, title: "Stylish Pro", category: "model" },
-  // { id: 822, title: "Timeless Studio Looks", category: "model" },
-  // { id: 502, title: "Helmut Newton", category: "model" },
 ];
 
 // Environment Variables
@@ -72,16 +42,10 @@ export async function GET(request: Request) {
 
     const endpoints: string[] = [];
 
-    // if (QUERY_TYPE === "users" || QUERY_TYPE === "both") {
-    //   endpoints.push(`${DOMAIN}/packs`);
-    // }
-
     if (QUERY_TYPE === "gallery" || QUERY_TYPE === "both") {
-      // endpoints.push(`${DOMAIN}/gallery/packs`);
       astriapackids.map((pack) => {
         endpoints.push(`${DOMAIN}/p/${pack.id}`);
       });
-      // endpoints.push(`${DOMAIN}/gallery/packs`);
     }
     console.log("ENDPOINTS: ", endpoints);
 

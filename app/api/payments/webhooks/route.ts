@@ -8,10 +8,6 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-// const oneCreditPriceId = process.env.STRIPE_PRICE_ID_ONE_CREDIT as string;
-// const threeCreditsPriceId = process.env.STRIPE_PRICE_ID_THREE_CREDITS as string;
-// const fiveCreditsPriceId = process.env.STRIPE_PRICE_ID_FIVE_CREDITS as string;
-
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -48,11 +44,6 @@ export async function POST(request: Request) {
     if (!payload.data?.customer?.email) {
       throw new Error("Missing customer email in payload");
     }
-
-    console.log("-----------PAYLOAD------------", payload);
-    console.log("-----------PAYLOAD DATA------------", payload.data);
-    // console.log("-----------PAYLOAD------------", event); // OLD, uses event
-    // console.log("-----------event DATA------------", event.data); // OLD, uses event
   } catch (error) {
     logger.error("Webhook processing failed", error);
     return NextResponse.json(

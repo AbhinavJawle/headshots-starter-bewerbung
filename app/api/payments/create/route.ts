@@ -14,7 +14,7 @@ const paymentRequestSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
   }),
-  cartItems: z.array(z.string()),
+  // cartItems: z.array(z.string()),
 });
 
 export async function POST(request: NextRequest) {
@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Validate request body
-    const { formData, cartItems } = paymentRequestSchema.parse(body);
+    // const { formData, cartItems } = paymentRequestSchema.parse(body);
+    const { formData } = paymentRequestSchema.parse(body);
 
     const response = await dodopayments.payments.create({
       billing: {
@@ -37,10 +38,11 @@ export async function POST(request: NextRequest) {
         name: `${formData.firstName} ${formData.lastName}`,
       },
       payment_link: true,
-      product_cart: cartItems.map((id) => ({
-        product_id: id,
-        quantity: 1,
-      })),
+      // product_cart: cartItems.map((id) => ({
+      //   product_id: id,
+      //   quantity: 1,
+      // })),
+      product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }],
       return_url: process.env.DEPLOYMENT_URL || "localhost:3000",
     });
 

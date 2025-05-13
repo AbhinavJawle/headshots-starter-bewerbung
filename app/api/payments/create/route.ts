@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       //   quantity: 1,
       // })),
       product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }],
-      return_url: process.env.DEPLOYMENT_URL || "localhost:3000",
+      return_url: `${process.env.DEPLOYMENT_URL}/overview` || "localhost:3000",
     });
 
     return NextResponse.json({ paymentLink: response.payment_link });

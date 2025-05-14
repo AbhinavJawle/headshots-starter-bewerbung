@@ -14,9 +14,8 @@ import { redirect } from "next/navigation";
 const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 
 export default async function Index() {
-
-  if(!packsIsEnabled) {
-    redirect('/overview')
+  if (!packsIsEnabled) {
+    redirect("/overview");
   }
 
   return (
@@ -33,7 +32,7 @@ export default async function Index() {
         </Link>
         <Card>
           <CardHeader>
-            <CardTitle>Packs Gallery</CardTitle>
+            <CardTitle>Stil Gallery</CardTitle>
             <CardDescription>
               Choose the type of images you would like to create.
             </CardDescription>

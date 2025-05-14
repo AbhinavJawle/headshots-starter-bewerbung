@@ -30,12 +30,12 @@ const Hero = () => {
         px={{ base: 4, lg: 4 }}
         py={{ base: 10, lg: 10 }}
         gap={{ base: 10, lg: 10 }}
-        marginTop={{ base: 1, lg: 4 }}
+        marginTop={{ base: 1, lg: 1 }}
       >
         <VStack
           className="color"
           alignItems={{ base: "center", sm: "center" }}
-          spacing={10}
+          spacing={{ base: 6, sm: 6 }}
           justifyContent="center"
           flexDirection="column"
         >
@@ -103,9 +103,8 @@ const Hero = () => {
             Bewerbungsfotos erstellen
           </Button>
           <Box
-            mb={3}
+            mb={1}
             as="h3"
-            // Removed maxWidth="rem" as it seemed incomplete/incorrect
             lineHeight={{ base: "1.1rem", sm: "1.1rem" }}
             fontSize={{ base: "0.8rem", sm: "1rem" }}
             fontWeight="grey"
@@ -131,9 +130,6 @@ const Hero = () => {
             />
           </HStack>
         </VStack>
-        {/* <Flex alignItems="center">
-          <Demo />
-        </Flex> */}
       </SimpleGrid>
     </Box>
   );

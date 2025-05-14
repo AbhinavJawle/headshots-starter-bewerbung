@@ -16,6 +16,10 @@ import { CheckIcon } from "@chakra-ui/icons"; // Import CheckIcon and QuestionOu
 import Link from "next/link"; // Import Link for buttons
 
 // Keep CheckedListItem if used elsewhere, or integrate directly
+const basicPrice = process.env.NEXT_PUBLIC_BASIC_PRICE;
+const professionellPrice = process.env.NEXT_PUBLIC_PROFESSIONAL_PRICE;
+const premiumPrice = process.env.NEXT_PUBLIC_PREMIUM_PRICE;
+
 export const CheckedListItem = ({
   children,
 }: {
@@ -33,36 +37,40 @@ export const CheckedListItem = ({
 const pricingPlans = [
   {
     name: "Basic",
-    price: "€10",
-    description: "Erhalten Sie 40 Headshots in 1 Stil.",
+    price: `${basicPrice} €`,
+    description:
+      "Erhalten Sie 40 professionelle Fotos mit verschiedenen Hintergründen und Outfits",
     features: [
       { text: "40 KI Bewerbungsfotos" },
-      { text: "1 einzigartiger Stil" },
-      { text: "20 Minuten Bearbeitungszeit" },
+      { text: "4 Hintergründe" },
+      { text: "8 Outfits" },
+      { text: "15 Minuten Bearbeitungszeit" },
     ],
     buttonText: "Jetzt Erstellen",
     isFeatured: false,
   },
   {
     name: "Professionell",
-    price: "€14.99",
+    price: `${professionellPrice} €`,
     description: "Erhalten Sie 80 Headshots in 2 Stil.",
     features: [
-      { text: "80 KI Bewerbungsfotos" },
-      { text: "2 einzigartiger Stil" },
-      { text: "20 Minuten Bearbeitungszeit" },
+      { text: "40 KI Bewerbungsfotos" },
+      { text: "4 Hintergründe" },
+      { text: "8 Outfits" },
+      { text: "15 Minuten Bearbeitungszeit" },
     ],
     buttonText: "Jetzt Erstellen",
     isFeatured: true,
   },
   {
-    name: "Expert",
-    price: "€19.99",
+    name: "Premium",
+    price: `${premiumPrice} €`,
     description: "Erhalten Sie 120 Headshots in 3 Stil.",
     features: [
-      { text: "120 KI Bewerbungsfotos" },
-      { text: "3 einzigartiger Stil" },
-      { text: "20 Minuten Bearbeitungszeit" },
+      { text: "40 KI Bewerbungsfotos" },
+      { text: "4 Hintergründe" },
+      { text: "8 Outfits" },
+      { text: "15 Minuten Bearbeitungszeit" },
     ],
     buttonText: "Jetzt Erstellen",
     isFeatured: false,

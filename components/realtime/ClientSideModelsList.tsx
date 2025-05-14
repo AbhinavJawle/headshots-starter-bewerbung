@@ -89,7 +89,7 @@ export default function ClientSideModelsList({
             <Link
               href={
                 packsIsEnabled
-                  ? "/overview/packs"
+                  ? "/overview/stil"
                   : "/overview/models/train/raw-tune"
               }
             >
@@ -151,7 +151,7 @@ export default function ClientSideModelsList({
             <Link
               href={
                 packsIsEnabled
-                  ? "/overview/packs"
+                  ? "/overview/stil"
                   : "/overview/models/train/raw-tune"
               }
             >

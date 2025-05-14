@@ -14,7 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect";
-// import useCartStore from "@/lib/store/cart";
+import { User } from "@supabase/auth-helpers-nextjs";
+// Removed unused imports: createServerComponentClient, Database, cookies
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name must be at least 2 characters"),
@@ -27,10 +28,9 @@ const formSchema = z.object({
   state: z.string().min(1, "State must be at least 2 characters"),
 });
 
-const CustomerPaymentForm = () => {
+const CustomerPaymentForm = ({ user }: { user: User | null }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  // const cartItems = useCartStore((state) => state.cartItems);
 
   const {
     control,
@@ -43,7 +43,7 @@ const CustomerPaymentForm = () => {
       country: "DE",
       firstName: "",
       lastName: "",
-      email: "",
+      email: `${user?.email}`,
       addressLine: "",
       city: "",
       state: "",

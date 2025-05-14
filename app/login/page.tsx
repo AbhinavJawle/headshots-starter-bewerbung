@@ -19,7 +19,7 @@ export default async function LoginPage({
   } = await supabase.auth.getUser();
 
   if (user) {
-    redirect("/");
+    redirect("/overview");
   }
 
   const headersList = headers();

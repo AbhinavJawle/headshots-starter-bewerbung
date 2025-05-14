@@ -28,7 +28,7 @@ import { HiLogout, HiArrowRight } from "react-icons/hi";
 // Client components don't need dynamic = "force-dynamic"
 export const dynamic = "force-dynamic";
 
-const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+const dodoIsConfigured = process.env.NEXT_PUBLIC_DODO_IS_ENABLED === "true";
 const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 
 const Header = () => {
@@ -181,7 +181,7 @@ const Header = () => {
               </Button>
 
               <HStack spacing={4} transition={transition}>
-                {stripeIsConfigured && (
+                {dodoIsConfigured && (
                   <Box transition={transition}>
                     <ClientSideCredits creditsRow={credits ? credits : null} />
                   </Box>
@@ -217,6 +217,12 @@ const Header = () => {
                       {user.email}
                     </Text>
                     <MenuDivider />
+                    <form action="/form" method="post">
+                      <MenuItem as="button" type="submit">
+                        Get Credits
+                      </MenuItem>
+                    </form>
+                    <MenuDivider />
                     <form action="/auth/sign-out" method="post">
                       <MenuItem
                         as="button"
@@ -230,7 +236,7 @@ const Header = () => {
                 </Menu>
               </HStack>
 
-              {stripeIsConfigured && (
+              {/* {dodoIsConfigured && (
                 <Button
                   as={Link}
                   href="/get-credits"
@@ -243,7 +249,7 @@ const Header = () => {
                 >
                   Get Credits
                 </Button>
-              )}
+              )} */}
             </HStack>
           )}
 
@@ -288,57 +294,6 @@ const Header = () => {
               </Button>
             </HStack>
           )}
-          {/* {user && (
-            <HStack spacing={4} transition={transition}>
-              {stripeIsConfigured && (
-                <Box transition={transition}>
-                  <ClientSideCredits creditsRow={credits ? credits : null} />
-                </Box>
-              )}
-
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  icon={
-                    <Avatar
-                      size={scrolled ? "xs" : "sm"}
-                      bg="brand.500"
-                      color="white"
-                      name={user.email}
-                      transition={transition}
-                    />
-                  }
-                  variant="ghost"
-                  aria-label="User menu"
-                  size={scrolled ? "xs" : "sm"}
-                  rounded="full"
-                  transition={transition}
-                />
-                <MenuList zIndex="101">
-                  <Text
-                    px={3}
-                    py={2}
-                    fontWeight="medium"
-                    color="brand.500"
-                    textAlign="center"
-                    isTruncated
-                  >
-                    {user.email}
-                  </Text>
-                  <MenuDivider />
-                  <form action="/auth/sign-out" method="post">
-                    <MenuItem
-                      as="button"
-                      type="submit"
-                      icon={<Icon as={HiLogout} />}
-                    >
-                      Log out
-                    </MenuItem>
-                  </form>
-                </MenuList>
-              </Menu>
-            </HStack>
-          )} */}
         </Flex>
       </Flex>
     </Box>

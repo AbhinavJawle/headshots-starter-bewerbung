@@ -42,7 +42,7 @@ type FormInput = z.infer<typeof fileUploadFormSchema>;
 
 //change this stripeisconfigured to dodoisconfigured and set it true
 
-const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+const dodoIsConfigured = process.env.NEXT_PUBLIC_DODO_IS_ENABLED === "true";
 
 export default function TrainModelZone({ packSlug }: { packSlug: string }) {
   const [files, setFiles] = useState<File[]>([]);
@@ -366,7 +366,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Train Model
-            {stripeIsConfigured && <span className="ml-1">(1 Credit)</span>}
+            {dodoIsConfigured && <span className="ml-1">(1 Credit)</span>}
           </Button>
         </form>
       </Form>

@@ -51,18 +51,20 @@ export default function Footer() {
         <Text></Text>
         <Stack alignItems="center" direction="row" spacing={4}>
           <Text fontSize="sm">
-            <Link href="/terms">Terms and Privacy</Link>
+            <Link href="/terms">Nutzungsbedingungen</Link>
           </Text>
+          <Text fontSize="sm">
+            <Link href="/privacy">Datenschutz</Link>
+          </Text>
+          <Text fontSize="sm">
+            <Link href="/refund">Rückerstattungsrichtlinie</Link>
+          </Text>
+
           <Text fontSize="sm">
             <Link href="/faq">FAQ</Link>
           </Text>
-          <SocialButton href="https://github.com/shinework/photoshot">
-            <FaGithub />
-          </SocialButton>
-          <SocialButton href="https://twitter.com/photoshot_ai">
-            <FaTwitter />
-          </SocialButton>
-          <SocialButton href="mailto:support@photoshot.app">
+
+          <SocialButton href="mailto:support@kibewerbungsfotos.de">
             <MdAlternateEmail />
           </SocialButton>
           <Text
@@ -70,7 +72,7 @@ export default function Footer() {
             fontSize="lg"
             fontWeight="bold"
           >
-            Photoshot.
+            KIBewerbungsfotos
           </Text>
         </Stack>
       </Container>

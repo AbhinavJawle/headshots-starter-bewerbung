@@ -218,7 +218,11 @@ const Header = () => {
                     </Text>
                     <MenuDivider />
                     <form action="/form" method="post">
-                      <MenuItem as="button" type="submit">
+                      <MenuItem
+                        as="button"
+                        type="submit"
+                        icon={<Icon as={IoIosFlash} />}
+                      >
                         Get Credits
                       </MenuItem>
                     </form>

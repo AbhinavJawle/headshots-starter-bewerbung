@@ -10,7 +10,7 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 
-const TermsPage = () => (
+const RefundPage = () => (
   <PageContainer>
     <VStack
       margin="auto"
@@ -137,4 +137,4 @@ const TermsPage = () => (
   </PageContainer>
 );
 
-export default TermsPage;
+export default RefundPage;

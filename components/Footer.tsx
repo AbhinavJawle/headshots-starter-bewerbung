@@ -45,11 +45,15 @@ export default function Footer() {
         py={4}
         direction={{ base: "column", md: "row" }}
         spacing={6}
-        justify={{ base: "center", md: "space-between" }}
-        align={{ base: "center", md: "center" }}
+        justify="center"
+        align="center"
       >
-        <Text></Text>
-        <Stack alignItems="center" direction="row" spacing={4}>
+        <Stack
+          alignItems="center"
+          direction="row"
+          spacing={4}
+          justifyContent="center"
+        >
           <Text fontSize="sm">
             <Link href="/terms">Nutzungsbedingungen</Link>
           </Text>
@@ -59,11 +63,9 @@ export default function Footer() {
           <Text fontSize="sm">
             <Link href="/refund">Rückerstattungsrichtlinie</Link>
           </Text>
-
           <Text fontSize="sm">
             <Link href="/faq">FAQ</Link>
           </Text>
-
           <SocialButton href="mailto:support@kibewerbungsfotos.de">
             <MdAlternateEmail />
           </SocialButton>
@@ -76,6 +78,11 @@ export default function Footer() {
           </Text>
         </Stack>
       </Container>
+      <Box py={2} bg="transparent" mb={5} textAlign="center">
+        <Text fontSize="sm">
+          © 2025 bewerbungsbild.ai - Alle Rechte vorbehalten
+        </Text>
+      </Box>
     </Box>
   );
 }

@@ -18,9 +18,17 @@ export default function ClientSideCredits({
 }: ClientSideCreditsProps) {
   if (!creditsRow)
     return (
-      <Flex align="center" gap={1}>
-        <Icon as={IoIosFlash} color="brand.500" />
-        <Text fontWeight="medium">Credits: 0</Text>
+      <Flex>
+        <Badge
+          display="flex"
+          alignItems="center"
+          px={2}
+          py={1}
+          borderRadius="full"
+        >
+          <Icon as={IoIosFlash} mr={1} />
+          <Text fontWeight="medium">Credits: 0</Text>
+        </Badge>
       </Flex>
     );
 
@@ -48,10 +56,8 @@ export default function ClientSideCredits({
   }, [supabase, credits, setCredits]);
 
   if (!credits) return null;
-
   const bgColor = useColorModeValue("brand.50", "brand.900");
   const textColor = useColorModeValue("brand.700", "brand.200");
-
   return (
     <Flex align="center" gap={1}>
       <Badge

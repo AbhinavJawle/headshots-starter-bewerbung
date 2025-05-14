@@ -5,45 +5,55 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-  Form,
+  Box,
+  Button,
   FormControl,
-  FormItem,
+  FormErrorMessage,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect";
+  Heading,
+  HStack,
+  Input,
+  SimpleGrid,
+  Text,
+  VStack,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+  useToast,
+} from "@chakra-ui/react";
+import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect"; // Assuming this is Chakra-compatible or to be styled externally
 import { User } from "@supabase/auth-helpers-nextjs";
-// Removed unused imports: createServerComponentClient, Database, cookies
 
 const formSchema = z.object({
-  firstName: z.string().min(1, "First name must be at least 2 characters"),
-  lastName: z.string().min(1, "Last name must be at least 2 characters"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  country: z.string().min(2, "Country must be at least 2 characters"),
-  addressLine: z.string().min(1, "Address must be at least 5 characters"),
-  city: z.string().min(2, "City must be at least 2 characters"),
-  zipCode: z.string().min(1, "Zip code must be at least 5 characters"),
-  state: z.string().min(1, "State must be at least 2 characters"),
+  country: z.string().min(2, "Country is required"),
+  addressLine: z.string().min(1, "Address is required"),
+  city: z.string().min(2, "City is required"),
+  zipCode: z.string().min(1, "Zip code is required"),
+  state: z.string().min(1, "State/Province is required"),
 });
+
+type CustomerFormData = z.infer<typeof formSchema>;
 
 const CustomerPaymentForm = ({ user }: { user: User | null }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const toast = useToast();
 
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<CustomerFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      country: "DE",
+      country: "DE", // Default to Germany as an example
       firstName: "",
       lastName: "",
-      email: `${user?.email}`,
+      email: user?.email || "",
       addressLine: "",
       city: "",
       state: "",
@@ -51,10 +61,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
     },
   });
 
-  const createPaymentLink = async (
-    formData: typeof formSchema._type,
-    setIsLoading: (isLoading: boolean) => void
-  ) => {
+  const createPaymentLink = async (formData: CustomerFormData) => {
     try {
       const response = await fetch("/api/payments/create", {
         method: "POST",
@@ -63,40 +70,41 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
         },
         body: JSON.stringify({
           formData,
-          // cartItems,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Payment link creation failed");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Payment link creation failed");
       }
 
       const data = await response.json();
-      window.location.href = data.paymentLink;
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
+      if (data.paymentLink) {
+        window.location.href = data.paymentLink;
       } else {
-        setError("An unknown error occurred");
+        throw new Error("Payment link not received");
       }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "An unknown error occurred";
+      setError(errorMessage);
+      toast({
+        title: "Payment Error",
+        description: errorMessage,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
       console.error("Payment error:", err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: CustomerFormData) => {
     setIsLoading(true);
     setError("");
-
-    // if (cartItems.length === 0) {
-    //   setError("Your cart is empty");
-    //   setIsLoading(false);
-    //   return;
-    // }
-
-    await createPaymentLink(data, setIsLoading);
-    setIsLoading(false);
+    await createPaymentLink(data);
   };
 
   const handlePrefill = () => {
@@ -111,181 +119,212 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
   };
 
   return (
-    <div className="lg:w-1/2 w-full p-5 mx-auto">
-      <h2 className="text-2xl font-medium mb-6">Checkout Information</h2>
+    <Box
+      w={{ base: "full", md: "70%", lg: "50%" }}
+      p={{ base: 4, md: 8 }}
+      mx="auto"
+      borderWidth="1px"
+      borderRadius="lg"
+      shadow="lg"
+      bg="white"
+    >
+      <Heading
+        as="h2"
+        size="lg"
+        fontWeight="semibold"
+        mb={6}
+        textAlign="center"
+      >
+        Checkout Information
+      </Heading>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {error}
-        </div>
+        <Alert status="error" mb={4} borderRadius="md">
+          <AlertIcon />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
-      <Form {...useForm()}>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Controller
-              name="firstName"
-              control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    First Name <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="eg: John" />
-                  </FormControl>
-                  {errors.firstName && (
-                    <FormMessage>{errors.firstName.message}</FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-
-            <Controller
-              name="lastName"
-              control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Last Name <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="eg: Doe" />
-                  </FormControl>
-                  {errors.lastName && (
-                    <FormMessage>{errors.lastName.message}</FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-          </div>
-
+      <VStack
+        as="form"
+        onSubmit={handleSubmit(onSubmit)}
+        spacing={6}
+        align="stretch"
+      >
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
           <Controller
-            name="email"
+            name="firstName"
             control={control}
             render={({ field }) => (
-              <FormItem>
+              <FormControl isInvalid={!!errors.firstName} id="firstName">
                 <FormLabel>
-                  Email <span className="text-red-500">*</span>
+                  First Name{" "}
+                  <Text as="span" color="red.500">
+                    *
+                  </Text>
                 </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="email"
-                    placeholder="eg: johndoe@example.com"
-                  />
-                </FormControl>
-                {errors.email && (
-                  <FormMessage>{errors.email.message}</FormMessage>
-                )}
-              </FormItem>
+                <Input {...field} placeholder="eg: John" />
+                <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
+              </FormControl>
             )}
           />
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Billing Address</h3>
+          <Controller
+            name="lastName"
+            control={control}
+            render={({ field }) => (
+              <FormControl isInvalid={!!errors.lastName} id="lastName">
+                <FormLabel>
+                  Last Name{" "}
+                  <Text as="span" color="red.500">
+                    *
+                  </Text>
+                </FormLabel>
+                <Input {...field} placeholder="eg: Doe" />
+                <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
+              </FormControl>
+            )}
+          />
+        </SimpleGrid>
 
-            <div>
-              <CountrySelect
-                control={control}
-                name="country"
-                label="Country"
-                placeholder="Please select a country"
-                required
-                className="mb-4"
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <FormControl isInvalid={!!errors.email} id="email">
+              <FormLabel>
+                Email{" "}
+                <Text as="span" color="red.500">
+                  *
+                </Text>
+              </FormLabel>
+              <Input
+                {...field}
+                type="email"
+                placeholder="eg: johndoe@example.com"
               />
-            </div>
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+            </FormControl>
+          )}
+        />
 
+        <VStack spacing={4} align="stretch">
+          <Heading as="h3" size="md" fontWeight="medium" mt={2}>
+            Billing Address
+          </Heading>
+
+          <FormControl isInvalid={!!errors.country} id="country">
+            <FormLabel>
+              Country{" "}
+              <Text as="span" color="red.500">
+                *
+              </Text>
+            </FormLabel>
+            <CountrySelect
+              control={control}
+              name="country"
+              label="Country"
+              placeholder="Please select a country"
+              required
+            />
+            <FormErrorMessage>{errors.country?.message}</FormErrorMessage>
+          </FormControl>
+
+          <Controller
+            name="addressLine"
+            control={control}
+            render={({ field }) => (
+              <FormControl isInvalid={!!errors.addressLine} id="addressLine">
+                <FormLabel>
+                  Street Address{" "}
+                  <Text as="span" color="red.500">
+                    *
+                  </Text>
+                </FormLabel>
+                <Input {...field} placeholder="eg: 364 Kent St" />
+                <FormErrorMessage>
+                  {errors.addressLine?.message}
+                </FormErrorMessage>
+              </FormControl>
+            )}
+          />
+
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
             <Controller
-              name="addressLine"
+              name="city"
               control={control}
               render={({ field }) => (
-                <FormItem>
+                <FormControl isInvalid={!!errors.city} id="city">
                   <FormLabel>
-                    Street Address <span className="text-red-500">*</span>
+                    City{" "}
+                    <Text as="span" color="red.500">
+                      *
+                    </Text>
                   </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="eg: 364 Kent St" />
-                  </FormControl>
-                  {errors.addressLine && (
-                    <FormMessage>{errors.addressLine.message}</FormMessage>
-                  )}
-                </FormItem>
+                  <Input {...field} placeholder="eg: Sydney" />
+                  <FormErrorMessage>{errors.city?.message}</FormErrorMessage>
+                </FormControl>
               )}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Controller
-                name="city"
-                control={control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      City <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="eg: Sydney" />
-                    </FormControl>
-                    {errors.city && (
-                      <FormMessage>{errors.city.message}</FormMessage>
-                    )}
-                  </FormItem>
-                )}
-              />
+            <Controller
+              name="state"
+              control={control}
+              render={({ field }) => (
+                <FormControl isInvalid={!!errors.state} id="state">
+                  <FormLabel>
+                    State / Province{" "}
+                    <Text as="span" color="red.500">
+                      *
+                    </Text>
+                  </FormLabel>
+                  <Input {...field} placeholder="eg: NSW" />
+                  <FormErrorMessage>{errors.state?.message}</FormErrorMessage>
+                </FormControl>
+              )}
+            />
 
-              <Controller
-                name="state"
-                control={control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      State <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="eg: NSW" />
-                    </FormControl>
-                    {errors.state && (
-                      <FormMessage>{errors.state.message}</FormMessage>
-                    )}
-                  </FormItem>
-                )}
-              />
+            <Controller
+              name="zipCode"
+              control={control}
+              render={({ field }) => (
+                <FormControl isInvalid={!!errors.zipCode} id="zipCode">
+                  <FormLabel>
+                    Zip / Postal Code{" "}
+                    <Text as="span" color="red.500">
+                      *
+                    </Text>
+                  </FormLabel>
+                  <Input {...field} placeholder="eg: 2035" />
+                  <FormErrorMessage>{errors.zipCode?.message}</FormErrorMessage>
+                </FormControl>
+              )}
+            />
+          </SimpleGrid>
+        </VStack>
 
-              <Controller
-                name="zipCode"
-                control={control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Zipcode <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="eg: 2035" />
-                    </FormControl>
-                    {errors.zipCode && (
-                      <FormMessage>{errors.zipCode.message}</FormMessage>
-                    )}
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="flex items-center justify-center gap-4">
-            <Button
-              type="button"
-              className="w-fit"
-              variant={"secondary"}
-              onClick={handlePrefill}
-            >
-              Prefill with demo details
-            </Button>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Processing..." : "Continue to Payment"}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+        <HStack spacing={4} justifyContent="center" mt={6}>
+          <Button
+            variant="outline"
+            onClick={handlePrefill}
+            isDisabled={isLoading}
+            w={{ base: "full", md: "auto" }}
+          >
+            Prefill Demo Details
+          </Button>
+          <Button
+            type="submit"
+            variant="brand"
+            isLoading={isLoading}
+            loadingText="Processing..."
+            w={{ base: "full", md: "auto" }}
+            flexGrow={1}
+          >
+            Continue to Payment
+          </Button>
+        </HStack>
+      </VStack>
+    </Box>
   );
 };
 

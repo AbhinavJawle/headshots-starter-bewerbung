@@ -38,51 +38,53 @@ const SocialButton = ({
 
 export default function Footer() {
   return (
-    <Box mt="auto">
+    <Box mt="auto" pt={8} pb={6}> {/* Added more padding top and bottom */}
       <Container
         as={Stack}
-        maxWidth="container.lg"
+        maxWidth="container.xl" // Slightly wider container for a more spacious feel
         py={4}
-        direction={{ base: "column", md: "row" }}
-        spacing={6}
+        spacing={4} // Reduced spacing between main sections
         justify="center"
         align="center"
       >
         <Stack
-          alignItems="center"
-          direction="row"
-          spacing={4}
-          justifyContent="center"
+          direction={{ base: "column", sm: "row" }} // Column on extra small, row on small and up
+          spacing={{ base: 4, sm: 6 }} // Adjust spacing for different screen sizes
+          align="center"
+          justify="center"
+          wrap="wrap" // Allow items to wrap
+          textAlign={{ base: "center", sm: "left" }} // Center text on mobile
         >
-          <Text fontSize="sm">
+          <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/terms">Nutzungsbedingungen</Link>
           </Text>
-          <Text fontSize="sm">
+          <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/privacy">Datenschutz</Link>
           </Text>
-          <Text fontSize="sm">
+          <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/refund">Rückerstattungsrichtlinie</Link>
           </Text>
-          <Text fontSize="sm">
+          <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/faq">FAQ</Link>
           </Text>
           <SocialButton href="mailto:support@kibewerbungsfotos.de">
             <MdAlternateEmail />
           </SocialButton>
-          <Text
-            display={{ base: "none", sm: "block" }}
-            fontSize="lg"
-            fontWeight="bold"
-          >
-            KIBewerbungsfotos
-          </Text>
         </Stack>
-      </Container>
-      <Box py={2} bg="transparent" mb={5} textAlign="center">
-        <Text fontSize="sm">
-          © 2025 bewerbungsbild.ai - Alle Rechte vorbehalten
+
+        <Text
+          pt={{ base: 4, sm: 2 }} // Add some padding top on mobile for the brand name
+          fontSize={{ base: "md", sm: "lg" }} // Responsive font size
+          fontWeight="bold"
+          textAlign="center"
+        >
+          KIBewerbungsfotos
         </Text>
-      </Box>
+
+        <Text fontSize="xs" color="gray.500" textAlign="center" pt={4}>
+          © {new Date().getFullYear()} bewerbungsbild.ai - Alle Rechte vorbehalten
+        </Text>
+      </Container>
     </Box>
   );
 }

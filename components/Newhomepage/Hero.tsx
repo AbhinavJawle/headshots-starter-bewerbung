@@ -56,6 +56,7 @@ const Hero = () => {
               as="h1"
               lineHeight={{ base: "2.3rem", sm: "3rem" }}
               fontSize={{ base: "2rem", sm: "2.6rem" }}
+              fontWeight="extrabold"
               marginX="auto"
             >
               Steigere deinen Marktwert in Sekunden

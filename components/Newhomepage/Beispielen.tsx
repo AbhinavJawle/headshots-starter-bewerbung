@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@chakra-ui/react"; // Using Box from Chakra
+import Image from "next/image"; // Added next/image
 
 // Updated list of images based on the /public/headshots directory
 const originalImages = [
@@ -90,10 +91,13 @@ function Beispielen() {
                 shadow: "md", // Optionally add/increase shadow on hover
               }}
             >
-              <img
+              <Image
                 src={`/headshots/${img}`}
                 alt={`Beispiel KI Bewerbungsfoto ${index + 1}`}
-                className={"w-full h-full object-cover rounded-lg shadow-sm"}
+                width={128} // 8rem * 16px/rem
+                height={192} // 12rem * 16px/rem
+                className={"object-cover rounded-lg shadow-sm w-full h-full"} // Added w-full and h-full to ensure it fills the Box
+                sizes="128px"
               />
             </Box>
           ))}

@@ -3,13 +3,13 @@ import {
   Box,
   Heading,
   SimpleGrid,
-  Image,
   Button,
   Flex,
   VStack,
   Badge, // Import Badge
 } from "@chakra-ui/react";
 import Link from "next/link";
+import NextImage from "next/image"; // Added next/image
 import { HiArrowRight } from "react-icons/hi";
 
 // Use the same list of images as in Beispielen.tsx
@@ -127,6 +127,10 @@ function Bewerbungsfotosehen() {
               overflow="hidden"
               borderRadius="lg"
               boxShadow="md"
+              // Aspect ratio box to maintain space before image loads with layout='fill'
+              // You can adjust the paddingBottom percentage to match your desired aspect ratio e.g., 100% for 1:1, 75% for 4:3
+              // For square images, as headshots often are, 100% is good.
+              pb="100%" // This creates a square box for the image to fill
               display={index === 14 ? { base: "none", lg: "block" } : "block"}
               _hover={{
                 boxShadow: "lg",
@@ -135,12 +139,12 @@ function Bewerbungsfotosehen() {
                 zIndex: 1,
               }}
             >
-              <Image
+              <NextImage
                 src={`/headshots/${img}`}
                 alt={`Beispiel KI Bewerbungsfoto ${index + 1}`}
+                layout="fill"
                 objectFit="cover"
-                width="100%"
-                height="100%"
+                sizes="(min-width: 992px) 20vw, (min-width: 768px) 25vw, (min-width: 480px) 33vw, 50vw"
               />
               {/* KI Tag */}
               <Badge

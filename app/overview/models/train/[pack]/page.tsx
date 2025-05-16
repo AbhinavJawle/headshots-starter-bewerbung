@@ -1,6 +1,8 @@
+"use client";
+
 import TrainModelZone from "@/components/TrainModelZone";
 import Information from "@/components/Information";
-import { Button } from "@/components/ui/button";
+import { Button } from "@chakra-ui/react";
 import { Box, useBreakpointValue } from "@chakra-ui/react"; // SimpleGrid removed
 import {
   Card,
@@ -24,9 +26,15 @@ export default function Index({ params }: { params: { pack: string } }) {
           href={packsIsEnabled ? "/overview/stil" : "/overview"}
           className="text-sm w-fit"
         >
-          <Button variant={"outline"}>
+          <Button
+            variant="outline"
+            size="md"
+            borderColor="brand.500"
+            color="brand.500"
+            _hover={{ bg: "brand.50" }}
+          >
             <FaArrowLeft className="mr-2" />
-            Go Back
+            Zurück
           </Button>
         </Link>
 
@@ -38,9 +46,10 @@ export default function Index({ params }: { params: { pack: string } }) {
             </Box>
             <Card className="w-full">
               <CardHeader>
-                <CardTitle>Train Model</CardTitle>
+                <CardTitle>Bewerbungsfoto-KI</CardTitle>
                 <CardDescription>
-                  Choose a name, type, and upload some photos to get started.
+                  Geben Sie Ihren Namen, Geschlecht ein und laden Sie einige
+                  Fotos hoch, um loszulegen.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -54,9 +63,10 @@ export default function Index({ params }: { params: { pack: string } }) {
             <Box flexGrow={1} flexBasis="0" minWidth="0">
               <Card className="w-full">
                 <CardHeader>
-                  <CardTitle>Train Model</CardTitle>
+                  <CardTitle>Bewerbungsfoto-KI</CardTitle>
                   <CardDescription>
-                    Choose a name, type, and upload some photos to get started.
+                    Geben Sie Ihren Namen, Geschlecht ein und laden Sie einige
+                    Fotos hoch, um loszulegen.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

@@ -38,7 +38,9 @@ const SocialButton = ({
 
 export default function Footer() {
   return (
-    <Box mt="auto" pt={8} pb={6}> {/* Added more padding top and bottom */}
+    <Box mt="auto" pt={8} pb={6}>
+      {" "}
+      {/* Added more padding top and bottom */}
       <Container
         as={Stack}
         maxWidth="container.xl" // Slightly wider container for a more spacious feel
@@ -82,7 +84,8 @@ export default function Footer() {
         </Text>
 
         <Text fontSize="xs" color="gray.500" textAlign="center" pt={4}>
-          © {new Date().getFullYear()} bewerbungsbild.ai - Alle Rechte vorbehalten
+          © {new Date().getFullYear()} KIBewerbungsfotos.de - Alle Rechte
+          vorbehalten
         </Text>
       </Container>
     </Box>

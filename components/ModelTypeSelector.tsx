@@ -17,7 +17,7 @@ export function ModelTypeSelector() {
           className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
           <FaMale className="mb-3 h-6 w-6" />
-          Man
+          Mann
         </Label>
       </div>
 
@@ -33,7 +33,7 @@ export function ModelTypeSelector() {
           className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
           <FaFemale className="mb-3 h-6 w-6" />
-          Woman
+          Frau
         </Label>
       </div>
       <div>

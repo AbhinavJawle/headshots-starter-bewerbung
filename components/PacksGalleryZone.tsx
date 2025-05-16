@@ -125,7 +125,7 @@ export default function PacksGalleryZone() {
           mb={4}
         />
         <Text fontSize="sm" color={loaderColor}>
-          Loading packs...
+          Laden...
         </Text>
       </Flex>
     );

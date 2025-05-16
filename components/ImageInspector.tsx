@@ -30,25 +30,25 @@ export function ImageInspector({
           //   detectedIssues.push('Selfie');
           // }
           if (result.blurry) {
-            detectedIssues.push("Image is blurry");
+            detectedIssues.push("Bild ist verschwommene");
           }
           if (result.includes_multiple_people) {
-            detectedIssues.push("Multiple people");
+            detectedIssues.push("Mehrere Personen");
           }
           if (result.full_body_image_or_longshot) {
-            detectedIssues.push("Image is not a close-up");
+            detectedIssues.push("Bild ist nicht ein Schuss");
           }
           if (result.wearing_sunglasses) {
-            detectedIssues.push("Wearing sunglasses");
+            detectedIssues.push("Trägt Sonnenbrille");
           }
           if (result.wearing_hat) {
-            detectedIssues.push("Wearing hat");
+            detectedIssues.push("Trägt Hut");
           }
           if (result.funny_face) {
-            detectedIssues.push("Funny face");
+            detectedIssues.push("Komisches Gesicht");
           }
           if (result.name && result.name !== type) {
-            detectedIssues.push(`Detected ${result.name}, expected ${type}`);
+            detectedIssues.push(`Erkannt ${result.name}, erwartet ${type}`);
           }
 
           setIssues(detectedIssues);
@@ -56,7 +56,7 @@ export function ImageInspector({
         }
       } catch (error) {
         if (!controller.signal.aborted) {
-          setIssues(["Failed to inspect image"]);
+          setIssues(["Bild konnte nicht überprüft werden"]);
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -76,13 +76,13 @@ export function ImageInspector({
     return (
       <div className="flex items-center gap-2 text-xs text-muted-foreground w-full">
         <Loader2 className="h-3 w-3 animate-spin" />
-        Inspecting image...
+        Bild wird berprüft...
       </div>
     );
   }
 
   if (issues.length === 0) {
-    return <div className="text-xs text-green-600">✓ Image looks good</div>;
+    return <div className="text-xs text-green-600">Bild sieht gut aus</div>;
   }
 
   return (

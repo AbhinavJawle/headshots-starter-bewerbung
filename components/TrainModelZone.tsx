@@ -40,8 +40,6 @@ import { Loader2 } from "lucide-react";
 
 type FormInput = z.infer<typeof fileUploadFormSchema>;
 
-//change this stripeisconfigured to dodoisconfigured and set it true
-
 const dodoIsConfigured = process.env.NEXT_PUBLIC_DODO_IS_ENABLED === "true";
 
 export default function TrainModelZone({ packSlug }: { packSlug: string }) {
@@ -76,9 +74,9 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       if (newFiles.length + files.length > 10) {
         toast({
           variant: "destructive",
-          title: "Too many images",
+          title: "Zu viele Bilder",
           description:
-            "You can only upload up to 10 images in total. Please try again.",
+            "Sie können nur insgesamt 10 Bilder hochladen. Bitte versuchen Sie es erneut.",
           duration: 7000,
         });
         return;
@@ -88,9 +86,9 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       if (newFiles.length !== acceptedFiles.length) {
         toast({
           variant: "destructive",
-          title: "Duplicate file names",
+          title: "Doppelte Dateinamen",
           description:
-            "Some of the files you selected were already added. They were ignored.",
+            "Einige der Dateien, die Sie ausgewählt haben, wurden bereits hinzugefügt. Sie wurden ignoriert.",
           duration: 7000,
         });
       }
@@ -101,9 +99,9 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
 
       if (totalSize + newSize > 10 * 1024 * 1024) {
         toast({
-          title: "Images exceed size limit",
+          title: "Bilderüberschreiten die Größe",
           description:
-            "The total combined size of the images cannot exceed 10MB.",
+            "Die Gesamtgröße der Bilder darf nicht 10MB überschreiten.",
           duration: 7000,
         });
         return;
@@ -113,8 +111,8 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
 
       toast({
         variant: "default",
-        title: "Images selected",
-        description: "The images were successfully selected.",
+        title: "Bilder ausgewählt",
+        description: "Die Bilder wurden erfolgreich ausgewählt.",
         duration: 7000,
       });
     },
@@ -180,12 +178,12 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
         <div className="flex flex-col gap-4">
           {responseMessage}
           <a href="/get-credits">
-            <Button size="sm">Get Credits</Button>
+            <Button size="sm">Credits kaufen</Button>
           </a>
         </div>
       );
       toast({
-        title: "Something went wrong!",
+        title: "Etwas ist schief gelaufen!",
         description: responseMessage.includes("Not enough credits")
           ? messageWithButton
           : responseMessage,
@@ -195,9 +193,9 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
     }
 
     toast({
-      title: "Model queued for training",
+      title: "Modell trainiert",
       description:
-        "The model was queued for training. You will receive an email when the model is ready to use.",
+        "Das Modell wurde trainiert. Sie erhalten eine E-Mail, wenn das Modell bereit ist.",
       duration: 7000,
     });
 
@@ -215,176 +213,189 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
   const modelType = form.watch("type");
 
   return (
-    <div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="rounded-md flex flex-col gap-8"
-        >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="w-full rounded-md">
-                <FormLabel>Name</FormLabel>
-                <FormDescription>
-                  Give your model a name so you can easily identify it later.
-                </FormDescription>
-                <FormControl>
-                  <Input
-                    placeholder="e.g. Natalie Headshots"
-                    {...field}
-                    className="max-w-screen-sm"
-                    autoComplete="off"
+    <>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center z-50">
+          <Loader2 className="h-16 w-16 text-white animate-spin mb-6" />
+          <h2 className="text-white text-2xl font-semibold mb-2">
+            Fotos werden hochgeladen...
+          </h2>
+          <p className="text-white text-lg text-center px-4">
+            Bitte warten Sie einen Moment und schließen Sie dieses Fenster
+            nicht.
+          </p>
+        </div>
+      )}
+      <div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="rounded-md flex flex-col gap-8"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="w-full rounded-md">
+                  <FormLabel>Name</FormLabel>
+                  <FormDescription>Geben Sie Ihren Namen ein.</FormDescription>
+                  <FormControl>
+                    <Input
+                      placeholder="e.g. Natalie Headshots"
+                      {...field}
+                      className="max-w-screen-sm"
+                      autoComplete="off"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-col gap-4">
+              <FormLabel>Geschlecht</FormLabel>
+              <FormDescription>Wählen Sie das Geschlecht aus.</FormDescription>
+              <RadioGroup
+                defaultValue={modelType}
+                className="grid grid-cols-3 gap-4"
+                value={modelType}
+                onValueChange={(value) => {
+                  form.setValue("type", value);
+                }}
+              >
+                <div>
+                  <RadioGroupItem
+                    value="man"
+                    id="man"
+                    className="peer sr-only"
+                    aria-label="man"
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+                  <Label
+                    htmlFor="man"
+                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  >
+                    <FaMale className="mb-3 h-6 w-6" />
+                    Mann
+                  </Label>
+                </div>
+
+                <div>
+                  <RadioGroupItem
+                    value="woman"
+                    id="woman"
+                    className="peer sr-only"
+                    aria-label="woman"
+                  />
+                  <Label
+                    htmlFor="woman"
+                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  >
+                    <FaFemale className="mb-3 h-6 w-6" />
+                    Frau
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem
+                    value="person"
+                    id="person"
+                    className="peer sr-only"
+                    aria-label="person"
+                  />
+                  <Label
+                    htmlFor="person"
+                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  >
+                    <FaRainbow className="mb-3 h-6 w-6" />
+                    Unisex
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+            <div
+              {...getRootProps()}
+              className=" rounded-md justify-center align-middle cursor-pointer flex flex-col gap-4"
+            >
+              <FormLabel>Bilder</FormLabel>
+              <FormDescription>
+                Laden Sie 5-10 Bilder der Person hoch, f r die Sie Kopfbilder
+                generieren m chten. Je mehr desto besser.
+              </FormDescription>
+              <div className="outline-dashed outline-2 outline-gray-100 hover:outline-blue-500 w-full h-full rounded-md p-4 flex justify-center align-middle">
+                <input {...getInputProps()} />
+                {isDragActive ? (
+                  <p className="self-center">
+                    Lassen Sie die Dateien hier fallen ...
+                  </p>
+                ) : (
+                  <div className="flex justify-center flex-col items-center gap-2">
+                    <FaImages size={32} className="text-gray-700" />
+                    <p className="self-center">
+                      Ziehen Sie die Dateien hierher, oder klicken Sie, um die
+                      Dateien auszuwählen.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+            {files.length > 0 && (
+              <div className="flex flex-row gap-4 flex-wrap">
+                {files.map((file) => (
+                  <div key={file.name} className="flex flex-col gap-1">
+                    <div className="relative">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        className="rounded-md w-24 h-24 object-cover"
+                        alt="Preview"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full mt-1"
+                        onClick={() => removeFile(file)}
+                      >
+                        Entfernen
+                      </Button>
+
+                      <ImageInspector
+                        file={file}
+                        type={form.getValues("type")}
+                        onInspectionComplete={(result) =>
+                          handleInspectionComplete(result, file)
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
-          />
-          <div className="flex flex-col gap-4">
-            <FormLabel>Type</FormLabel>
-            <FormDescription>
-              Select the type of headshots you want to generate.
-            </FormDescription>
-            <RadioGroup
-              defaultValue={modelType}
-              className="grid grid-cols-3 gap-4"
-              value={modelType}
-              onValueChange={(value) => {
-                form.setValue("type", value);
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading}
+              variant={"brand"}
+              _disabled={{
+                color: "gray.500",
+                bg: "gray.100",
               }}
             >
-              <div>
-                <RadioGroupItem
-                  value="man"
-                  id="man"
-                  className="peer sr-only"
-                  aria-label="man"
-                />
-                <Label
-                  htmlFor="man"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                >
-                  <FaMale className="mb-3 h-6 w-6" />
-                  Man
-                </Label>
-              </div>
-
-              <div>
-                <RadioGroupItem
-                  value="woman"
-                  id="woman"
-                  className="peer sr-only"
-                  aria-label="woman"
-                />
-                <Label
-                  htmlFor="woman"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                >
-                  <FaFemale className="mb-3 h-6 w-6" />
-                  Woman
-                </Label>
-              </div>
-              <div>
-                <RadioGroupItem
-                  value="person"
-                  id="person"
-                  className="peer sr-only"
-                  aria-label="person"
-                />
-                <Label
-                  htmlFor="person"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                >
-                  <FaRainbow className="mb-3 h-6 w-6" />
-                  Unisex
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-          <div
-            {...getRootProps()}
-            className=" rounded-md justify-center align-middle cursor-pointer flex flex-col gap-4"
-          >
-            <FormLabel>Samples</FormLabel>
-            <FormDescription>
-              Upload 5-10 images of the person you want to generate headshots
-              for. Je mehr desto besser.
-            </FormDescription>
-            <div className="outline-dashed outline-2 outline-gray-100 hover:outline-blue-500 w-full h-full rounded-md p-4 flex justify-center align-middle">
-              <input {...getInputProps()} />
-              {isDragActive ? (
-                <p className="self-center">Drop the files here ...</p>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <span>Wird hochgeladen</span>
+                </>
               ) : (
-                <div className="flex justify-center flex-col items-center gap-2">
-                  <FaImages size={32} className="text-gray-700" />
-                  <p className="self-center">
-                    Drag 'n' drop some files here, or click to select files.
-                  </p>
-                </div>
+                <span>Bewerbungsfoto generieren</span>
               )}
-            </div>
-          </div>
-          {files.length > 0 && (
-            <div className="flex flex-row gap-4 flex-wrap">
-              {files.map((file) => (
-                <div key={file.name} className="flex flex-col gap-1">
-                  <div className="relative">
-                    <img
-                      src={URL.createObjectURL(file)}
-                      className="rounded-md w-24 h-24 object-cover"
-                      alt="Preview"
-                    />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full mt-1"
-                      onClick={() => removeFile(file)}
-                    >
-                      Remove
-                    </Button>
 
-                    <ImageInspector
-                      file={file}
-                      type={form.getValues("type")}
-                      onInspectionComplete={(result) =>
-                        handleInspectionComplete(result, file)
-                      }
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isLoading}
-            variant={"brand"}
-            _disabled={{
-              color: "gray.500",
-              bg: "gray.100",
-            }}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>Wird hochgeladen</span>
-              </>
-            ) : (
-              <span>Bewerbungsfoto generieren</span>
-            )}
-
-            {dodoIsConfigured && <span className="ml-1">(1 Credit)</span>}
-          </Button>
-          <p className="self-center">Der Upload braucht ~10 Sekunden.</p>
-          <p className="self-center">
-            Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
-          </p>
-        </form>
-      </Form>
-    </div>
+              {dodoIsConfigured && <span className="ml-1">(1 Credit)</span>}
+            </Button>
+            <p className="self-center">Der Upload braucht ~10 Sekunden.</p>
+            <p className="self-center">
+              Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
+            </p>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 }

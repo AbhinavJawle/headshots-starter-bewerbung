@@ -3,7 +3,6 @@
 import { useState } from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-// import { Button } from "@/components/ui/button";
 import { Button } from "@chakra-ui/react";
 import { Icons } from "@/components/icons";
 import { FaDownload } from "react-icons/fa";
@@ -230,7 +229,7 @@ export default function DownloadImagesButton({
       ) : (
         <FaDownload className="mr-2 h-4 w-4" />
       )}
-      Download All ({images?.length || 0})
+      Download All ({images?.length || 0}) (.zip)
     </Button>
   );
 }

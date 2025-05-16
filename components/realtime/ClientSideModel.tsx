@@ -24,7 +24,10 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure,
+  IconButton,
 } from "@chakra-ui/react";
+import { FaDownload } from "react-icons/fa";
+import { saveAs } from "file-saver";
 
 export const revalidate = 0;
 
@@ -46,6 +49,27 @@ export default function ClientSideModel({
   const [model, setModel] = useState<modelRow>(serverModel);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isDownloading, setIsDownloading] = useState<string | null>(null); // To track which image is downloading
+
+  const handleDownloadImage = async (imageUrl: string, imageName: string) => {
+    setIsDownloading(imageName);
+    try {
+      const proxyUrl = `/api/download-image?url=${encodeURIComponent(
+        imageUrl
+      )}`;
+      const response = await fetch(proxyUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch image: ${response.statusText}`);
+      }
+      const blob = await response.blob();
+      saveAs(blob, imageName);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      // Optionally, show a toast notification for the error
+    } finally {
+      setIsDownloading(null);
+    }
+  };
 
   useEffect(() => {
     const channel = supabase
@@ -93,6 +117,10 @@ export default function ClientSideModel({
                 <Heading as="h3" size="md" color={subheadingColor}>
                   Training Data
                 </Heading>
+                <Text as="h5" size="sm" color={subheadingColor}>
+                  Klicken Sie auf ein Bild, um es zu öffnen
+                </Text>
+
                 <Divider />
                 <SimpleGrid
                   columns={{ base: 3, sm: 3, md: 6 }}
@@ -107,8 +135,9 @@ export default function ClientSideModel({
                       boxShadow="sm"
                       transition="transform 0.2s"
                       _hover={{ transform: "scale(1.02)", cursor: "pointer" }}
+                      position="relative" // Needed for absolute positioning of the badge
                       onClick={() => handleImageClick(sample.uri)}
-                      tabIndex={0} // Add this line
+                      tabIndex={0}
                       role="button" // Add for accessibility
                       onKeyDown={(e) => {
                         // Optional: Allow keyboard activation
@@ -122,6 +151,30 @@ export default function ClientSideModel({
                           src={sample.uri}
                           alt="Training sample"
                           objectFit="cover"
+                        />
+                        <IconButton
+                          icon={<FaDownload />}
+                          aria-label="Download image"
+                          size="sm" // Increased size
+                          colorScheme="blue"
+                          variant="solid"
+                          isRound
+                          position="absolute"
+                          top={3} // Adjusted position
+                          right={3} // Adjusted position
+                          zIndex={1} // Ensure it's above the image
+                          boxShadow="md" // Added shadow for better visibility
+                          _hover={{ bg: "blue.600" }} // Enhanced hover state
+                          isLoading={
+                            isDownloading === `sample_${sample.id}.jpg`
+                          }
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent modal from opening
+                            handleDownloadImage(
+                              sample.uri,
+                              `sample_${sample.id}.jpg`
+                            );
+                          }}
                         />
                       </AspectRatio>
                     </Box>
@@ -160,8 +213,9 @@ export default function ClientSideModel({
                         boxShadow="sm"
                         transition="transform 0.2s"
                         _hover={{ transform: "scale(1.02)", cursor: "pointer" }}
+                        position="relative" // Needed for absolute positioning of the badge
                         onClick={() => handleImageClick(image.uri)}
-                        tabIndex={0} // Add this line
+                        tabIndex={0}
                         role="button" // Add for accessibility
                         onKeyDown={(e) => {
                           // Optional: Allow keyboard activation
@@ -175,6 +229,30 @@ export default function ClientSideModel({
                             src={image.uri}
                             alt="Generated headshot"
                             objectFit="cover"
+                          />
+                          <IconButton
+                            icon={<FaDownload />}
+                            aria-label="Download image"
+                            size="sm" // Increased size
+                            colorScheme="blue"
+                            variant="solid"
+                            isRound
+                            position="absolute"
+                            top={3} // Adjusted position
+                            right={3} // Adjusted position
+                            zIndex={1} // Ensure it's above the image
+                            boxShadow="md" // Added shadow for better visibility
+                            _hover={{ bg: "blue.600" }} // Enhanced hover state
+                            isLoading={
+                              isDownloading === `headshot_${image.id}.jpg`
+                            }
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent modal from opening
+                              handleDownloadImage(
+                                image.uri,
+                                `headshot_${image.id}.jpg`
+                              );
+                            }}
                           />
                         </AspectRatio>
                       </Box>

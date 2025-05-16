@@ -58,7 +58,7 @@ export const LoginFail = ({
           color="red.500"
           textAlign="center"
         >
-          Login Error
+          Login fehlgeschlagen
         </Text>
         <VStack spacing={{ base: 3, md: 4 }} align="center">
           <Text
@@ -73,8 +73,8 @@ export const LoginFail = ({
             color="gray.500"
             textAlign="center"
           >
-            Hint: Please make sure you open the link on the same device /
-            browser from which you tried to signup.
+            Bitte stelle sicher, dass du den Link auf demselben Gerät / Browser
+            öffnest, auf dem du dich registrieren wolltest.
           </Text>
         </VStack>
         <Box pt={{ base: 2, md: 4 }}>
@@ -91,7 +91,7 @@ export const LoginFail = ({
                 color: "brand.600",
               }}
             >
-              <Text>Try Login Again</Text>
+              <Text>Erneut versuchen</Text>
               <ExternalLinkIcon boxSize={{ base: 3, md: 4 }} />
             </HStack>
           </ChakraLink>

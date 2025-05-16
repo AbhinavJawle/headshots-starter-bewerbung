@@ -27,14 +27,14 @@ export default async function Index() {
         <Link href="/overview" className="text-sm w-fit">
           <Button variant={"outline"}>
             <FaArrowLeft className="mr-2" />
-            Go Back
+            Zurück
           </Button>
         </Link>
         <Card>
           <CardHeader>
-            <CardTitle>Stil Gallery</CardTitle>
+            <CardTitle>Stil-Galerie</CardTitle>
             <CardDescription>
-              Choose the type of images you would like to create.
+              Wählen Sie den Typ der Bilder aus, die Sie erstellen möchten.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">

@@ -363,12 +363,23 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
             className="w-full"
             disabled={isLoading}
             variant={"brand"}
+            _disabled={{
+              color: "gray.500",
+              bg: "gray.100",
+            }}
           >
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Train Model
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <span>Wird hochgeladen</span>
+              </>
+            ) : (
+              <span>Bewerbungsfoto generieren</span>
+            )}
+
             {dodoIsConfigured && <span className="ml-1">(1 Credit)</span>}
           </Button>
-          <p className="self-center">Braucht ~10 Sekunden.</p>
+          <p className="self-center">Der Upload braucht ~10 Sekunden.</p>
           <p className="self-center">
             Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
           </p>

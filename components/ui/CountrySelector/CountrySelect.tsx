@@ -121,7 +121,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
                       }
                     </>
                   ) : isLoading ? (
-                    "Loading..."
+                    "Laden..."
                   ) : (
                     placeholder
                   )}
@@ -133,7 +133,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
               <Command shouldFilter={false}>
                 <CommandInput
                   className="bg-bg-primary"
-                  placeholder="Search country..."
+                  placeholder="Land suchen..."
                   onValueChange={(value) => {
                     setSearchTerm(value);
 
@@ -143,7 +143,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
                   }}
                 />
                 <CommandList>
-                  <CommandEmpty>No country found.</CommandEmpty>
+                  <CommandEmpty>Land nicht gefunden.</CommandEmpty>
                   <CommandGroup className="bg-bg-primary">
                     {filteredCountries.map((country) => (
                       <CommandItem

@@ -20,6 +20,7 @@ import disposableDomains from "disposable-email-domains";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { WaitingForMagicLink } from "./WaitingForMagicLink";
+import Link from "next/link";
 
 type Inputs = {
   email: string;
@@ -142,7 +143,7 @@ export const Login = ({
 
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("brand.500", "brand.400");
-
+  const BASE_URL = process.env.DEPLOYMENT_URL;
   return (
     <Center minH="calc(100vh - 73px)" bg={bgGradient} px={{ base: 4, md: 0 }}>
       <VStack
@@ -174,7 +175,7 @@ export const Login = ({
           fontWeight="bold"
           color="brand.500"
         >
-          Registrierung
+          Registrieren/Einloggen
         </Text>
         <Text
           fontSize={{ base: "xs", md: "sm" }}
@@ -259,6 +260,19 @@ export const Login = ({
             >
               Registrieren
             </Button>
+            <Text mt={8} fontSize={{ base: "xs", md: "xs" }} color="gray.500">
+              Mit Ihrer Registrierung stimmen Sie den{" "}
+              <Link
+                href={`${BASE_URL}/terms`}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="brand.500"
+                style={{ textDecoration: "underline" }}
+              >
+                Nutzungsbedingungen
+              </Link>{" "}
+              von kibewerbungsfotos.de zu.
+            </Text>
           </VStack>
         </Box>
       </VStack>

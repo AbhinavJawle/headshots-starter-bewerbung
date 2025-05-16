@@ -3,7 +3,7 @@
 import { useState } from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import { Button } from "@chakra-ui/react";
+import { Button, Box } from "@chakra-ui/react";
 import { Icons } from "@/components/icons";
 import { FaDownload } from "react-icons/fa";
 
@@ -223,9 +223,21 @@ export default function DownloadImagesButton({
       disabled={isLoading || !images || images.length === 0}
       size="sm"
       variant={"brand"}
+      _disabled={{
+        color: "gray.500",
+        bg: "gray.100",
+      }}
     >
       {isLoading ? (
-        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        // Wrap spinner in a Box to control its color independently
+        <Box
+          as="span"
+          display="inline-flex"
+          alignItems="center"
+          mr={2} // Moved margin from spinner to Box
+        >
+          <Icons.spinner className="h-4 w-4 animate-spin" />
+        </Box>
       ) : (
         <FaDownload className="mr-2 h-4 w-4" />
       )}

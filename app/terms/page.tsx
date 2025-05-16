@@ -2,7 +2,7 @@ import TermsPage from "@/components/Newhomepage/TermsPage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photoshot Privacy Policy",
+  title: "KIBewerbungsfotos Terms and Conditions",
 };
 
 const Terms = () => <TermsPage />;

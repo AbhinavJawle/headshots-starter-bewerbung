@@ -20,6 +20,12 @@ import {
 } from "@chakra-ui/react";
 import { HiArrowRight } from "react-icons/hi";
 
+// Initialize Supabase client outside the component
+const supabase = createClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+);
+
 const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 
 export const revalidate = 0;
@@ -31,10 +37,6 @@ type ClientSideModelsListProps = {
 export default function ClientSideModelsList({
   serverModels,
 }: ClientSideModelsListProps) {
-  const supabase = createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
-  );
   const [models, setModels] = useState<modelRowWithSamples[]>(serverModels);
 
   useEffect(() => {
@@ -43,22 +45,28 @@ export default function ClientSideModelsList({
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "models" },
-        async (payload: any) => {
-          const samples = await supabase
-            .from("samples")
-            .select("*")
-            .eq("modelId", payload.new.id);
+        (payload: any) => {
+          const handlePayload = async () => {
+            const samples = await supabase
+              .from("samples")
+              .select("*")
+              .eq("modelId", payload.new.id);
 
-          const newModel: modelRowWithSamples = {
-            ...payload.new,
-            samples: samples.data,
+            const newModel: modelRowWithSamples = {
+              ...payload.new,
+              samples: samples.data,
+            };
+
+            // It's safer to update state based on the previous state
+            // to avoid issues with stale closures, especially with realtime updates.
+            setModels((prevModels) => {
+              const dedupedModels = prevModels.filter(
+                (model) => model.id !== payload.old?.id
+              );
+              return [...dedupedModels, newModel];
+            });
           };
-
-          const dedupedModels = models.filter(
-            (model) => model.id !== payload.old?.id
-          );
-
-          setModels([...dedupedModels, newModel]);
+          handlePayload();
         }
       )
       .subscribe();
@@ -66,7 +74,7 @@ export default function ClientSideModelsList({
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase, models, setModels]);
+  }, [supabase]);
 
   const bgGradient = useColorModeValue(
     "linear(to-br, white, gray.50)",

@@ -152,30 +152,6 @@ export default function ClientSideModel({
                           alt="Training sample"
                           objectFit="cover"
                         />
-                        <IconButton
-                          icon={<FaDownload />}
-                          aria-label="Download image"
-                          size="sm" // Increased size
-                          colorScheme="blue"
-                          variant="solid"
-                          isRound
-                          position="absolute"
-                          top={3} // Adjusted position
-                          right={3} // Adjusted position
-                          zIndex={1} // Ensure it's above the image
-                          boxShadow="md" // Added shadow for better visibility
-                          _hover={{ bg: "blue.600" }} // Enhanced hover state
-                          isLoading={
-                            isDownloading === `sample_${sample.id}.jpg`
-                          }
-                          onClick={(e) => {
-                            e.stopPropagation(); // Prevent modal from opening
-                            handleDownloadImage(
-                              sample.uri,
-                              `sample_${sample.id}.jpg`
-                            );
-                          }}
-                        />
                       </AspectRatio>
                     </Box>
                   ))}

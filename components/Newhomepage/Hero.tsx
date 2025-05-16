@@ -43,11 +43,10 @@ const Hero = () => {
             <Box
               mb={3}
               as="h3"
-              // Removed maxWidth="rem" as it seemed incomplete/incorrect
               lineHeight={{ base: "1.1rem", sm: "1.1rem" }}
               fontSize={{ base: "0.7rem", sm: "1rem" }}
               fontWeight="grey"
-              marginX="auto" // Added marginX="auto" for good measure, though parent textAlign should handle it
+              marginX="auto"
             >
               Der <b>#1</b> KI Bewerbungsfoto-Generator für professionelle {""}
               Bewerbungsfotos.
@@ -55,11 +54,10 @@ const Hero = () => {
             <Box
               mb={3}
               as="h1"
-              // Removed maxWidth="rem" as it seemed incomplete/incorrect
               lineHeight={{ base: "2.3rem", sm: "3rem" }}
               fontSize={{ base: "2rem", sm: "2.6rem" }}
               fontWeight="black"
-              marginX="auto" // Added marginX="auto" for good measure, though parent textAlign should handle it
+              marginX="auto"
             >
               Steigere deinen Marktwert in Sekunden
             </Box>

@@ -16,7 +16,10 @@ import theme from "@/styles/theme";
 import "react-medium-image-zoom/dist/styles.css";
 
 const queryClient = new QueryClient();
-export const inter = Inter({ subsets: ["latin"] });
+export const inter = Inter({ 
+  subsets: ["latin"],
+  weight: ["400", "700", "900"] 
+});
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

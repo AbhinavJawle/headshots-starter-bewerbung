@@ -1,5 +1,6 @@
 import PacksGalleryZone from "@/components/PacksGalleryZone";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { Button } from "@chakra-ui/react";
 import {
   Card,
   CardContent,
@@ -25,7 +26,13 @@ export default async function Index() {
         className="flex flex-1 flex-col gap-2 px-2"
       >
         <Link href="/overview" className="text-sm w-fit">
-          <Button variant={"outline"}>
+          <Button
+            variant="outline"
+            size="md"
+            borderColor="brand.500"
+            color="brand.500"
+            _hover={{ bg: "brand.50" }}
+          >
             <FaArrowLeft className="mr-2" />
             Zurück
           </Button>

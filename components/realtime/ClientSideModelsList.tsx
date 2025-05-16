@@ -163,9 +163,8 @@ export default function ClientSideModelsList({
                   : "/overview/models/train/raw-tune"
               }
             >
-              <Button size="lg" variant={"brand"}>
-                <HiArrowRight />
-                Bewerbungsfoto erstellen
+              <Button size={{ base: "md", md: "lg" }} variant={"brand"}>
+                Bewerbungsfoto erstellen <HiArrowRight />
               </Button>
             </Link>
           </VStack>

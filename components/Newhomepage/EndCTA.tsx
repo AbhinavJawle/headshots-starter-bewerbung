@@ -42,7 +42,7 @@ const EndCTA = () => {
               // Removed maxWidth="rem" as it seemed incomplete/incorrect
               lineHeight={{ base: "2.3rem", sm: "3rem" }}
               fontSize={{ base: "2rem", sm: "2.6rem" }}
-              fontWeight="black"
+              fontWeight="extrabold"
               marginX="auto" // Added marginX="auto" for good measure, though parent textAlign should handle it
             >
               Erhalten Sie Ihre Bewerbungsfotos heute

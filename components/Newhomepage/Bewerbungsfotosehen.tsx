@@ -67,7 +67,7 @@ function Bewerbungsfotosehen() {
         <Heading
           as="h2"
           size="xl"
-          fontWeight="black"
+          fontWeight="extrabold"
           mb={8}
           lineHeight={{ base: "2rem", sm: "3rem" }}
         >

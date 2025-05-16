@@ -2,7 +2,15 @@ import ClientSideModelsList from "@/components/realtime/ClientSideModelsList";
 import { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { Box, Heading, Text, VStack, Container, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  VStack,
+  Container,
+  Flex,
+  Divider,
+} from "@chakra-ui/react";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +78,12 @@ export default async function Index() {
         >
           <ClientSideModelsList serverModels={models ?? []} />
         </Box>
+        <p>
+          Wenn der Status Ihres Modells nach 10-15 Minuten nicht geändert wurde,
+          bitte laden Sie die Seite manuell neu
+        </p>
+        <Divider />
+
         <p className="self-center">
           Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
         </p>

@@ -15,6 +15,7 @@ import { Database } from "@/types/supabase";
 import { Icons } from "./icons";
 import { useRouter } from "next/navigation";
 import { modelRowWithSamples } from "@/types/utils";
+import { Divider } from "@chakra-ui/react";
 
 type ModelsTableProps = {
   models: modelRowWithSamples[];

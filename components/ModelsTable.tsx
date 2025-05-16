@@ -32,9 +32,8 @@ export default function ModelsTable({ models }: ModelsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
-            <TableHead>Status</TableHead>
-            {/* <TableHead>Type</TableHead> */}
-            <TableHead>Samples</TableHead>
+            <TableHead>Stand</TableHead>
+            <TableHead>Datei</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -53,14 +52,16 @@ export default function ModelsTable({ models }: ModelsTableProps) {
                       model.status === "finished" ? "default" : "secondary"
                     }
                   >
-                    {model.status === "processing" ? "training" : model.status}
+                    {/* {model.status === "processing"
+                      ? "anlernen..."
+                      : model.status} */}
+                    {model.status === "processing" ? "anlernen..." : "Fertig"}
                     {model.status === "processing" && (
                       <Icons.spinner className="h-4 w-4 animate-spin" />
                     )}
                   </Badge>
                 </div>
               </TableCell>
-              {/* <TableCell>{model.type}</TableCell> */}
               <TableCell>
                 <div className="flex gap-2 flex-shrink-0 items-center">
                   {model.samples.slice(0, 3).map((sample) => (

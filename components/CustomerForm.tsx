@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LockIcon } from "@chakra-ui/icons";
+import { LockIcon, EmailIcon, InfoOutlineIcon, InfoIcon } from "@chakra-ui/icons";
 import * as z from "zod";
 import {
   Box,
@@ -14,6 +14,8 @@ import {
   Heading,
   HStack,
   Input,
+  InputGroup,
+  InputLeftElement,
   SimpleGrid,
   Text,
   VStack,
@@ -22,7 +24,7 @@ import {
   AlertDescription,
   useToast,
 } from "@chakra-ui/react";
-import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect"; // Assuming this is Chakra-compatible or to be styled externally
+import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect"; 
 import { User } from "@supabase/auth-helpers-nextjs";
 
 const formSchema = z.object({
@@ -51,7 +53,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
   } = useForm<CustomerFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      country: "DE", // Default to Germany as an example
+      country: "DE", 
       firstName: "",
       lastName: "",
       email: user?.email || "",
@@ -137,7 +139,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
         mb={6}
         textAlign="center"
       >
-        Checkout Information
+        Checkout-Informationen
       </Heading>
 
       {error && (
@@ -160,67 +162,106 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             render={({ field }) => (
               <FormControl isInvalid={!!errors.firstName} id="firstName">
                 <FormLabel>
-                  First Name{" "}
+                  Vorname{" "}
                   <Text as="span" color="red.500">
                     *
                   </Text>
                 </FormLabel>
-                <Input {...field} placeholder="eg: John" />
-                <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <InfoOutlineIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input {...field} placeholder="z.B: Max" />
+                </InputGroup>
+                <FormErrorMessage>
+                  {errors.firstName?.message}
+                </FormErrorMessage>
               </FormControl>
             )}
           />
-
           <Controller
             name="lastName"
             control={control}
             render={({ field }) => (
               <FormControl isInvalid={!!errors.lastName} id="lastName">
                 <FormLabel>
-                  Last Name{" "}
+                  Nachname{" "}
                   <Text as="span" color="red.500">
                     *
                   </Text>
                 </FormLabel>
-                <Input {...field} placeholder="eg: Doe" />
-                <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <InfoOutlineIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input {...field} placeholder="z.B: Mustermann" />
+                </InputGroup>
+                <FormErrorMessage>
+                  {errors.lastName?.message}
+                </FormErrorMessage>
               </FormControl>
             )}
           />
         </SimpleGrid>
+
         <Controller
           name="email"
           control={control}
-          render={({ field }) => (
-            <FormControl isInvalid={!!errors.email} id="email">
-              <FormLabel>
-                Email{" "}
-                <Text as="span" color="red.500">
-                  *
-                </Text>
-              </FormLabel>
-              <Input
-                {...field}
-                type="email"
-                placeholder="eg: johndoe@example.com"
-                readOnly
-                className="bg-gray-100 cursor-not-allowed"
-              />
-              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-            </FormControl>
-          )}
+          render={({ field }) =>
+            !user?.email ? (
+              <FormControl isInvalid={!!errors.email} id="email">
+                <FormLabel>
+                  Email Adresse{" "}
+                  <Text as="span" color="red.500">
+                    *
+                  </Text>
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <EmailIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="z.B: max.mustermann@example.com"
+                  />
+                </InputGroup>
+                <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+              </FormControl>
+            ) : (
+              <FormControl id="email-display">
+                <FormLabel>Email Adresse</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <EmailIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    value={user.email}
+                    type="email"
+                    placeholder="z.B: johndoe@example.com"
+                    readOnly
+                    className="cursor-not-allowed"
+                  />
+                </InputGroup>
+                <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+              </FormControl>
+            )
+          }
         />
         <VStack spacing={4} align="stretch">
           <Heading as="h3" size="md" fontWeight="medium" mt={2}>
-            Billing Address
+            Rechnungsadresse
           </Heading>
 
           <FormControl isInvalid={!!errors.country} id="country">
             <FormLabel>
-              Country{" "}
-              <Text as="span" color="red.500">
-                *
-              </Text>
+              <HStack spacing={2} align="center">
+                <InfoOutlineIcon color="gray.500" /> 
+                <Text>Land</Text>
+                <Text as="span" color="red.500">
+                  *
+                </Text>
+              </HStack>
             </FormLabel>
             <CountrySelect
               control={control}
@@ -238,12 +279,17 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             render={({ field }) => (
               <FormControl isInvalid={!!errors.addressLine} id="addressLine">
                 <FormLabel>
-                  Street Address{" "}
+                  Adresse{" "} 
                   <Text as="span" color="red.500">
                     *
                   </Text>
                 </FormLabel>
-                <Input {...field} placeholder="eg: 364 Kent St" />
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <InfoIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input {...field} placeholder="z.B: Musterstraße 123" />
+                </InputGroup>
                 <FormErrorMessage>
                   {errors.addressLine?.message}
                 </FormErrorMessage>
@@ -258,12 +304,17 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
               render={({ field }) => (
                 <FormControl isInvalid={!!errors.city} id="city">
                   <FormLabel>
-                    City{" "}
+                    Stadt{" "}
                     <Text as="span" color="red.500">
                       *
                     </Text>
                   </FormLabel>
-                  <Input {...field} placeholder="eg: Sydney" />
+                  <InputGroup>
+                    <InputLeftElement pointerEvents="none">
+                      <InfoIcon color="gray.300" />
+                    </InputLeftElement>
+                    <Input {...field} placeholder="z.B: München" />
+                  </InputGroup>
                   <FormErrorMessage>{errors.city?.message}</FormErrorMessage>
                 </FormControl>
               )}
@@ -275,12 +326,17 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
               render={({ field }) => (
                 <FormControl isInvalid={!!errors.state} id="state">
                   <FormLabel>
-                    State / Province{" "}
+                    Bundesland / Kanton{" "}
                     <Text as="span" color="red.500">
                       *
                     </Text>
                   </FormLabel>
-                  <Input {...field} placeholder="eg: NSW" />
+                  <InputGroup>
+                    <InputLeftElement pointerEvents="none">
+                      <InfoIcon color="gray.300" />
+                    </InputLeftElement>
+                    <Input {...field} placeholder="z.B: Bayern" />
+                  </InputGroup>
                   <FormErrorMessage>{errors.state?.message}</FormErrorMessage>
                 </FormControl>
               )}
@@ -292,12 +348,17 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
               render={({ field }) => (
                 <FormControl isInvalid={!!errors.zipCode} id="zipCode">
                   <FormLabel>
-                    Zip / Postal Code{" "}
+                    PLZ{" "}
                     <Text as="span" color="red.500">
                       *
                     </Text>
                   </FormLabel>
-                  <Input {...field} placeholder="eg: 2035" />
+                  <InputGroup>
+                    <InputLeftElement pointerEvents="none">
+                      <InfoIcon color="gray.300" />
+                    </InputLeftElement>
+                    <Input {...field} placeholder="z.B: 80331" /> 
+                  </InputGroup>
                   <FormErrorMessage>{errors.zipCode?.message}</FormErrorMessage>
                 </FormControl>
               )}
@@ -313,7 +374,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             w={{ base: "full", md: "auto" }}
             flexGrow={1}
           >
-            Continue to Payment
+            Weiter zu Bezahlung
           </Button>
         </HStack>
         <p className="self-center">

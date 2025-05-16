@@ -130,7 +130,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-90% p-0">
-              <Command>
+              <Command shouldFilter={false}>
                 <CommandInput
                   className="bg-bg-primary"
                   placeholder="Search country..."

@@ -115,7 +115,7 @@ export default function ClientSideModel({
             >
               <VStack align="start" spacing={4}>
                 <Heading as="h3" size="md" color={subheadingColor}>
-                  Training Data
+                  Ihre hochgeladenen Bilder
                 </Heading>
                 <Text as="h5" size="sm" color={subheadingColor}>
                   Klicken Sie auf ein Bild, um es zu öffnen
@@ -197,7 +197,7 @@ export default function ClientSideModel({
               {model.status === "finished" ? (
                 <>
                   <Heading as="h3" size="md" color={subheadingColor}>
-                    Generated Headshots
+                    Generierte Bewerbungsfotos ({serverImages.length})
                   </Heading>
                   <Divider />
                   <SimpleGrid
@@ -272,7 +272,7 @@ export default function ClientSideModel({
                 >
                   <Icons.spinner className="h-12 w-12 animate-spin text-brand-500 mb-4" />
                   <Text fontSize="lg" fontWeight="medium" color={headingColor}>
-                    Your model is being trained
+                    Dein Bewerbungsfoto KI-Modell wird trainiert
                   </Text>
                   <Text
                     fontSize="sm"
@@ -280,9 +280,9 @@ export default function ClientSideModel({
                     mt={2}
                     textAlign="center"
                   >
-                    This process typically takes about 20 minutes.
+                    Dieser Prozess dauert typischerweise etwa 20 Minuten.
                     <br />
-                    You'll receive an email when it's ready.
+                    Du erhältst eine E-Mail, wenn es fertig ist.
                   </Text>
                 </Flex>
               )}

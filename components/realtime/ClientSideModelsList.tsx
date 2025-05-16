@@ -91,8 +91,8 @@ export default function ClientSideModelsList({
       {models && models.length > 0 && (
         <VStack spacing={6} align="stretch">
           <Flex justify="space-between" align="center" mb={4}>
-            <Heading size="md" color={headingColor}>
-              Your AI Models
+            <Heading size={{ base: "xs", md: "md" }} color={headingColor}>
+              Bewerbungsfotos
             </Heading>
             <Link
               href={
@@ -103,11 +103,11 @@ export default function ClientSideModelsList({
             >
               <Button
                 variant="brand"
-                size="sm"
+                size={{ base: "xs", md: "sm" }}
                 shadow="xl"
                 rightIcon={<HiArrowRight />}
               >
-                Train New Model
+                Neue erstellen
               </Button>
             </Link>
           </Flex>
@@ -143,7 +143,7 @@ export default function ClientSideModelsList({
 
             <VStack spacing={3}>
               <Heading size="lg" textAlign="center" color={headingColor}>
-                Get Started with AI Headshots
+                Erstellen Sie Ihre erste KI Bewerbungsfoto
               </Heading>
               <Text
                 fontSize="md"
@@ -151,8 +151,8 @@ export default function ClientSideModelsList({
                 color={textColor}
                 maxW="md"
               >
-                Create your first AI model to generate professional headshots
-                for your applications.
+                Erstellen Sie Ihr erstes KI-Modell, um professionelle
+                Bewerbungsfotos zu generieren
               </Text>
             </VStack>
 
@@ -165,7 +165,7 @@ export default function ClientSideModelsList({
             >
               <Button size="lg" variant={"brand"}>
                 <HiArrowRight />
-                Train Your First Model
+                Bewerbungsfoto erstellen
               </Button>
             </Link>
           </VStack>

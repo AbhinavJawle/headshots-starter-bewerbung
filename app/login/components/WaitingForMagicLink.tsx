@@ -56,11 +56,11 @@ export const WaitingForMagicLink = ({
           color="brand.500"
           textAlign="center"
         >
-          Check your email to continue
+          Überprüfen Sie Ihre E-Mails, um fortzufahren
         </Text>
         <VStack spacing={{ base: 3, md: 4 }} align="center">
           <Text fontSize={{ base: "sm", md: "md" }} textAlign="center">
-            We've emailed you a magic link to access your account.{" "}
+            Wir haben Ihnen eine Link gesendet, um Ihre Konto zu aktivieren.{" "}
           </Text>
           <ChakraLink
             as={Link}
@@ -73,14 +73,14 @@ export const WaitingForMagicLink = ({
             fontSize={{ base: "md", md: "lg" }}
             style={{ textDecoration: "underline" }}
           >
-            Open Gmail
+            Gmail öffnen
           </ChakraLink>
           <Text
             fontSize={{ base: "xs", md: "sm" }}
             color="gray.500"
             textAlign="center"
           >
-            Hint: it might be in your spam folder.
+            Tipp: es könnte in Ihrem Spam-Ordner sein.
           </Text>
         </VStack>
         <Box pt={{ base: 2, md: 4 }}>
@@ -93,7 +93,7 @@ export const WaitingForMagicLink = ({
             color="brand.500"
             _hover={{ bg: "brand.50" }}
           >
-            Go back
+            Zurück
           </Button>
         </Box>
       </VStack>

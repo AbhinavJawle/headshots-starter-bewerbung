@@ -23,10 +23,10 @@ export default async function Index() {
         gap={4}
       >
         <Text fontSize="xl" color="red.500" fontWeight="medium">
-          User not found
+          User nicht gefunden
         </Text>
         <Text fontSize="md" color="gray.500">
-          Please log in to view your models
+          Bitte loggen Sie sich ein, um Ihre Modelle anzuzeigen
         </Text>
       </Flex>
     );
@@ -52,9 +52,11 @@ export default async function Index() {
             color="gray.800"
             mb={2}
           >
-            Your Models
+            Ihre Bewerbungsfotos
           </Heading>
-          <Text color="gray.600">Manage and create new AI headshots</Text>
+          <Text color="gray.600">
+            Verwalten und erstellen Sie neue AI Bewerbungsfotos
+          </Text>
         </Box>
 
         <Box

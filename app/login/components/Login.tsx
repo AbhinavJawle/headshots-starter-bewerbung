@@ -74,10 +74,10 @@ export const Login = ({
       setTimeout(() => {
         setIsSubmitting(false);
         toast({
-          title: "Email sent",
-          description: "Check your inbox for a magic link to sign in.",
+          title: "Email gesendet",
+          description: "Überprüfen Sie Ihre E-Mails, um fortzufahren.",
           status: "success",
-          duration: 5000,
+          duration: 10000,
           isClosable: true,
         });
         setIsMagicLinkSent(true);
@@ -85,9 +85,9 @@ export const Login = ({
     } catch (error) {
       setIsSubmitting(false);
       toast({
-        title: "Something went wrong",
+        title: "Etwas ist schief gelaufen",
         description:
-          "Please try again, if the problem persists, contact us at hello@tryleap.ai",
+          "Bitte versuchen Sie es erneut, wenn das Problem weiterhin besteht, kontaktieren Sie uns bitte unter hello@tryleap.ai",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -174,14 +174,14 @@ export const Login = ({
           fontWeight="bold"
           color="brand.500"
         >
-          Welcome
+          Registrierung
         </Text>
         <Text
           fontSize={{ base: "xs", md: "sm" }}
           textAlign="center"
           color="gray.500"
         >
-          Sign in or create an account to get started.
+          Registrieren Sie sich, um loszulegen.
         </Text>
         <Button
           onClick={signInWithGoogle}
@@ -201,7 +201,7 @@ export const Login = ({
           height={{ base: "40px", md: "48px" }}
           fontSize={{ base: "sm", md: "md" }}
         >
-          Continue with Google
+          Mit Google anmelden
         </Button>
         <OR />
 
@@ -210,7 +210,7 @@ export const Login = ({
             <VStack spacing={2} w="full" align="start">
               <Input
                 type="email"
-                placeholder="Email"
+                placeholder="email@beispiel.com"
                 borderColor="gray.300"
                 _hover={{ borderColor: "brand.500" }}
                 _focus={{
@@ -224,19 +224,19 @@ export const Login = ({
                   validate: {
                     emailIsValid: (value: string) =>
                       /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) ||
-                      "Please enter a valid email",
+                      "Bitte geben Sie eine gültige E-Mail-Adresse ein",
                     emailDoesntHavePlus: (value: string) =>
                       /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) ||
-                      "Email addresses with a '+' are not allowed",
+                      "E-Mail-Adressen mit einem '+' sind nicht erlaubt",
                     emailIsntDisposable: (value: string) =>
                       !disposableDomains.includes(value.split("@")[1]) ||
-                      "Please use a permanent email address",
+                      "Bitte verwenden Sie eine dauerhafte E-Mail-Adresse",
                   },
                 })}
               />
               {isSubmitted && errors.email && (
                 <Text fontSize={{ base: "2xs", md: "xs" }} color="red.400">
-                  {errors.email?.message || "Email is required to sign in"}
+                  {errors.email?.message || "Email ist erforderlich"}
                 </Text>
               )}
             </VStack>
@@ -257,7 +257,7 @@ export const Login = ({
               height={{ base: "40px", md: "48px" }}
               fontSize={{ base: "sm", md: "md" }}
             >
-              Continue with Email
+              Registrieren
             </Button>
           </VStack>
         </Box>
@@ -271,7 +271,7 @@ export const OR = () => {
     <HStack w="full" my={2}>
       <Divider flex="1" borderColor="gray.300" />
       <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500" px={3}>
-        OR
+        ODER
       </Text>
       <Divider flex="1" borderColor="gray.300" />
     </HStack>

@@ -217,13 +217,13 @@ const Header = () => {
                       {user.email}
                     </Text>
                     <MenuDivider />
-                    <form action="/form" method="post">
+                    <form action="/overview/payment" method="post">
                       <MenuItem
                         as="button"
                         type="submit"
                         icon={<Icon as={IoIosFlash} />}
                       >
-                        Get Credits
+                        Credits kaufen
                       </MenuItem>
                     </form>
                     <MenuDivider />
@@ -233,7 +233,7 @@ const Header = () => {
                         type="submit"
                         icon={<Icon as={HiLogout} />}
                       >
-                        Log out
+                        Ausloggen
                       </MenuItem>
                     </form>
                   </MenuList>

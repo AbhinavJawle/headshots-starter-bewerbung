@@ -3,13 +3,15 @@ import { Icons } from "@/components/icons";
 import ClientSideModel from "@/components/realtime/ClientSideModel";
 import DownloadImagesButton from "@/components/DownloadImagesButton"; // <-- Add this import
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { Button } from "@chakra-ui/react";
 import { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -47,17 +49,20 @@ export default async function Index({ params }: { params: { id: string } }) {
 
   return (
     <div id="train-model-container" className="w-full h-full">
-      {/* Modified header section for responsiveness */}
       <div className="flex flex-col items-start gap-4 w-full mb-6 px-4 py-3 bg-gray-50 border-b border-gray-200 md:flex-row md:items-center md:justify-between">
         {/* Left Group: Go Back Button and Model Info */}
         <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
           {" "}
-          {/* Stacks on very small, row on sm+ */}
-          {/* Go Back Button */}
           <Link href="/overview" className="text-xs w-fit">
-            <Button variant={"outline"} className="text-xs" size="sm">
+            <Button
+              variant="outline"
+              size={{ base: "sm", md: "md" }}
+              borderColor="brand.500"
+              color="brand.500"
+              _hover={{ bg: "brand.50" }}
+            >
               <FaArrowLeft className="mr-2" />
-              Go Back
+              Zurück
             </Button>
           </Link>
           {/* Model Name and Status */}
@@ -70,7 +75,9 @@ export default async function Index({ params }: { params: { id: string } }) {
                 variant={model.status === "finished" ? "default" : "secondary"}
                 className="text-xs font-medium bg-[#3dacec] text-white rounded-md px-2 py-1"
               >
-                {model.status === "processing" ? "training" : model.status}
+                {/* {model.status === "processing" ? "anlernen..." :  model.status} */}
+                {model.status === "processing" ? "anlernen..." : "Fertig"}
+
                 {model.status === "processing" && (
                   <Icons.spinner className="h-4 w-4 animate-spin ml-2 inline-block" />
                 )}

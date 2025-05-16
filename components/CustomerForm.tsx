@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LockIcon } from "@chakra-ui/icons";
 import * as z from "zod";
 import {
   Box,
@@ -127,6 +128,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
       borderRadius="lg"
       shadow="lg"
       bg="white"
+      mt={8}
     >
       <Heading
         as="h2"
@@ -186,7 +188,6 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             )}
           />
         </SimpleGrid>
-
         <Controller
           name="email"
           control={control}
@@ -202,12 +203,13 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
                 {...field}
                 type="email"
                 placeholder="eg: johndoe@example.com"
+                readOnly
+                className="bg-gray-100 cursor-not-allowed"
               />
               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
           )}
         />
-
         <VStack spacing={4} align="stretch">
           <Heading as="h3" size="md" fontWeight="medium" mt={2}>
             Billing Address
@@ -223,7 +225,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             <CountrySelect
               control={control}
               name="country"
-              label="Country"
+              label=""
               placeholder="Please select a country"
               required
             />
@@ -302,16 +304,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             />
           </SimpleGrid>
         </VStack>
-
         <HStack spacing={4} justifyContent="center" mt={6}>
-          <Button
-            variant="outline"
-            onClick={handlePrefill}
-            isDisabled={isLoading}
-            w={{ base: "full", md: "auto" }}
-          >
-            Prefill Demo Details
-          </Button>
           <Button
             type="submit"
             variant="brand"
@@ -323,6 +316,10 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             Continue to Payment
           </Button>
         </HStack>
+        <p className="self-center">
+          {" "}
+          <LockIcon /> SSL-verschlüsselte Bezahlung
+        </p>
       </VStack>
     </Box>
   );

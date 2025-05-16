@@ -68,6 +68,9 @@ export default async function Index() {
         >
           <ClientSideModelsList serverModels={models ?? []} />
         </Box>
+        <p className="self-center">
+          Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
+        </p>
       </VStack>
     </Container>
   );

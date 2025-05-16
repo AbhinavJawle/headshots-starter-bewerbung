@@ -68,6 +68,9 @@ const EndCTA = () => {
           >
             Bewerbungsfotos erstellen
           </Button>
+          <p className="self-center">
+            Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
+          </p>
         </VStack>
       </SimpleGrid>
     </Box>

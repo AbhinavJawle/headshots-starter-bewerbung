@@ -368,6 +368,10 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
             Train Model
             {dodoIsConfigured && <span className="ml-1">(1 Credit)</span>}
           </Button>
+          <p className="self-center">Braucht ~10 Sekunden.</p>
+          <p className="self-center">
+            Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
+          </p>
         </form>
       </Form>
     </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import TrainModelZone from "@/components/TrainModelZone";
 import Information from "@/components/Information";
 import { Button } from "@/components/ui/button";

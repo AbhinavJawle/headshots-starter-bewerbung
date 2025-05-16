@@ -60,7 +60,7 @@ const imageHeightRem = 12; // Corresponds to h-48
 const totalMarginXRem = 0.5; // Correct total horizontal margin per image
 
 const totalImageWidthRem = imageWidthRem + totalMarginXRem; // Corrected calculation
-const animationDurationSeconds = 100;
+const animationDurationSeconds = 60;
 
 function Beispielen() {
   // Shuffle images on each render
@@ -98,6 +98,7 @@ function Beispielen() {
                 height={192} // 12rem * 16px/rem
                 className={"object-cover rounded-lg shadow-sm w-full h-full"} // Added w-full and h-full to ensure it fills the Box
                 sizes="128px"
+                quality={90} // Added quality prop
               />
             </Box>
           ))}

@@ -115,7 +115,7 @@ function Bewerbungsfotosehen() {
         {/* Wrap Button in Flex for centering */}
 
         <SimpleGrid
-          columns={{ base: 2, sm: 3, md: 4, lg: 5 }} // Responsive columns
+          columns={{ base: 3, sm: 3, md: 4, lg: 5 }} // Responsive columns
           spacing={{ base: 3, md: 4 }} // Responsive spacing
           maxWidth="container.xl"
           mx="auto"
@@ -127,10 +127,6 @@ function Bewerbungsfotosehen() {
               overflow="hidden"
               borderRadius="lg"
               boxShadow="md"
-              // Aspect ratio box to maintain space before image loads with layout='fill'
-              // You can adjust the paddingBottom percentage to match your desired aspect ratio e.g., 100% for 1:1, 75% for 4:3
-              // For square images, as headshots often are, 100% is good.
-              pb="100%" // This creates a square box for the image to fill
               display={index === 14 ? { base: "none", lg: "block" } : "block"}
               _hover={{
                 boxShadow: "lg",
@@ -138,13 +134,16 @@ function Bewerbungsfotosehen() {
                 transition: "all 0.3s ease",
                 zIndex: 1,
               }}
+              pb="100%" // This creates a square box for the image to fill
+              pt="100%"
+              w="100%"
             >
               <NextImage
                 src={`/headshots/${img}`}
                 alt={`Beispiel KI Bewerbungsfoto ${index + 1}`}
                 layout="fill"
                 objectFit="cover"
-                sizes="(min-width: 992px) 20vw, (min-width: 768px) 25vw, (min-width: 480px) 33vw, 50vw"
+                sizes="(min-width: 992px) 80vw, (min-width: 768px) 25vw, (min-width: 480px) 50vw, 50vw"
               />
               {/* KI Tag */}
               <Badge

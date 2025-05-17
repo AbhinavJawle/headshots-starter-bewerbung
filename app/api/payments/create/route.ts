@@ -66,14 +66,7 @@ export async function POST(request: NextRequest) {
       //     quantity: 1,
       //   },
       // ],
-      allowed_payment_method_types: [
-        "credit",
-        "debit",
-        "apple_pay",
-        "eps",
-        "ideal",
-        "przelewy24",
-      ],
+      allowed_payment_method_types: ["credit", "debit"],
 
       billing_currency: "EUR",
 

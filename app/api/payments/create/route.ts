@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
         name: `${formData.firstName} ${formData.lastName}`,
       },
       payment_link: true,
+      //live
       product_cart: [
         {
           product_id: `${process.env.BASIC_LIVE}`,
@@ -65,6 +66,13 @@ export async function POST(request: NextRequest) {
       //     quantity: 1,
       //   },
       // ],
+      allowed_payment_method_types: [
+        "credit",
+        "debit",
+        "apple_pay",
+        "eps",
+        "ideal",
+      ],
 
       // product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
       metadata: {

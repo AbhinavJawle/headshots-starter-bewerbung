@@ -99,6 +99,7 @@ function Beispielen() {
                 className={"object-cover rounded-lg shadow-sm w-full h-full"} // Added w-full and h-full to ensure it fills the Box
                 sizes="128px"
                 quality={90} // Added quality prop
+                loading="eager" // Load all images eagerly for smooth scrolling
               />
             </Box>
           ))}

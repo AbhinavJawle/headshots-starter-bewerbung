@@ -7,8 +7,11 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 export const dynamic = "force-dynamic";
 
 const astriapackids = [
-  { id: 260, title: "Corporate Headshot", category: "corporate" },
-  { id: 820, title: "Bewerbungsfoto", category: "corporate" },
+  { id: 260, title: "Bewerbungsfoto", category: "corporate" },
+  { id: 820, title: "Anwalt", category: "lawyer" },
+  { id: 427, title: "Arzt", category: "doctor" },
+  { id: 406, title: "Immobilienmakler", category: "realtor" },
+  { id: 407, title: "Redner", category: "speaker" },
 ];
 
 // Environment Variables

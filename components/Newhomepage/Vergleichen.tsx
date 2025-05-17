@@ -88,7 +88,7 @@ function Vergleichen() {
           fontWeight="extrabold"
           marginX="auto" // Added marginX="auto" for good measure, though parent textAlign should handle it
         >
-          Wie Ihre Selfies zu professionellen Bewerbungsfotos werden
+          Wie Ihre Selfies zu professionellen Bewerbungsbilder werden
         </Box>
 
         <Text

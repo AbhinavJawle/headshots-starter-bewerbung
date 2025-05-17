@@ -69,12 +69,12 @@ const Hero = () => {
             <Box
               mb={3}
               as="h1"
-              lineHeight={{ base: "2.3rem", sm: "3rem" }}
-              fontSize={{ base: "2rem", sm: "2.6rem" }}
+              lineHeight={{ base: "2.1rem", sm: "2.7rem" }}
+              fontSize={{ base: "2rem", sm: "2.4rem" }}
               fontWeight="extrabold"
               marginX="auto"
             >
-              Steigere deinen Marktwert in Sekunden
+              Professionelle Bewerbungsfoto selber machen
             </Box>
 
             <VStack>
@@ -123,7 +123,7 @@ const Hero = () => {
             fontWeight="grey"
             marginX="auto" // Added marginX="auto" for good measure, though parent textAlign should handle it
           >
-            Bewerbungsfoto machen Sie selber!
+            Steigere deinen Marktwert in Sekunden!
           </Box>
 
           {/* Trustpilot Rating Section */}

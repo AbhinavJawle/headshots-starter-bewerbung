@@ -38,7 +38,7 @@ const EndCTA = () => {
           <Box textAlign={{ base: "center", sm: "center" }}>
             <Box
               mb={3}
-              as="h1"
+              as="h2"
               // Removed maxWidth="rem" as it seemed incomplete/incorrect
               lineHeight={{ base: "2.3rem", sm: "3rem" }}
               fontSize={{ base: "2rem", sm: "2.6rem" }}

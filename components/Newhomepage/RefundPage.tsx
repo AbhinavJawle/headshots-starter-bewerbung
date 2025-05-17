@@ -22,7 +22,7 @@ const RefundPage = () => (
       width="100%"
       alignItems="flex-start"
     >
-      <Heading as="h1" size="xl" fontWeight="bold">
+      <Heading as="h2" size="xl" fontWeight="bold">
         Rückerstattungsrichtlinie
       </Heading>
       <Text>

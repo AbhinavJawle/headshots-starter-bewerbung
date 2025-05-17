@@ -67,9 +67,9 @@ export default async function Index({ params }: { params: { id: string } }) {
           </Link>
           {/* Model Name and Status */}
           <div className="flex flex-row gap-2 items-center">
-            <h1 className="text-xl font-semibold text-gray-800">
+            <h2 className="text-xl font-semibold text-gray-800">
               {model.name}
-            </h1>
+            </h2>
             <div>
               <Badge
                 variant={model.status === "finished" ? "default" : "secondary"}

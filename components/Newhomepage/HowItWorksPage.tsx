@@ -15,7 +15,7 @@ const HowItWorksPage = () => (
       <Text
         fontSize={{ base: "3xl", md: "4xl" }}
         fontWeight="extrabold"
-        as="h1"
+        as="h2"
       >
         AI Avatar: how it works?
       </Text>

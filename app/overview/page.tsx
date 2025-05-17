@@ -54,7 +54,7 @@ export default async function Index() {
       <VStack spacing={{ base: 6, md: 8 }} align="stretch">
         <Box>
           <Heading
-            as="h1"
+            as="h2"
             fontSize={{ base: "2xl", md: "3xl" }}
             fontWeight="bold"
             color="gray.800"

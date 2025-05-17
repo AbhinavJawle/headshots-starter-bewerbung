@@ -2,14 +2,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/homepage/theme-provider";
-import { validateConfig } from "@/lib/config";
+// import { validateConfig } from "@/lib/config";
 import Providers from "@/components/Providers";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
 
 // Validate configuration at app initialization
-validateConfig();
+// validateConfig();
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -18,7 +18,7 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-const siteUrl = process.env.DEPLOYMENT_URL || "https://your-domain.de";
+const siteUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

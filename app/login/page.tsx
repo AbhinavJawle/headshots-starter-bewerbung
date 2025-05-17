@@ -4,8 +4,20 @@ import { redirect } from "next/navigation";
 import { Database } from "../../types/supabase";
 import { Login } from "./components/Login";
 import { Box } from "@chakra-ui/react";
+import { Metadata } from 'next'; 
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Anmelden | KI Bewerbungsfotos", 
+  robots: {
+    index: false,
+    follow: true, 
+  },
+  alternates: {
+    canonical: '/login',
+  }
+};
 
 export default async function LoginPage({
   searchParams,

@@ -100,7 +100,12 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
               trainieren.
             </p>
             <Link href="/overview/payment">
-              <Button size={"md"} variant="brand" className="w-full">
+              <Button
+                size={"md"}
+                variant="brand"
+                className="w-full"
+                bg={"gray.100"}
+              >
                 Credits kaufen
               </Button>
             </Link>

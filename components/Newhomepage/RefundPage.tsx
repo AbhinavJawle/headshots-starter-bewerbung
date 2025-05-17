@@ -22,82 +22,74 @@ const RefundPage = () => (
       width="100%"
       alignItems="flex-start"
     >
-      <Heading as="h2" size="xl" fontWeight="bold">
+      <Heading as="h2" size="lg" fontWeight="bold">
         Rückerstattungsrichtlinie
       </Heading>
       <Text>
-        Bei Bewerbungsbild AI legen wir großen Wert auf Ihre Zufriedenheit mit
-        unseren Dienstleistungen. Die folgenden Richtlinien erläutern, unter
-        welchen Umständen Erstattungen möglich sind und wie der Prozess abläuft.
+        Bei KIBewerbungsfotos steht Ihre Zufriedenheit mit unseren
+        Dienstleistungen an erster Stelle. Die nachfolgenden Richtlinien
+        beschreiben die Bedingungen für mögliche Erstattungen sowie den
+        entsprechenden Ablauf.
       </Text>
       <Heading as="h2" size="lg" fontWeight="bold" mt={6}>
         Qualitätsversprechen
       </Heading>
       <Text>
-        Sie können von unserem Service mindestens 3-6 zufriedenstellende
-        Porträtbilder erwarten. Sie haben die Möglichkeit, aus allen generierten
-        Bildern Ihre persönlichen Favoriten auszuwählen. Sollten Sie der Meinung
-        sein, dass keine der bereitgestellten Aufnahmen Ihren Anforderungen
-        entspricht, bieten wir Ihnen kostenlos eine erneute Bildgenerierung an.
+        Unser Service garantiert Ihnen 3-6 hochwertige Porträtbilder. Sie können
+        aus allen generierten Bildern Ihre Favoriten auswählen. Falls keines der
+        bereitgestellten Bilder Ihren Erwartungen entspricht, generieren wir
+        kostenfrei neue Bilder für Sie.
       </Text>
       <Text>
-        Eine vollständige Rückerstattung ist nur möglich, wenn die
-        KI-Verarbeitung Ihrer Bilder noch nicht begonnen hat. Dies liegt daran,
-        dass die KI-Verarbeitung mit Kosten verbunden ist, die wir bereits bei
-        Beginn des Prozesses tragen.
+        Eine Rückerstattung des vollen Betrags ist ausschließlich vor Beginn der
+        KI-Verarbeitung Ihrer Bilder möglich, da uns bereits zu diesem Zeitpunkt
+        Verarbeitungskosten entstehen.
       </Text>
       <Heading as="h2" size="lg" fontWeight="bold" mt={6}>
         Ausschlusskriterien für Erstattungen
       </Heading>
-      <Text>
-        In folgenden Situationen können wir leider keine Rückerstattung
-        gewähren:
-      </Text>
+      <Text>Eine Rückerstattung ist in folgenden Fällen ausgeschlossen:</Text>
       <UnorderedList pl={6}>
         <ListItem>
-          Wenn die von Ihnen hochgeladenen Originalbilder nicht unseren
-          Anforderungen entsprechen
+          Bei Originalbildern, die nicht den technischen Anforderungen
+          entsprechen
         </ListItem>
         <ListItem>
-          Wenn Sie bereits mindestens ein KI-generiertes Bild als
-          zufriedenstellend bewertet haben
+          Nach positiver Bewertung mindestens eines KI-generierten Bildes
         </ListItem>
         <ListItem>
-          Nach dem Download oder der Löschung der erstellten Porträtaufnahmen
+          Nach erfolgtem Download oder Löschung der erstellten Bilder
         </ListItem>
       </UnorderedList>
       <Text>
-        Bitte beachten Sie, dass alle Erstattungsanfragen innerhalb von 14 Tagen
-        nach Kaufabschluss eingereicht werden müssen.
+        Erstattungsanträge müssen innerhalb von 14 Tagen nach dem Kaufdatum
+        gestellt werden.
       </Text>
       <Heading as="h2" size="lg" fontWeight="bold" mt={6}>
         Erstattungsverfahren
       </Heading>
       <Text>
-        Um eine Erstattung zu beantragen, senden Sie bitte eine E-Mail an{" "}
-        <Link href="mailto:info@bewerbungsbild.ai" color="blue.500">
-          info@bewerbungsbild.ai
+        Für eine Erstattung kontaktieren Sie uns bitte per E-Mail an{" "}
+        <Link href="mailto:info@kibewerbungsfotos.de" color="blue.500">
+          info@kibewerbungsfotos.de
         </Link>{" "}
-        mit der E-Mail-Adresse, die Sie bei Ihrer Bestellung verwendet haben.
-        Unser Team wird Ihre Anfrage innerhalb von 1-3 Werktagen prüfen und
-        bearbeiten.
+        unter Angabe der bei der Bestellung verwendeten E-Mail-Adresse. Wir
+        bearbeiten Ihre Anfrage innerhalb von 1-3 Werktagen.
       </Text>
       <Text>
-        Bei Genehmigung Ihrer Erstattung erfolgt die Rückzahlung innerhalb von
-        5-10 Werktagen auf das ursprünglich für den Kauf verwendete
-        Zahlungsmittel. Eine Erstattung auf alternative Konten oder
-        Zahlungsmethoden ist nicht möglich.
+        Genehmigte Erstattungen werden binnen 5-10 Werktagen auf das
+        ursprüngliche Zahlungsmittel zurückerstattet. Erstattungen auf andere
+        Konten oder Zahlungsmethoden sind nicht durchführbar.
       </Text>
       <Heading as="h2" size="lg" fontWeight="bold" mt={6}>
         Schutz vor Missbrauch
       </Heading>
       <Text>
-        Bewerbungsbild AI verfolgt eine strikte Politik gegen Missbrauch unserer
-        Erstattungsrichtlinien. Bei nachgewiesenem Missbrauch behalten wir uns
-        das Recht vor, Erstattungsanträge abzulehnen und betreffende
-        Benutzerkonten dauerhaft zu sperren. Wir setzen alle notwendigen
-        Maßnahmen ein, um die Integrität unseres Services und die Interessen
-        unserer gesamten Nutzergemeinschaft zu schützen.
+        KIBewerbungsfotos verfolgt eine Null-Toleranz-Politik gegenüber
+        Missbrauch unserer Erstattungsrichtlinien. Bei festgestelltem Missbrauch
+        behalten wir uns vor, Erstattungsanträge abzulehnen und entsprechende
+        Konten zu sperren. Wir implementieren alle erforderlichen Maßnahmen zum
+        Schutz unseres Services und unserer Nutzergemeinschaft.
       </Text>
     </VStack>
   </PageContainer>

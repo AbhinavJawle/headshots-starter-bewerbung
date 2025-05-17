@@ -23,6 +23,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -89,6 +90,27 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
   });
 
   const onSubmit: SubmitHandler<FormInput> = () => {
+    if (dodoIsConfigured && credits && credits.credits < 1) {
+      toast({
+        title: "Nicht genügend Credits",
+        description: (
+          <div className="flex flex-col gap-4">
+            <p>
+              Sie haben nicht genügend Credits, um ein neues Modell zu
+              trainieren.
+            </p>
+            <Link href="/overview/payment">
+              <Button size={"md"} variant="brand" className="w-full">
+                Credits kaufen
+              </Button>
+            </Link>
+          </div>
+        ),
+        duration: Infinity, // Infinite duration
+        variant: "default",
+      });
+      return;
+    }
     trainModel();
   };
 
@@ -201,21 +223,33 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
 
     if (!response.ok) {
       const responseData = await response.json();
+      // const responseData = await response.json(); // Ensure responseData is declared here
       const responseMessage: string = responseData.message;
       console.error("Something went wrong! ", responseMessage);
       const messageWithButton = (
         <div className="flex flex-col gap-4">
           {responseMessage}
-          <a href="/get-credits">
+          <a href="/overview/payment">
             <Button size="sm">Credits kaufen</Button>
           </a>
         </div>
       );
       toast({
         title: "Etwas ist schief gelaufen!",
-        description: responseMessage.includes("Not enough credits")
-          ? messageWithButton
-          : responseMessage,
+        description: responseMessage.includes("Not enough credits") ? (
+          messageWithButton
+        ) : responseMessage.includes("Not enough credits") ? (
+          <div className="flex flex-col gap-4">
+            <p>{responseMessage}</p>
+            <Link href="/payment">
+              <Button size="sm" variant="brand" className="w-full">
+                Credits kaufen
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          responseMessage
+        ),
         duration: 5000,
       });
       return;
@@ -345,8 +379,8 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
             >
               <FormLabel>Bilder</FormLabel>
               <FormDescription>
-                Laden Sie 5-10 Bilder der Person hoch, f r die Sie Kopfbilder
-                generieren m chten. Je mehr desto besser.
+                Laden Sie 5-10 Bilder der Person hoch, für die Sie Kopfbilder
+                generieren möchten. Je mehr desto besser.
               </FormDescription>
               <div className="outline-dashed outline-2 outline-gray-100 hover:outline-blue-500 w-full h-full rounded-md p-4 flex justify-center align-middle">
                 <input {...getInputProps()} />
@@ -418,7 +452,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
 
               {dodoIsConfigured && <span className="ml-1">(1 Credit)</span>}
             </Button>
-            <p className="self-center">Der Upload braucht ~10 Sekunden.</p>
+            <p className="self-center">Der Upload braucht ~20 Sekunden.</p>
             <p className="self-center">
               Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
             </p>

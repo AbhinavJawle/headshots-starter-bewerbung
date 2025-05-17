@@ -20,7 +20,7 @@ const productIdToCredits: { [key: string]: number } = {
   // "your_other_product_id_2": 10,
 };
 
-const webhook = new Webhook(process.env.NEXT_PUBLIC_DODO_WEBHOOK_KEY!);
+const webhook = new Webhook(process.env.DODO_PAYMENTS_WEBHOOK_SECRET!);
 
 export async function POST(request: Request) {
   const headersList = await headers();

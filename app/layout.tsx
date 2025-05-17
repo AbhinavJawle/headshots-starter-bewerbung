@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/homepage/theme-provider";
-// import { validateConfig } from "@/lib/config";
+import { validateConfig } from "@/lib/config";
 import Providers from "@/components/Providers";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";

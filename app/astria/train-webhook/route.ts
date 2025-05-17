@@ -59,7 +59,6 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-  
 
   if (!webhook_secret) {
     return NextResponse.json(
@@ -127,10 +126,10 @@ export async function POST(request: Request) {
     if (resendApiKey) {
       const resend = new Resend(resendApiKey);
       await resend.emails.send({
-        from: "noreply@headshots.tryleap.ai",
+        from: "noreply@kibewerbungsfotos.de",
         to: user?.email ?? "",
-        subject: "Your model was successfully trained!",
-        html: `<h2>We're writing to notify you that your model training was successful! 1 credit has been used from your account.</h2>`,
+        subject: "Dein KIBewerbungsfoto KI wurde erfolgreich trainiert!",
+        html: `<h2>Wir schreiben dir, um dir mitzuteilen, dass dein Modell trainiert wurde! 1 Kredit wurde von Ihrem Konto abgebaut.</h2>`,
       });
     }
 

@@ -68,9 +68,6 @@ export async function POST(request: NextRequest) {
       // ],
       allowed_payment_method_types: ["credit", "debit"],
 
-      billing_currency: "EUR",
-
-      // product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
       metadata: {
         userId: user.id,
         // You can add other relevant metadata here, like product_id if it's fixed or determined here

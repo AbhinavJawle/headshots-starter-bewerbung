@@ -239,21 +239,6 @@ const Header = () => {
                   </MenuList>
                 </Menu>
               </HStack>
-
-              {/* {dodoIsConfigured && (
-                <Button
-                  as={Link}
-                  href="/get-credits"
-                  variant="ghost"
-                  size="sm"
-                  fontWeight="medium"
-                  _hover={{ color: "brand.500" }}
-                  py={scrolled ? 1 : 2}
-                  transition={transition}
-                >
-                  Get Credits
-                </Button>
-              )} */}
             </HStack>
           )}
 

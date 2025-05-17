@@ -37,12 +37,41 @@ import {
   aggregateCharacteristics,
 } from "@/lib/imageInspection";
 import { Loader2 } from "lucide-react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/supabase";
 
 type FormInput = z.infer<typeof fileUploadFormSchema>;
 
 const dodoIsConfigured = process.env.NEXT_PUBLIC_DODO_IS_ENABLED === "true";
 
 export default function TrainModelZone({ packSlug }: { packSlug: string }) {
+  const supabase = createClientComponentClient<Database>();
+  const [user, setUser] = useState<any>(null);
+
+  const [credits, setCredits] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUserAndCredits = async () => {
+      // Get user
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+
+      // Get credits if user exists
+      if (user) {
+        const { data } = await supabase
+          .from("credits")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
+        setCredits(data);
+      }
+    };
+
+    fetchUserAndCredits();
+  }, [supabase]);
+
   const [files, setFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [characteristics, setCharacteristics] = useState<

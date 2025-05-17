@@ -35,15 +35,15 @@ const Information = () => {
   const displayType = useBreakpointValue({ base: "accordion", md: "static" });
 
   const content = (
-    <Box p={3} shadow="sm" borderWidth="1px" borderRadius="md" bg="gray.50">
-      <Text fontSize="md" fontWeight="semibold" mb={2}>
+    <Box p={4} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50">
+      <Text fontSize="lg" fontWeight="semibold" mb={3}>
         Wichtige Foto-Hinweise
       </Text>
-      <Text fontSize="sm" mb={3}>
+      <Text fontSize="sm" mb={4}>
         Beachten Sie diese Tipps für beste Ergebnisse:
       </Text>
 
-      <List spacing={1} mb={3} fontSize="sm">
+      <List spacing={2} mb={4} fontSize="sm">
         <ListItem>
           <ListIcon as={CheckIcon} color="green.500" boxSize={3} />
           Variieren Sie Fotos (keine Serien!)
@@ -54,12 +54,12 @@ const Information = () => {
         </ListItem>
       </List>
 
-      <SimpleGrid columns={2} spacing={4} mb={3} fontSize="sm">
+      <SimpleGrid columns={2} spacing={4} mb={4} fontSize="sm">
         <Box>
-          <Text fontWeight="semibold" color="green.500" mb={1} fontSize="sm">
+          <Text fontWeight="semibold" color="green.500" mb={2} fontSize="sm">
             Ideal
           </Text>
-          <List spacing={0.5}>
+          <List spacing={1}>
             <ListItem>
               <ListIcon as={CheckIcon} color="green.500" boxSize={3} />
               Klare Sicht aufs Gesicht
@@ -75,10 +75,10 @@ const Information = () => {
           </List>
         </Box>
         <Box>
-          <Text fontWeight="semibold" color="red.500" mb={1} fontSize="sm">
+          <Text fontWeight="semibold" color="red.500" mb={2} fontSize="sm">
             Vermeiden
           </Text>
-          <List spacing={0.5}>
+          <List spacing={1}>
             <ListItem>
               <ListIcon as={CloseIcon} color="red.500" boxSize={3} />
               Gesicht verdeckt/zu weit
@@ -95,31 +95,67 @@ const Information = () => {
         </Box>
       </SimpleGrid>
 
-      <Text fontWeight="semibold" mb={1} fontSize="sm">
+      <Text fontWeight="semibold" mb={2} fontSize="sm">
         Beispiele:
       </Text>
-      <SimpleGrid columns={{ base: 2, md: 2 }} spacing={2} mb={2}>
+      <SimpleGrid columns={{ base: 2, md: 2 }} spacing={3} mb={3}>
         {goodExamples.slice(0, 2).map((src, index) => (
-          <Image
-            key={`good-${index}`}
-            src={src}
-            alt={`Gutes Beispiel ${index + 1}`}
-            borderRadius="sm"
-            objectFit="cover"
-            height="60px"
-          />
+          <Box key={`good-${index}`} position="relative">
+            <Image
+              src={src}
+              alt={`Gutes Beispiel ${index + 1}`}
+              borderRadius="md"
+              objectFit="cover"
+              height="70px"
+              width="100%"
+              shadow="sm"
+            />
+            <Box
+              position="absolute"
+              top={1}
+              left={1}
+              bg="green.500"
+              color="white"
+              fontSize="xs"
+              fontWeight="bold"
+              px={2}
+              py={0.5}
+              borderRadius="md"
+              opacity={0.9}
+            >
+              Gut
+            </Box>
+          </Box>
         ))}
       </SimpleGrid>
-      <SimpleGrid columns={{ base: 2, md: 2 }} spacing={2}>
+      <SimpleGrid columns={{ base: 2, md: 2 }} spacing={3}>
         {badExamples.slice(0, 2).map((src, index) => (
-          <Image
-            key={`bad-${index}`}
-            src={src}
-            alt={`Schlechtes Beispiel ${index + 1}`}
-            borderRadius="sm"
-            objectFit="cover"
-            height="60px"
-          />
+          <Box key={`bad-${index}`} position="relative">
+            <Image
+              src={src}
+              alt={`Schlechtes Beispiel ${index + 1}`}
+              borderRadius="md"
+              objectFit="cover"
+              height="70px"
+              width="100%"
+              shadow="sm"
+            />
+            <Box
+              position="absolute"
+              top={1}
+              left={1}
+              bg="red.500"
+              color="white"
+              fontSize="xs"
+              fontWeight="bold"
+              px={2}
+              py={0.5}
+              borderRadius="md"
+              opacity={0.9}
+            >
+              Schlecht
+            </Box>
+          </Box>
         ))}
       </SimpleGrid>
     </Box>
@@ -128,21 +164,30 @@ const Information = () => {
   if (displayType === "accordion") {
     return (
       <Accordion allowToggle defaultIndex={[0]}>
-        <AccordionItem>
+        <AccordionItem
+          border="1px solid"
+          borderColor="gray.200"
+          borderRadius="lg"
+          overflow="hidden"
+        >
           <h2>
-            <AccordionButton _expanded={{ bg: "gray.100" }} py={2}>
+            <AccordionButton
+              _expanded={{ bg: "blue.50", color: "blue.700" }}
+              py={3}
+              _hover={{ bg: "gray.100" }}
+            >
               <Box
                 flex="1"
                 textAlign="left"
                 fontWeight="semibold"
-                fontSize="sm"
+                fontSize="md"
               >
                 Wichtige Foto-Hinweise
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={3}>{content}</AccordionPanel>
+          <AccordionPanel pb={4}>{content}</AccordionPanel>
         </AccordionItem>
       </Accordion>
     );

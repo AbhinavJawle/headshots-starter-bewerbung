@@ -36,7 +36,7 @@ export function ModelTypeSelector() {
           Frau
         </Label>
       </div>
-      <div>
+      {/* <div>
         <RadioGroupItem
           value="person"
           id="person"
@@ -50,7 +50,7 @@ export function ModelTypeSelector() {
           <FaRainbow className="mb-3 h-6 w-6" />
           Unisex
         </Label>
-      </div>
+      </div> */}
     </RadioGroup>
   );
 }

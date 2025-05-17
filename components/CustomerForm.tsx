@@ -3,7 +3,12 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LockIcon, EmailIcon, InfoOutlineIcon, InfoIcon } from "@chakra-ui/icons";
+import {
+  LockIcon,
+  EmailIcon,
+  InfoOutlineIcon,
+  InfoIcon,
+} from "@chakra-ui/icons";
 import * as z from "zod";
 import {
   Box,
@@ -24,7 +29,7 @@ import {
   AlertDescription,
   useToast,
 } from "@chakra-ui/react";
-import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect"; 
+import { CountrySelect } from "@/components/ui/CountrySelector/CountrySelect";
 import { User } from "@supabase/auth-helpers-nextjs";
 
 const formSchema = z.object({
@@ -53,7 +58,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
   } = useForm<CustomerFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      country: "DE", 
+      country: "DE",
       firstName: "",
       lastName: "",
       email: user?.email || "",
@@ -173,9 +178,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
                   </InputLeftElement>
                   <Input {...field} placeholder="z.B: Max" />
                 </InputGroup>
-                <FormErrorMessage>
-                  {errors.firstName?.message}
-                </FormErrorMessage>
+                <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
               </FormControl>
             )}
           />
@@ -196,9 +199,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
                   </InputLeftElement>
                   <Input {...field} placeholder="z.B: Mustermann" />
                 </InputGroup>
-                <FormErrorMessage>
-                  {errors.lastName?.message}
-                </FormErrorMessage>
+                <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
               </FormControl>
             )}
           />
@@ -256,7 +257,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
           <FormControl isInvalid={!!errors.country} id="country">
             <FormLabel>
               <HStack spacing={2} align="center">
-                <InfoOutlineIcon color="gray.500" /> 
+                <InfoOutlineIcon color="gray.500" />
                 <Text>Land</Text>
                 <Text as="span" color="red.500">
                   *
@@ -279,7 +280,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             render={({ field }) => (
               <FormControl isInvalid={!!errors.addressLine} id="addressLine">
                 <FormLabel>
-                  Adresse{" "} 
+                  Adresse{" "}
                   <Text as="span" color="red.500">
                     *
                   </Text>
@@ -357,7 +358,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
                     <InputLeftElement pointerEvents="none">
                       <InfoIcon color="gray.300" />
                     </InputLeftElement>
-                    <Input {...field} placeholder="z.B: 80331" /> 
+                    <Input {...field} placeholder="z.B: 80331" />
                   </InputGroup>
                   <FormErrorMessage>{errors.zipCode?.message}</FormErrorMessage>
                 </FormControl>
@@ -373,6 +374,10 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             loadingText="Processing..."
             w={{ base: "full", md: "auto" }}
             flexGrow={1}
+            _disabled={{
+              color: "gray.500",
+              bg: "gray.100",
+            }}
           >
             Weiter zu Bezahlung
           </Button>

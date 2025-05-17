@@ -6,6 +6,7 @@ import { validateConfig } from "@/lib/config";
 import Providers from "@/components/Providers";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import CookieConsentBanner from "@/components/CookieConsentBanner"; // Added import
 import { Metadata, Viewport } from "next";
 
 // Validate configuration at app initialization
@@ -111,6 +112,7 @@ export default function RootLayout({
         <Toaster />
         <SpeedInsights />
         <Analytics />
+        <CookieConsentBanner /> {/* Added CookieConsentBanner component */}
         {/* </ThemeProvider> */}
       </body>
     </html>

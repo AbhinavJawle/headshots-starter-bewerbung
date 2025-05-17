@@ -89,11 +89,11 @@ export const metadata: Metadata = {
   //   images: ["/og-image.png"],
   //   // creator: '@IhrTwitterHandle',
   // },
-  // icons: {
-  //   icon: "/favicon.png",
-  //   shortcut: "/favicon.png",
-  //   apple: "/apple-touch-icon.png",
-  // },
+
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+  },
   manifest: "/site.webmanifest",
   robots: {
     index: true,

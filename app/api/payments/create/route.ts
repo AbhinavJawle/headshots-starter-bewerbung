@@ -72,7 +72,10 @@ export async function POST(request: NextRequest) {
         "apple_pay",
         "eps",
         "ideal",
+        "przelewy24",
       ],
+
+      billing_currency: "EUR",
 
       // product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
       metadata: {

@@ -52,8 +52,21 @@ export async function POST(request: NextRequest) {
         name: `${formData.firstName} ${formData.lastName}`,
       },
       payment_link: true,
+      product_cart: [
+        {
+          product_id: `${process.env.BASIC_LIVE}`,
+          quantity: 1,
+        },
+      ],
+      //test:
+      // product_cart: [
+      //   {
+      //     product_id:  `${process.env.BASIC_TEST}`,
+      //     quantity: 1,
+      //   },
+      // ],
 
-      product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
+      // product_cart: [{ product_id: "pdt_N9oLHUhlbDeyciMDR7c3q", quantity: 1 }], // Example product_id, adjust as needed
       metadata: {
         userId: user.id,
         // You can add other relevant metadata here, like product_id if it's fixed or determined here

@@ -81,8 +81,8 @@ const FaqPage = () => (
       </Text>
       <Text>
         Nicht jedes Foto ist perfekt. Aufgrund der Natur der KI sehen Sie
-        möglicherweise einige seltsame Ergebnisse. HeadshotPro versucht, dies
-        von Anfang an klarzustellen: Nicht jedes Foto ist perfekt, aber wir
+        möglicherweise einige seltsame Ergebnisse. KIBewerbungsfotos versucht,
+        dies von Anfang an klarzustellen: Nicht jedes Foto ist perfekt, aber wir
         versprechen Ihnen, dass Sie in jeder Bestellung ein profilwürdiges
         Bewerbungsfoto finden werden, das den Aufwand wert ist.
       </Text>
@@ -100,7 +100,7 @@ const FaqPage = () => (
         Kann ich KI-Bewerbungsfotos auf LinkedIn verwenden?
       </Text>
       <Text>
-        25 % der HeadshotPro-Kunden verwenden ihre KI-Bewerbungsfotos auf
+        35 % der KIBewerbungsfotos verwenden ihre KI-Bewerbungsfotos auf
         LinkedIn. Es ist völlig in Ordnung, KI-Bewerbungsfotos auf LinkedIn zu
         verwenden. Ein modernes Bewerbungsfoto kann hier einen guten Eindruck
         machen.
@@ -111,23 +111,10 @@ const FaqPage = () => (
       <Text>
         Ja, ChatGPT kann sehr einfache Headshots generieren. Diese sind jedoch
         nicht realistisch genug, um sie professionell zu verwenden, können aber
-        zum Herumspielen Spaß machen. Nutzen Sie HeadshotPro für
+        zum Herumspielen Spaß machen. Nutzen Sie KIBewerbungsfotos für
         KI-Bewerbungsfotos, die Sie professionell einsetzen können.
       </Text>
-      <Text fontWeight="bold" fontSize="xl">
-        Was ist, wenn ich mit meinen KI-Bewerbungsfotos unzufrieden bin?
-      </Text>
-      <Text>
-        Obwohl wir eine Zufriedenheitsrate von 98 % haben, verstehen wir, dass
-        Ihre Fotos manchmal möglicherweise nicht Ihren Erwartungen entsprechen.
-        In solchen Fällen bieten wir folgende Optionen an: Kostenlose
-        Wiederholung: Wir generieren Ihre Fotos gerne kostenlos neu. Wenden Sie
-        sich einfach an support@aragon.ai, und wir geben Ihnen auch Tipps, wie
-        Sie bessere Ergebnisse erzielen können. Rückerstattung: Wenn Sie es
-        nicht erneut versuchen möchten, können Sie eine Rückerstattung
-        beantragen, sofern Sie die in unserer Rückerstattungsrichtlinie
-        dargelegten Kriterien erfüllen.
-      </Text>
+
       <Text fontWeight="bold" fontSize="xl">
         🖼 Was passiert mit meinen Fotos?
       </Text>
@@ -140,15 +127,18 @@ const FaqPage = () => (
       <Text>
         Um die Löschung Ihres Kontos und aller zugehörigen Daten zu beantragen,
         senden Sie bitte eine E-Mail an{" "}
-        <Link href="mailto:support@photoshot">support@photoshot</Link>. Bitte
-        beachten Sie, dass Sie durch die Löschung Ihres Kontos keinen Zugriff
-        mehr auf die mit Ihrem Konto verbundenen Daten oder Inhalte haben.
+        <Link href="mailto:support@kibewerbungsfotos.de">
+          support@kibewerbungsfotos.de
+        </Link>
+        Bitte beachten Sie, dass Sie durch die Löschung Ihres Kontos keinen
+        Zugriff mehr auf die mit Ihrem Konto verbundenen Daten oder Inhalte
+        haben.
       </Text>
       <Text>
         Bitte beachten Sie, dass nur die Daten auf den Photoshot-Servern
         gelöscht werden. Daten, die an Replicate übertragen wurden, werden nicht
         gelöscht. Sie müssten sich gemäß deren{" "}
-        <Link href="https://replicate.com/privacy">Nutzungsbedingungen</Link> an
+        <Link href="https://astria.ai/privacy">Nutzungsbedingungen</Link> an
         Replicate wenden, um dies zu tun.
       </Text>
       <Text fontWeight="bold" fontSize="xl">

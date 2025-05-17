@@ -10,21 +10,23 @@ import {
   Image,
   SimpleGrid,
   Spinner,
-  Progress,
-  useColorModeValue,
   Heading,
   LinkOverlay,
   LinkBox,
   Container,
   Divider,
+  Badge,
+  useColorModeValue,
+  VStack,
+  Center,
 } from "@chakra-ui/react";
 
 interface Pack {
-  id: string;
+  id: number;
   title: string;
-  cover_url: string;
-  slug: string;
-  category?: string;
+  cover_url?: string;
+  slug?: string;
+  category: string;
 }
 
 export default function PacksGalleryZone() {
@@ -32,65 +34,21 @@ export default function PacksGalleryZone() {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Categorized packs
-  const [corporatePacks, setCorporatePacks] = useState<Pack[]>([]);
-  const [lawyerPacks, setLawyerPacks] = useState<Pack[]>([]);
-  const [medicinePacks, setMedicinePacks] = useState<Pack[]>([]);
-  const [realtorPacks, setRealtorPacks] = useState<Pack[]>([]);
-  const [casualPacks, setCasualPacks] = useState<Pack[]>([]);
-  const [modelPacks, setModelPacks] = useState<Pack[]>([]);
-
-  const cardBg = useColorModeValue("gray.700", "gray.800"); // Darker background for cards
-  const cardHoverBg = useColorModeValue("gray.600", "gray.700");
-  const textColor = useColorModeValue("white", "whiteAlpha.900");
-  const loaderColor = useColorModeValue("gray.600", "gray.400");
-  const headingColor = useColorModeValue("blue.500", "blue.300");
-  const sectionBg = useColorModeValue("gray.100", "gray.900");
+  // Theme colors
+  const cardBg = useColorModeValue("white", "gray.800");
+  const cardHoverBg = useColorModeValue("gray.50", "gray.700");
+  const textColor = useColorModeValue("gray.800", "white");
+  const dividerColor = useColorModeValue("gray.300", "gray.600");
+  const mainCardBg = useColorModeValue("blue.50", "blue.900");
+  const mainCardBorder = useColorModeValue("blue.200", "blue.700");
+  const badgeBg = useColorModeValue("blue.100", "blue.700");
+  const badgeColor = useColorModeValue("blue.800", "blue.100");
 
   const fetchPacks = async (): Promise<void> => {
     try {
       setLoading(true);
       const response = await axios.get<Pack[]>("/astria/packs");
-      const fetchedPacks = response.data;
-      setPacks(fetchedPacks);
-
-      // Categorize packs based on index in the array
-      // First 5 are corporate
-      setCorporatePacks(
-        fetchedPacks
-          .slice(0, 5)
-          .map((pack) => ({ ...pack, category: "corporate" }))
-      );
-      // Next 3 are lawyers
-      setLawyerPacks(
-        fetchedPacks
-          .slice(5, 8)
-          .map((pack) => ({ ...pack, category: "lawyer" }))
-      );
-      // Next 1 is medicine
-      setMedicinePacks(
-        fetchedPacks
-          .slice(8, 9)
-          .map((pack) => ({ ...pack, category: "medicine" }))
-      );
-      // Next 1 is realtor
-      setRealtorPacks(
-        fetchedPacks
-          .slice(9, 10)
-          .map((pack) => ({ ...pack, category: "realtor" }))
-      );
-      // Next 5 are casual
-      setCasualPacks(
-        fetchedPacks
-          .slice(10, 15)
-          .map((pack) => ({ ...pack, category: "casual" }))
-      );
-      // Next 3 are model
-      setModelPacks(
-        fetchedPacks
-          .slice(15, 18)
-          .map((pack) => ({ ...pack, category: "model" }))
-      );
+      setPacks(response.data);
     } catch (err: unknown) {
       if (err instanceof Error) {
         toast({
@@ -116,118 +74,222 @@ export default function PacksGalleryZone() {
 
   if (loading) {
     return (
-      <Flex direction="column" align="center" justify="center" h="256px">
-        <Progress
-          size="xs"
-          isIndeterminate
-          width="150px"
-          colorScheme="blue"
-          mb={4}
-        />
-        <Text fontSize="sm" color={loaderColor}>
-          Laden...
-        </Text>
-      </Flex>
+      <Center h="300px">
+        <VStack spacing={4}>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+          <Text>Laden...</Text>
+        </VStack>
+      </Center>
     );
   }
 
   if (packs.length === 0) {
     return (
-      <Box textAlign="center" py={8}>
+      <Box textAlign="center" py={12}>
         <Text fontSize="lg" color={useColorModeValue("gray.600", "gray.400")}>
-          No packs available.
+          Keine Pakete verfügbar.
         </Text>
       </Box>
     );
   }
 
-  // Render a category section with its packs
-  const renderCategorySection = (title: string, categoryPacks: Pack[]) => {
-    if (categoryPacks.length === 0) return null;
+  // Find the main pack (Bewerbungsfoto)
+  const mainPack = packs.find((pack) => pack.category === "corporate");
+  // Get all other packs
+  const otherPacks = packs.filter((pack) => pack.category !== "corporate");
 
-    return (
-      <Box mb={10} py={6} px={4} borderRadius="lg" bg={sectionBg}>
-        <Heading
-          as="h2"
-          size="lg"
-          mb={6}
-          color={headingColor}
-          textAlign="center"
-          textTransform="uppercase"
-          fontWeight="bold"
-        >
-          {title}
+  const getCategoryLabel = (category: string): string => {
+    const categories: Record<string, string> = {
+      lawyer: "Anwalt",
+      doctor: "Arzt",
+      realtor: "Immobilienmakler",
+      speaker: "Redner",
+      corporate: "Business",
+    };
+    return categories[category] || category;
+  };
+
+  return (
+    <Box width="100%" overflow="hidden">
+      <Container maxW="container.xl" py={8} px={{ base: 4, md: 6 }}>
+        {/* Main Featured Pack */}
+        {mainPack && (
+          <LinkBox
+            as="article"
+            w="full"
+            bg={mainCardBg}
+            borderRadius="xl"
+            overflow="hidden"
+            transition="all 0.3s ease-in-out"
+            _hover={{
+              transform: "translateY(-5px)",
+              boxShadow: "xl",
+            }}
+            boxShadow="md"
+            borderWidth="1px"
+            borderColor={mainCardBorder}
+            mb={8}
+          >
+            <NextLink
+              href={`/overview/models/train/${mainPack.slug || mainPack.id}`}
+              passHref
+              legacyBehavior
+            >
+              <LinkOverlay>
+                <Flex
+                  direction={{ base: "column", md: "row" }}
+                  h={{ md: "400px" }}
+                >
+                  <Box
+                    flex={{ md: "1" }}
+                    position="relative"
+                    h={{ base: "300px", md: "full" }}
+                  >
+                    <Image
+                      src={
+                        mainPack.cover_url ||
+                        "https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png"
+                      }
+                      alt={mainPack.title}
+                      w="full"
+                      h="full"
+                      objectFit="cover"
+                      objectPosition="top"
+                    />
+                    <Badge
+                      position="absolute"
+                      top={4}
+                      left={4}
+                      bg={badgeBg}
+                      color={badgeColor}
+                      px={3}
+                      py={1}
+                      borderRadius="md"
+                      fontWeight="bold"
+                    >
+                      Empfohlen
+                    </Badge>
+                  </Box>
+                  <Box
+                    flex={{ md: "1" }}
+                    p={{ base: 6, md: 8 }}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                  >
+                    <Heading
+                      as="h2"
+                      size={{ base: "lg", md: "xl" }}
+                      color={textColor}
+                      fontWeight="bold"
+                      mb={4}
+                    >
+                      Bewerbungsfoto
+                    </Heading>
+                    <Text fontSize={{ base: "md", md: "lg" }} mb={6}>
+                      Professionelle Bewerbungsfotos für Ihren beruflichen
+                      Erfolg. Erstellen Sie das perfekte Foto für Ihren
+                      Lebenslauf und Online-Profile.
+                    </Text>
+                    <Badge
+                      alignSelf="flex-start"
+                      colorScheme="blue"
+                      fontSize="md"
+                      px={3}
+                      py={1}
+                    >
+                      {getCategoryLabel(mainPack.category)}
+                    </Badge>
+                  </Box>
+                </Flex>
+              </LinkOverlay>
+            </NextLink>
+          </LinkBox>
+        )}
+
+        <Divider my={8} borderColor={dividerColor} borderWidth="2px" />
+
+        <Heading as="h3" size="lg" mb={6} textAlign="center">
+          Weitere Foto-Pakete
         </Heading>
+
         <SimpleGrid
-          columns={{
-            base: 1,
-            sm: 2,
-            md: 3,
-            lg: 3,
-          }}
+          columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
           spacing={6}
+          mx="auto"
         >
-          {categoryPacks.map((pack) => (
+          {otherPacks.map((pack) => (
             <LinkBox
               key={pack.id}
               as="article"
-              w="full"
               bg={cardBg}
               borderRadius="lg"
               overflow="hidden"
               transition="all 0.3s ease-in-out"
               _hover={{
-                transform: "scale(1.03)",
-                boxShadow: "xl",
+                transform: "translateY(-5px)",
+                boxShadow: "lg",
                 bg: cardHoverBg,
               }}
-              boxShadow="lg"
+              boxShadow="base"
+              borderWidth="1px"
+              borderColor={dividerColor}
             >
               <NextLink
-                href={`/overview/models/train/${pack.slug}`}
+                href={`/overview/models/train/${pack.slug || pack.id}`}
                 passHref
                 legacyBehavior
               >
                 <LinkOverlay>
                   <Image
                     src={
-                      pack.cover_url ??
+                      pack.cover_url ||
                       "https://www.astria.ai/assets/logo-b4e21f646fb5879eb91113a70eae015a7413de8920960799acb72c60ad4eaa99.png"
                     }
                     alt={pack.title}
                     w="full"
                     h="200px"
                     objectFit="cover"
+                    objectPosition="top"
                   />
-                  <Box p={4} textAlign="center">
+                  <Box p={4}>
                     <Heading
                       as="h3"
-                      size="sm"
+                      size="md"
                       color={textColor}
-                      textTransform="capitalize"
-                      noOfLines={2}
+                      mb={2}
+                      noOfLines={1}
                     >
-                      Bewerbungsfoto
-                      {/* {pack.title} */}
+                      {getCategoryLabel(pack.category)}
                     </Heading>
+                    <Badge
+                      colorScheme={
+                        pack.category === "lawyer"
+                          ? "purple"
+                          : pack.category === "doctor"
+                          ? "green"
+                          : pack.category === "realtor"
+                          ? "orange"
+                          : pack.category === "speaker"
+                          ? "red"
+                          : "gray"
+                      }
+                    >
+                      {pack.category}
+                    </Badge>
                   </Box>
                 </LinkOverlay>
               </NextLink>
             </LinkBox>
           ))}
         </SimpleGrid>
-      </Box>
-    );
-  };
-
-  return (
-    <Container maxW="container.xl" py={8}>
-      {renderCategorySection("Corporate", corporatePacks)}
-      {renderCategorySection("Lawyers", lawyerPacks)}
-      {renderCategorySection("Medicine", medicinePacks)}
-      {renderCategorySection("Realtor", realtorPacks)}
-      {renderCategorySection("Casual", casualPacks)}
-      {renderCategorySection("Model", modelPacks)}
-    </Container>
+      </Container>
+    </Box>
   );
 }

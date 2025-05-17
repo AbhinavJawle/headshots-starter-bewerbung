@@ -7,9 +7,11 @@ import {
   HStack,
   Image,
   Text,
+  Badge,
 } from "@chakra-ui/react"; // Added HStack, Image, Text
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
+import { CheckIcon } from "@chakra-ui/icons";
 // import Demo from "./Demo";
 
 const EndCTA = () => {
@@ -72,6 +74,36 @@ const EndCTA = () => {
             Ihre Fotos werden gelöscht sobald der Prozess fertig ist.
           </p>
         </VStack>
+        <HStack justifyContent="center" spacing={4} mt={4}>
+          <Flex justifyContent="center" py={1}>
+            <Badge colorScheme="gray" px={2} py={1} borderRadius="full">
+              <HStack spacing={1} alignItems="center">
+                <CheckIcon color="green.500" boxSize={3} />
+                <Text
+                  fontSize={{ base: "0.7rem", sm: "0.9rem" }}
+                  fontWeight="medium"
+                >
+                  Made in EU
+                </Text>
+                <Text fontSize={{ base: "0.7rem", sm: "0.9rem" }}>🇪🇺</Text>
+              </HStack>
+            </Badge>
+          </Flex>
+          <Flex justifyContent="center" py={1}>
+            <Badge colorScheme="gray" px={2} py={1} borderRadius="full">
+              <HStack spacing={1} alignItems="center">
+                <CheckIcon color="green.500" boxSize={3} />
+                <Text
+                  fontSize={{ base: "0.7rem", sm: "0.9rem" }}
+                  fontWeight="medium"
+                >
+                  GDPR COMPLIANT
+                </Text>
+                <Text fontSize={{ base: "0.7rem", sm: "0.9rem" }}>🇪🇺</Text>
+              </HStack>
+            </Badge>
+          </Flex>
+        </HStack>
       </SimpleGrid>
     </Box>
   );

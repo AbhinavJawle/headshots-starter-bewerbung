@@ -105,6 +105,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
                 variant="brand"
                 className="w-full"
                 bg={"gray.100"}
+                textDecor={"underline"}
               >
                 Credits kaufen
               </Button>
@@ -445,6 +446,7 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
                 color: "gray.500",
                 bg: "gray.100",
               }}
+              size={{ base: "sm", md: "md" }}
             >
               {isLoading ? (
                 <>

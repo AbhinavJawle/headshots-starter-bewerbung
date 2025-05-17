@@ -115,20 +115,9 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
     await createPaymentLink(data);
   };
 
-  const handlePrefill = () => {
-    setValue("firstName", "John");
-    setValue("lastName", "Doe");
-    setValue("email", "john.doe@example.com");
-    setValue("country", "US");
-    setValue("addressLine", "364 Kent St");
-    setValue("city", "Sydney");
-    setValue("state", "NSW");
-    setValue("zipCode", "2035");
-  };
-
   return (
     <Box
-      w={{ base: "full", md: "70%", lg: "50%" }}
+      w={{ base: "full", md: "80%", lg: "70%" }}
       p={{ base: 4, md: 8 }}
       mx="auto"
       borderWidth="1px"
@@ -298,7 +287,7 @@ const CustomerPaymentForm = ({ user }: { user: User | null }) => {
             )}
           />
 
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={2}>
             <Controller
               name="city"
               control={control}

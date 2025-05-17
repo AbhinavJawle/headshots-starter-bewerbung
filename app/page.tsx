@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "KI Bewerbungsfoto Erstellen: Moderne & Professionelle Fotos Online",
     description:
-      "Erstellen Sie Ihr perfektes KI Bewerbungsfoto online. Modern, professionell und in wenigen Minuten. Ideal für den deutschen Arbeitsmarkt (DACH). Machen Sie Ihr Bewerbungsfoto selber – mit KI!",
+      "Erstellen Sie Ihr perfektes KI Bewerbungsfoto online. Modern, professionell und in wenigen Minuten. Machen Sie Ihr Bewerbungsfoto selber – mit KI!",
     alternates: {
       canonical: "/",
     },

@@ -24,12 +24,11 @@ const siteUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default:
-      "KI Bewerbungsfotos Erstellen | Professionelle Bewerbungsbilder Online",
+    default: "KI Bewerbungsfotos",
     template: "%s | KI Bewerbungsfotos Online",
   },
   description:
-    "Erstellen Sie moderne und professionelle KI Bewerbungsfotos in Minuten. Perfekt für Ihre Bewerbung – einfach, schnell und kostengünstig. Testen Sie es jetzt!",
+    "Erstellen Sie moderne und professionelle KI Bewerbungsfotos in Minuten. Perfekt für Ihre Bewerbung – einfach, schnell und kostengünstig.",
   keywords: [
     "bewerbungsfoto",
     "bewerbungsfotos",

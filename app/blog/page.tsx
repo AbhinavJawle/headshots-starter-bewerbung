@@ -67,7 +67,7 @@ export default async function BlogIndexPage() {
                   src={post.meta.coverImage}
                   alt={post.meta.title}
                   objectFit="cover"
-                  objectPosition="top center"
+                  objectPosition="center"
                   width="full"
                   height="full"
                 />

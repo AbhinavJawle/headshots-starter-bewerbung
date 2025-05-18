@@ -9,12 +9,15 @@ import {
   useBreakpointValue,
   Button,
   Link as ChakraLink,
+  Collapse,
 } from "@chakra-ui/react";
 import { HiArrowRight } from "react-icons/hi";
+import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
 
 function getCanonicalUrl(slug: string) {
   const baseUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de";
@@ -127,6 +130,9 @@ function getReadingTime(content: string) {
   return `${minutes} min Lesezeit`;
 }
 
+// Dynamically import ExpandableToc as a client component
+const ExpandableToc = dynamic(() => import("./ExpandableToc"), { ssr: true });
+
 export default async function BlogPostPage({
   params,
 }: {
@@ -238,26 +244,20 @@ export default async function BlogPostPage({
 
             {/* Table of Contents for long posts */}
             {toc.length > 4 && (
-              <Box as="nav" aria-label="Inhaltsverzeichnis" mb={6} w="full">
-                <Text fontWeight="bold" mb={2} color="gray.700">
-                  Inhaltsverzeichnis
-                </Text>
-                <VStack align="start" spacing={1} fontSize="sm">
-                  {toc.map((item, idx) => (
-                    <ChakraLink
-                      key={item.id + idx}
-                      href={`#${item.id}`}
-                      color="gray.700"
-                      _hover={{
-                        color: "gray.900",
-                        textDecoration: "underline",
-                      }}
-                      pl={item.level === 3 ? 4 : 0}
-                    >
-                      {item.text}
-                    </ChakraLink>
-                  ))}
-                </VStack>
+              <Box
+                as="nav"
+                aria-label="Inhaltsverzeichnis"
+                mb={6}
+                w="full"
+                bg="white"
+                borderRadius="md"
+                borderWidth="1px"
+                borderColor="gray.200"
+                boxShadow="sm"
+                px={{ base: 3, md: 5 }}
+                py={{ base: 3, md: 4 }}
+              >
+                <ExpandableToc toc={toc} />
               </Box>
             )}
 

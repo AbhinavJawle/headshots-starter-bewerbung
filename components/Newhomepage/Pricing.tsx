@@ -185,7 +185,7 @@ const Pricing = () => {
             </VStack>
             <Button
               as={Link}
-              href="/dashboard"
+              href="/overview"
               mt={6}
               w="full"
               variant={plan.isFeatured ? "brand" : "outline"}

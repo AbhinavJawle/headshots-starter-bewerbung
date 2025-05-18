@@ -14,6 +14,78 @@ import { HiArrowRight } from "react-icons/hi";
 import { getPostBySlug, getPostSlugs } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { Suspense } from "react";
+
+function getCanonicalUrl(slug: string) {
+  const baseUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de";
+  return `${baseUrl}/blog/${slug}`;
+}
+
+function getArticleJsonLd(post: any, slug: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.meta.title,
+    description: post.meta.description,
+    image: post.meta.coverImage ? [post.meta.coverImage] : [],
+    author: {
+      "@type": "Person",
+      name: post.meta.author || "Team Kibewerbungsfotos",
+    },
+    datePublished: post.meta.date,
+    dateModified: post.meta.date,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": getCanonicalUrl(slug),
+    },
+  };
+}
+
+function extractFaqJsonLd(contentHtml: string) {
+  // Simple regex to extract FAQ sections (Q: ... A: ...)
+  const faqRegex = /<h2[^>]*>\s*FAQs?\s*<\/h2>([\s\S]*?)(<h2|<h3|<\/div|$)/i;
+  const match = contentHtml.match(faqRegex);
+  if (!match) return null;
+  const faqBlock = match[1];
+  const qaRegex = /<li[^>]*>\s*<strong>(.*?)<\/strong>\s*<br\/?>(.*?)<\/li>/g;
+  const faqs = [];
+  let qaMatch;
+  while ((qaMatch = qaRegex.exec(faqBlock))) {
+    faqs.push({
+      question: qaMatch[1].replace(/\s+/g, " ").trim(),
+      answer: qaMatch[2].replace(/\s+/g, " ").trim(),
+    });
+  }
+  if (faqs.length === 0) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+}
+
+function extractToc(contentHtml: string) {
+  // Extract h2/h3 headings for TOC
+  const headingRegex = /<h([23])[^>]*>(.*?)<\/h[23]>/g;
+  const toc = [];
+  let match;
+  while ((match = headingRegex.exec(contentHtml))) {
+    toc.push({
+      level: parseInt(match[1]),
+      text: match[2].replace(/<[^>]+>/g, ""),
+      id: match[2]
+        .replace(/<[^>]+>/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9äöüß]+/g, "-")
+        .replace(/^-+|-+$/g, ""),
+    });
+  }
+  return toc;
+}
 
 export async function generateMetadata({
   params,
@@ -25,6 +97,8 @@ export async function generateMetadata({
   return {
     title: post.meta.title,
     description: post.meta.description,
+    alternates: { canonical: getCanonicalUrl(params.slug) },
+    robots: { index: true, follow: true },
     openGraph: {
       title: post.meta.title,
       description: post.meta.description,
@@ -50,7 +124,7 @@ export async function generateStaticParams() {
 function getReadingTime(content: string) {
   const words = content.split(/\s+/).length;
   const minutes = Math.ceil(words / 200);
-  return `${minutes} min read`;
+  return `${minutes} min Lesezeit`;
 }
 
 export default async function BlogPostPage({
@@ -69,13 +143,30 @@ export default async function BlogPostPage({
 
   const author = post.meta.author || "Team Kibewerbungsfotos";
   const readingTime = getReadingTime(post.contentHtml);
+  const canonicalUrl = getCanonicalUrl(params.slug);
+  const articleJsonLd = getArticleJsonLd(post, params.slug);
+  const faqJsonLd = extractFaqJsonLd(post.contentHtml);
+  const toc = extractToc(post.contentHtml);
 
   return (
     <Container
+      as="article"
       maxW={{ base: "100%", md: "3xl", lg: "4xl" }}
       px={{ base: 4, md: 6 }}
       py={{ base: 6, md: 12 }}
     >
+      {/* SEO: JSON-LD Article structured data */}
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify(articleJsonLd)}
+      </script>
+      {/* SEO: FAQPage JSON-LD if present */}
+      {faqJsonLd && (
+        <script type="application/ld+json" suppressHydrationWarning>
+          {JSON.stringify(faqJsonLd)}
+        </script>
+      )}
+      {/* SEO: Canonical and robots meta tags (handled by metadata API) */}
+
       <Box
         w="full"
         bg="white"
@@ -91,7 +182,7 @@ export default async function BlogPostPage({
           >
             <Image
               src={post.meta.coverImage}
-              alt={post.meta.title}
+              alt={post.meta.alt || post.meta.title || "Bewerbungsfoto"}
               w="full"
               h="full"
               objectFit="cover"
@@ -142,8 +233,33 @@ export default async function BlogPostPage({
               <Text>•</Text>
               <Text>{readingTime}</Text>
               <Text>•</Text>
-              <Text>By {author}</Text>
+              <Text>Von {author}</Text>
             </Flex>
+
+            {/* Table of Contents for long posts */}
+            {toc.length > 4 && (
+              <Box as="nav" aria-label="Inhaltsverzeichnis" mb={6} w="full">
+                <Text fontWeight="bold" mb={2} color="gray.700">
+                  Inhaltsverzeichnis
+                </Text>
+                <VStack align="start" spacing={1} fontSize="sm">
+                  {toc.map((item, idx) => (
+                    <ChakraLink
+                      key={item.id + idx}
+                      href={`#${item.id}`}
+                      color="gray.700"
+                      _hover={{
+                        color: "gray.900",
+                        textDecoration: "underline",
+                      }}
+                      pl={item.level === 3 ? 4 : 0}
+                    >
+                      {item.text}
+                    </ChakraLink>
+                  ))}
+                </VStack>
+              </Box>
+            )}
 
             <Box
               className="prose"
@@ -157,6 +273,7 @@ export default async function BlogPostPage({
                   mt: { base: 4, md: 6 },
                   mb: { base: 2, md: 3 },
                   lineHeight: "1.3",
+                  scrollMarginTop: "100px",
                 },
                 h1: { fontSize: { base: "xl", md: "2xl" } },
                 h2: { fontSize: { base: "lg", md: "xl" } },

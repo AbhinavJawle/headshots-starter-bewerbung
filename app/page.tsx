@@ -6,7 +6,7 @@ import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl = process.env.DEPLOYMENT_URL || "https://your-domain.de"; // Ensure this is consistent
+const siteUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de"; // Ensure this is consistent
 
 export async function generateMetadata(): Promise<Metadata> {
   // Optionally fetch data here if needed for metadata
@@ -23,24 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
       description:
         "Nutzen Sie KI, um Ihr Bewerbungsfoto selber zu machen. Schnell, einfach und überzeugend für den modernen Arbeitsmarkt.",
       url: siteUrl,
-      // images: [
-      //   {
-      //     url: '/og-homepage.png',
-      //     width: 1200,
-      //     height: 630,
-      //     alt: 'KI Bewerbungsfoto online erstellen - modern und professionell',
-      //   },
-      // ],
+
       locale: "de_DE",
       type: "website",
     },
-    // twitter: {
-    //   card: "summary_large_image",
-    //   title: "KI Bewerbungsfoto Erstellen: Schnell & Professionell Online",
-    //   description:
-    //     "Ihr Top KI Bewerbungsfoto in Minuten. Modern, einfach und perfekt für Ihre Bewerbung im DACH-Raum.",
-    //   images: ["/og-homepage.png"], // Use the specific homepage OG image
-    // },
   };
 }
 

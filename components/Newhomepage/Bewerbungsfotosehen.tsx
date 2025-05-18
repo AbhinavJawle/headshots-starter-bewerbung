@@ -84,7 +84,7 @@ function Bewerbungsfotosehen() {
           rightIcon={<HiArrowRight />}
           mb={3}
         >
-          Nur für €10
+          Nur für €20
         </Button>
         <Box
           mb={8}

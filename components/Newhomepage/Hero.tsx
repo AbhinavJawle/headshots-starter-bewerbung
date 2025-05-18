@@ -99,7 +99,7 @@ const Hero = () => {
                   <Text as="span" flex="1">
                     {" "}
                     <CheckIcon color="green.500" mr={2} />
-                    Kostet nur €10
+                    Kostet nur €20
                   </Text>
                 </ListItem>
               </List>

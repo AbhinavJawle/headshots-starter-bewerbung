@@ -38,21 +38,7 @@ const pricingPlans = [
   {
     name: "Basic",
     price: `${basicPrice} €`,
-    description:
-      "Erhalten Sie 40 professionelle Fotos mit verschiedenen Hintergründen und Outfits",
-    features: [
-      { text: "40 KI Bewerbungsfotos" },
-      { text: "4 Hintergründe" },
-      { text: "8 Outfits" },
-      { text: "15 Minuten Bearbeitungszeit" },
-    ],
-    buttonText: "Jetzt Erstellen",
-    isFeatured: false,
-  },
-  {
-    name: "Professionell",
-    price: `${professionellPrice} €`,
-    description: "Erhalten Sie 80 Headshots in 2 Stil.",
+    description: "Erhalten Sie 40 Headshots in 1 Stil",
     features: [
       { text: "40 KI Bewerbungsfotos" },
       { text: "4 Hintergründe" },
@@ -63,14 +49,27 @@ const pricingPlans = [
     isFeatured: true,
   },
   {
+    name: "Professionell",
+    price: `${professionellPrice} €`,
+    description: "Erhalten Sie 80 Headshots in 2 Stil.",
+    features: [
+      { text: "80 KI Bewerbungsfotos" },
+      { text: "8 Hintergründe" },
+      { text: "16 Outfits" },
+      { text: "10 Minuten Bearbeitungszeit" },
+    ],
+    buttonText: "Jetzt Erstellen",
+    isFeatured: false,
+  },
+  {
     name: "Premium",
     price: `${premiumPrice} €`,
     description: "Erhalten Sie 120 Headshots in 3 Stil.",
     features: [
-      { text: "40 KI Bewerbungsfotos" },
-      { text: "4 Hintergründe" },
-      { text: "8 Outfits" },
-      { text: "15 Minuten Bearbeitungszeit" },
+      { text: "120 KI Bewerbungsfotos" },
+      { text: "12 Hintergründe" },
+      { text: "24 Outfits" },
+      { text: "8 Minuten Bearbeitungszeit" },
     ],
     buttonText: "Jetzt Erstellen",
     isFeatured: false,
@@ -123,7 +122,7 @@ const Pricing = () => {
             </Link>
             {""}
             <br />
-            <b>Unsere Angebote starten bei €10</b>
+            <b>Unsere Angebote starten bei €20</b>
           </Box>
         </Box>
       </VStack>

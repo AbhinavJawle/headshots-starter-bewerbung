@@ -93,9 +93,9 @@ export default async function BlogPostPage({
               src={post.meta.coverImage}
               alt={post.meta.title}
               w="full"
-              h="full"
-              objectFit="cover"
-              objectPosition="center"
+              objectFit="contain"
+              objectPosition="top center"
+              bg="gray.100"
             />
           </Box>
         )}

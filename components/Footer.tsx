@@ -58,6 +58,9 @@ export default function Footer() {
           textAlign={{ base: "center", sm: "left" }} // Center text on mobile
         >
           <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
+            <Link href="/blog">Blog</Link>
+          </Text>
+          <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/terms">Nutzungsbedingungen</Link>
           </Text>
           <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>

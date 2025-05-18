@@ -263,7 +263,7 @@ export const Login = ({
             <Text mt={8} fontSize={{ base: "xs", md: "xs" }} color="gray.500">
               Mit Ihrer Registrierung stimmen Sie den{" "}
               <Link
-                href={`${BASE_URL}/terms`}
+                href={`https://kibewerbungsfotos.de/terms`}
                 target="_blank"
                 rel="noopener noreferrer"
                 color="brand.500"

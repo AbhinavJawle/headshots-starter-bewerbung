@@ -171,14 +171,18 @@ export default async function BlogPostPage({
       py={{ base: 6, md: 12 }}
     >
       {/* SEO: JSON-LD Article structured data */}
-      <script type="application/ld+json" suppressHydrationWarning>
-        {JSON.stringify(articleJsonLd)}
-      </script>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* SEO: FAQPage JSON-LD if present */}
       {faqJsonLd && (
-        <script type="application/ld+json" suppressHydrationWarning>
-          {JSON.stringify(faqJsonLd)}
-        </script>
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
       )}
       {/* SEO: Canonical and robots meta tags (handled by metadata API) */}
 

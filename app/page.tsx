@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       title:
-        "KI Bewerbungsfoto: Moderne & Professionelle Bilder Online Gestalten",
+        "KI Bewerbungsfoto Erstellen: Moderne & Professionelle Fotos Online",
       description:
         "Nutzen Sie KI, um Ihr Bewerbungsfoto selber zu machen. Schnell, einfach und überzeugend für den modernen Arbeitsmarkt.",
       url: siteUrl,

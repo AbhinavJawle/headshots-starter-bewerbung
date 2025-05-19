@@ -1,7 +1,7 @@
 ---
 title: "Was gehört in einen Lebenslauf? Die ultimative Guide"
 date: "2025-05-17"
-slug: "was-gehört-in-einen-lebenslauf"
+slug: "was-gehoert-in-einen-lebenslauf"
 description: "Willkommen zu deinem ultimativen Guide, wie du einen Lebenslauf erstellst, der Personaler in Deutschland begeistert! Ob du frisch von der Uni kommst, einen Karrierewechsel planst oder einfach deinen CV aufpolieren willst"
 coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747632787/7_eraq4u.jpg"
 author: "kibewerbungsfotos"

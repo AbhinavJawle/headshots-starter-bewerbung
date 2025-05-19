@@ -3,8 +3,7 @@ title: "Bewerbungsbild für Frauen: Tipps, Trends und Erstellen 2025"
 date: "2025-05-16"
 slug: "bewerbungsbild-fuer-frauen-tipps-trends-und-erstellen-2025"
 description: Hallo zusammen! 😊 Wenn du dich auf Jobsuche befindest, weißt du sicherlich, wie wichtig ein erstklassiges Bewerbungsfoto ist. Besonders für Frauen kann es eine Herausforderung sein, das richtige Gleichgewicht"
-image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/19.jpg"
+coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747600849/19_ia3ram.jpg"
 author: "kibewerbungsfotos"
 tags:
   [

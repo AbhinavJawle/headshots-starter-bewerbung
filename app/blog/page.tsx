@@ -13,6 +13,15 @@ import {
 import NextLink from "next/link";
 import { getAllPosts } from "@/lib/blog";
 
+function getCloudinaryTransformedUrl(url: string) {
+  if (!url.includes("res.cloudinary.com")) return url;
+  // Insert transformation string after '/upload/'
+  return url.replace(
+    /\/upload\//,
+    "/upload/w_600,h_338,c_fill,g_auto,e_sharpen:60,q_auto:good,dpr_2.0,f_auto/"
+  );
+}
+
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();
 
@@ -64,7 +73,7 @@ export default async function BlogIndexPage() {
             {post.meta.coverImage && (
               <AspectRatio ratio={16 / 9} width="full">
                 <Image
-                  src={post.meta.coverImage}
+                  src={getCloudinaryTransformedUrl(post.meta.coverImage)}
                   alt={post.meta.title}
                   objectFit="cover"
                   objectPosition="center"

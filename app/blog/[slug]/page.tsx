@@ -90,6 +90,15 @@ function extractToc(contentHtml: string) {
   return toc;
 }
 
+function getCloudinaryTransformedUrl(url: string) {
+  if (!url.includes("res.cloudinary.com")) return url;
+  // Insert transformation string after '/upload/'
+  return url.replace(
+    /\/upload\//,
+    "/upload/w_600,h_338,c_pad,g_center,e_sharpen:60,q_auto:good,dpr_2.0,f_auto,b_gen_fill/"
+  );
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -187,7 +196,7 @@ export default async function BlogPostPage({
             h={{ base: "200px", md: "300px", lg: "400px" }}
           >
             <Image
-              src={post.meta.coverImage}
+              src={getCloudinaryTransformedUrl(post.meta.coverImage)}
               alt={post.meta.alt || post.meta.title || "Bewerbungsfoto"}
               w="full"
               h="full"

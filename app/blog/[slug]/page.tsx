@@ -18,11 +18,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-
-function getCanonicalUrl(slug: string) {
-  const baseUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de";
-  return `${baseUrl}/blog/${slug}`;
-}
+import { getCanonicalUrl } from "@/app/layout";
 
 function getArticleJsonLd(post: any, slug: string) {
   return {
@@ -106,16 +102,25 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
   if (!post) return {};
+
+  const canonicalUrl = getCanonicalUrl(`blog/${params.slug}`);
+
   return {
     title: post.meta.title,
     description: post.meta.description,
-    alternates: { canonical: getCanonicalUrl(params.slug) },
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        "de-DE": canonicalUrl,
+      },
+    },
     robots: { index: true, follow: true },
     openGraph: {
       title: post.meta.title,
       description: post.meta.description,
       images: post.meta.coverImage ? [post.meta.coverImage] : [],
       type: "article",
+      url: canonicalUrl,
     },
     twitter: {
       card: "summary_large_image",

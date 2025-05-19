@@ -19,7 +19,15 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-const siteUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de";
+const siteUrl =
+  process.env.DEPLOYMENT_URL || "https://www.kibewerbungsfotos.de";
+
+// Utility function to generate canonical URLs
+export function getCanonicalUrl(path: string = "") {
+  // Remove trailing slash from siteUrl and leading slash from path
+  const cleanPath = path.replace(/^\/+/, "");
+  return `${siteUrl.replace(/\/+$/, "")}/${cleanPath}`;
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -62,7 +70,10 @@ export const metadata: Metadata = {
   creator: "KIBewerbungsfotos",
   publisher: "KIBewerbungsfotos",
   alternates: {
-    canonical: "/",
+    canonical: getCanonicalUrl(),
+    languages: {
+      "de-DE": getCanonicalUrl(),
+    },
   },
   openGraph: {
     title: "Professionelle KI Bewerbungsfotos Online Erstellen",

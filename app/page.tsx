@@ -6,7 +6,8 @@ import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl = process.env.DEPLOYMENT_URL || "https://kibewerbungsfotos.de"; // Ensure this is consistent
+const siteUrl =
+  process.env.DEPLOYMENT_URL || "https://www.kibewerbungsfotos.de"; // Ensure this is consistent
 
 export async function generateMetadata(): Promise<Metadata> {
   // Optionally fetch data here if needed for metadata

@@ -4,7 +4,7 @@ date: "2025-05-16"
 slug: "bewerbungsbild-groesse-die-perfekten-groessen-fuer-euer-bewerbungsbild"
 description: "Hallo, liebe Karrierejäger! 😄 Stellt euch vor: Eure Bewerbung landet auf dem Schreibtisch eines Personalers. Was sieht er zuerst? Genau, euer Bewerbungsbild! In Deutschland ist das Bewerbungsfoto so"
 image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/25.jpg"
+coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747632788/13_xqagff.jpg"
 author: "kibewerbungsfotos"
 tags:
   [

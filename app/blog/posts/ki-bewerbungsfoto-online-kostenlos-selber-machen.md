@@ -4,7 +4,7 @@ date: "2025-05-16"
 slug: "ki bewerbungsfoto online kostenlos"
 description: "Hallo, liebe Jobjäger und Karrieretiger! 😄 Stellt euch vor: Ihr sitzt gemütlich auf dem Sofa, ladet ein Selfie hoch, und zack – ein professionelles Bewerbungsfoto, das Personaler"
 image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/12.jpg"
+coverImage: "http://res.cloudinary.com/dj4wnlqys/image/upload/v1747632787/18_yaqwic.jpg"
 author: "kibewerbungsfotos"
 tags:
   [

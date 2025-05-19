@@ -4,7 +4,7 @@ date: "2025-05-16"
 slug: "bewerbungsfoto-hintergrund-der-unsichtbare-star-ihrer-bewerbung"
 description: "Hallo, liebe Job-Jäger und Karriere-Kämpfer! 😎 Wusstet ihr, dass 82% der Personaler in Deutschland eine Bewerbung erst mit einem Foto als vollständig ansehen?"
 image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/22.jpg"
+coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747632793/25_j4ww2b.jpg"
 author: "kibewerbungsfotos"
 tags:
   [

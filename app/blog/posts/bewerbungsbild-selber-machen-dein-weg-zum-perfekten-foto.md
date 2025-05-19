@@ -4,7 +4,7 @@ date: "2025-05-16"
 slug: "Bewerbungsbild-selber-machen-Dein-Weg-zum-perfekten-Foto"
 description: "Dein Lebenslauf ist poliert, dein Anschreiben ein Meisterwerk, und dann… ein verpixeltes Selfie als Bewerbungsfoto. Autsch! In Deutschland ist"
 image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/3.jpg"
+coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747632794/24_x6riwz.jpg"
 author: "kibewerbungsfotos"
 tags:
   [

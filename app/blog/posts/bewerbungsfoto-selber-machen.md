@@ -4,7 +4,7 @@ date: "2025-05-16"
 slug: "Bewerbungsphoto-selber-machen"
 description: "Dein Lebenslauf glänzt, dein Anschreiben ist ein Volltreffer, und dann – zack! – ein Bewerbungsfoto, das aussieht, als"
 image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/16.jpg"
+coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747632786/4_tfjbnd.jpg"
 author: "kibewerbungsfotos"
 tags:
   [

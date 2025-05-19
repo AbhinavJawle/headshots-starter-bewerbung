@@ -4,7 +4,7 @@ date: "2024-06-01"
 slug: "Warum-ein-professionelles-Bewerbungsfoto-entscheidend-ist"
 description: "Stell dir vor, du bewirbst dich für deinen Traumjob. Dein Lebenslauf ist makellos, deine Qualifikationen sind beeindruckend"
 image: "/blog/hello-world-cover.jpg"
-coverImage: "/headshots/1.jpg"
+coverImage: "https://res.cloudinary.com/dj4wnlqys/image/upload/v1747632786/6_z9ev6l.jpg"
 author: "kibewerbungsfotos"
 tags: ["SaaS", "AI Bewerbungsfoto", "Product Updates", "Marketing"]
 ---

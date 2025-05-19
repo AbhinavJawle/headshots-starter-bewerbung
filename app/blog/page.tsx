@@ -18,7 +18,7 @@ function getCloudinaryTransformedUrl(url: string) {
   // Insert transformation string after '/upload/'
   return url.replace(
     /\/upload\//,
-    "/upload/w_600,h_338,c_fill,g_auto,e_sharpen:60,q_auto:good,dpr_2.0,f_auto/"
+    "/upload/w_600,h_338,c_pad,g_center,e_sharpen:60,q_auto:good,dpr_2.0,f_auto,b_gen_fill/"
   );
 }
 

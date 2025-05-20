@@ -48,32 +48,32 @@ const pricingPlans = [
     buttonText: "Jetzt Erstellen",
     isFeatured: true,
   },
-  {
-    name: "Professionell",
-    price: `${professionellPrice} €`,
-    description: "Erhalten Sie 80 Headshots in 2 Stil.",
-    features: [
-      { text: "80 KI Bewerbungsfotos" },
-      { text: "8 Hintergründe" },
-      { text: "16 Outfits" },
-      { text: "10 Minuten Bearbeitungszeit" },
-    ],
-    buttonText: "Jetzt Erstellen",
-    isFeatured: false,
-  },
-  {
-    name: "Premium",
-    price: `${premiumPrice} €`,
-    description: "Erhalten Sie 120 Headshots in 3 Stil.",
-    features: [
-      { text: "120 KI Bewerbungsfotos" },
-      { text: "12 Hintergründe" },
-      { text: "24 Outfits" },
-      { text: "8 Minuten Bearbeitungszeit" },
-    ],
-    buttonText: "Jetzt Erstellen",
-    isFeatured: false,
-  },
+  // {
+  //   name: "Professionell",
+  //   price: `${professionellPrice} €`,
+  //   description: "Erhalten Sie 80 Headshots in 2 Stil.",
+  //   features: [
+  //     { text: "80 KI Bewerbungsfotos" },
+  //     { text: "8 Hintergründe" },
+  //     { text: "16 Outfits" },
+  //     { text: "10 Minuten Bearbeitungszeit" },
+  //   ],
+  //   buttonText: "Jetzt Erstellen",
+  //   isFeatured: false,
+  // },
+  // {
+  //   name: "Premium",
+  //   price: `${premiumPrice} €`,
+  //   description: "Erhalten Sie 120 Headshots in 3 Stil.",
+  //   features: [
+  //     { text: "120 KI Bewerbungsfotos" },
+  //     { text: "12 Hintergründe" },
+  //     { text: "24 Outfits" },
+  //     { text: "8 Minuten Bearbeitungszeit" },
+  //   ],
+  //   buttonText: "Jetzt Erstellen",
+  //   isFeatured: false,
+  // },
 ];
 
 const Pricing = () => {
@@ -130,7 +130,7 @@ const Pricing = () => {
       <SimpleGrid
         width="100%"
         spacing={{ base: 4, md: 8 }}
-        columns={{ base: 1, md: 3 }}
+        columns={{ base: 1, md: 1 }}
         py={10}
         px={{ base: 2, md: 4 }}
         maxWidth="container.xl" // Changed from container.xl to match parent

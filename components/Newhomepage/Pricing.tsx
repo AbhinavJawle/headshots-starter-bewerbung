@@ -44,6 +44,7 @@ const pricingPlans = [
       { text: "4 Hintergründe" },
       { text: "8 Outfits" },
       { text: "15 Minuten Bearbeitungszeit" },
+      { text: "1 Credit" },
     ],
     buttonText: "Jetzt Erstellen",
     isFeatured: true,

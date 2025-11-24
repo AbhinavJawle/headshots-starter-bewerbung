@@ -72,9 +72,7 @@ export default function Footer() {
           <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/faq">FAQ</Link>
           </Text>
-          <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
-            <Link href="https://sprunkid.com/">Sprunkid</Link>
-          </Text>
+          <Text fontSize="sm">Made By Abhinav</Text>
           <SocialButton href="mailto:support@kibewerbungsfotos.de">
             <MdAlternateEmail />
           </SocialButton>

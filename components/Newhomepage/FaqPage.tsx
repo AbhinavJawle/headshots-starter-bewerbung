@@ -127,8 +127,8 @@ const FaqPage = () => (
       <Text>
         Um die Löschung Ihres Kontos und aller zugehörigen Daten zu beantragen,
         senden Sie bitte eine E-Mail an{" "}
-        <Link href="mailto:support@kibewerbungsfotos.de">
-          support@kibewerbungsfotos.de
+        <Link href="mailto:abhinav@kibewerbungsfotos.de">
+          abhinav@kibewerbungsfotos.de
         </Link>
         Bitte beachten Sie, dass Sie durch die Löschung Ihres Kontos keinen
         Zugriff mehr auf die mit Ihrem Konto verbundenen Daten oder Inhalte

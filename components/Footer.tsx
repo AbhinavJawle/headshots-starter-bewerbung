@@ -69,7 +69,7 @@ export default function Footer() {
           <Text fontSize="sm" _hover={{ textDecoration: "underline" }}>
             <Link href="/faq">FAQ</Link>
           </Text>
-          <SocialButton href="mailto:support@kibewerbungsfotos.de">
+          <SocialButton href="mailto:abhinav@kibewerbungsfotos.de">
             <MdAlternateEmail />
           </SocialButton>
         </Stack>

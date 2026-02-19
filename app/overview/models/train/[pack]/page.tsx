@@ -1,6 +1,6 @@
 "use client";
 
-import TrainModelZone from "@/components/TrainModelZone";
+// import TrainModelZone from "@/components/TrainModelZone";
 import Information from "@/components/Information";
 import { Button } from "@chakra-ui/react";
 import { Box, useBreakpointValue } from "@chakra-ui/react"; // SimpleGrid removed
@@ -52,9 +52,9 @@ export default function Index({ params }: { params: { pack: string } }) {
                   Fotos hoch, um loszulegen.
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              {/* <CardContent>
                 <TrainModelZone packSlug={params.pack} />
-              </CardContent>
+              </CardContent> */}
             </Card>
           </>
         ) : (
@@ -70,7 +70,7 @@ export default function Index({ params }: { params: { pack: string } }) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <TrainModelZone packSlug={params.pack} />
+                  {/* <TrainModelZone packSlug={params.pack} /> */}
                 </CardContent>
               </Card>
             </Box>

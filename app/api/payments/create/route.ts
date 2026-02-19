@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         {
           error: "User not authenticated",
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -74,7 +74,8 @@ export async function POST(request: NextRequest) {
         // For dynamic products, this might be better handled if Dodo allows passing line_item metadata
       },
       return_url: process.env.DEPLOYMENT_URL
-        ? `https://${process.env.DEPLOYMENT_URL}/overview`
+        ? // ? `https://${process.env.DEPLOYMENT_URL}/overview`
+          `${process.env.DEPLOYMENT_URL}/overview`
         : "http://localhost:3000/overview",
     });
 
@@ -85,7 +86,7 @@ export async function POST(request: NextRequest) {
       {
         error: err instanceof Error ? err.message : "An unknown error occurred",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

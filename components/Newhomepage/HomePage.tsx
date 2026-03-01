@@ -35,9 +35,9 @@ const HomePage = () => (
     <Features />
     <Bewerbungsfotosehen />
     <Vergleichen />
-    <Flex px={4} pt={10} maxWidth="container.lg" width="100%" marginX="auto">
+    {/* <Flex px={4} pt={10} maxWidth="container.lg" width="100%" marginX="auto">
       <Pricing />
-    </Flex>
+    </Flex> */}
     <FaqPage />
     <EndCTA />
   </>
